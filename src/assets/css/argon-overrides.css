@@ -1,0 +1,81 @@
+.card-profile-home{
+	position: fixed;
+	position: sticky;
+	top: 110px;
+}
+.invalid-form-input-message {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #fb6340; 
+}
+.is-invalid-input {
+	border: 1px solid #fb6340;
+	color: #fb6340;
+}
+.navbar-top{
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: calc(100% - 250px);
+}
+.navbar-horizontal .navbar-brand img{
+	/*height: 50px;*/
+}
+.navbar-brand-img {
+	height: 27px;
+}
+.main-content-top-margin{
+	margin-top: 78px;
+}
+
+
+/*Start Loading Spinner */
+.html-spinner{
+  width:21px;
+  height:21px;
+  border:2px solid #ffffff55;
+  border-top:2px solid white;
+  border-radius:50%;
+  margin: 0 10px;
+  
+  /*Animation code for older Chrome, Safari, Opera*/
+  -webkit-transition-property: -webkit-transform;
+  -webkit-transition-duration: 1.2s;
+  -webkit-animation-name: rotate;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  
+  /*Animation code for older Firefox*/
+  -moz-transition-property: -moz-transform;
+  -moz-animation-name: rotate; 
+  -moz-animation-duration: 1.2s; 
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: linear;
+  
+  /*Default animation code*/
+  transition-property: transform;
+  animation-name: rotate; /*Call to @keyframe rule*/
+  animation-duration: 1.2s; /*Change to speed up or slow down the animation*/
+  animation-iteration-count: infinite; /*Make the animation go forever*/
+  animation-timing-function: linear;
+}
+ 
+/*keyframes rule for older Chrome, Safari, Opera*/
+@-webkit-keyframes rotate {
+    from {-webkit-transform: rotate(0deg);}
+    to {-webkit-transform: rotate(360deg);}
+}
+ 
+/*keyframes rule for older Firefox version*/
+@-moz-keyframes rotate {
+    from {-moz-transform: rotate(0deg);}
+    to {-moz-transform: rotate(360deg);}
+}
+ 
+/*Default @keyframes rule*/
+@keyframes rotate {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+/* End Loading Spinner */

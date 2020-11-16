@@ -30,7 +30,7 @@ let authenticated;
 const token = localStorage.FBIdToken;
 if(token){
   const decodedToken = jwtDecode(token);
-  if(decodedToken.exp * 1000 > Date.now()){
+  if(decodedToken.exp * 1000 < Date.now()){
     authenticated = false;
     // if(window.location.href !== 'http://localhost:3000/auth/login'){
     //   window.location.href = '/auth/login';

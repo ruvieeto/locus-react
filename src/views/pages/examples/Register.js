@@ -15,6 +15,7 @@
 
 */
 import React, { Fragment, Component } from "react";
+import PropTypes from 'prop-types';
 // nodejs library that concatenates classes
 import classnames from "classnames";
 // reactstrap components
@@ -38,6 +39,10 @@ import AuthHeader from "components/Headers/AuthHeader.js";
 import { Link } from 'react-router-dom';
 
 import axios from 'axios';
+
+// Redux
+import { connect } from 'react-redux';
+import { signupUser } from '../../../redux/actions/userActions';
 
 class Register extends Component {
   constructor(){
@@ -87,7 +92,6 @@ class Register extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ 
-      loading: true,
       errors: {},
       emailInvalid: false,
       passwordInvalid: false,
@@ -102,44 +106,36 @@ class Register extends Component {
       handle: this.state.handle
     }
 
-    axios.post('/signup', newUserData)
-      .then(res => {
-        localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`);
-        this.setState({ loading: false });
-        this.props.history.push('/admin/dashboard');
-      })
-      .catch(err => {
-        this.setState({
-          errors: err.response.data,
-          loading: false
-        })
-
-        if(err.response.data.email){
-            this.setState({
-            emailInvalid: true
-          });
-        }
-        if(err.response.data.password){
-          this.setState({
-            passwordInvalid: true
-          });
-        }
-        if(err.response.data.confirmPassword){
-          this.setState({
-            confirmPasswordInvalid: true,
-            passwordInvalid: true // For both input fields have warning border
-          });
-        }
-        if(err.response.data.handle){
-          this.setState({
-            handleInvalid: true
-          });
-        }
-      })
+    this.props.signupUser(newUserData, this.props.history);
   }
 
   render() {
-    const { errors, loading, passwordStrength } = this.state;
+    const { passwordStrength } = this.state;
+    const { UI: { loading, errors } } = this.props;
+
+    // ************************** Before Redux Start **************************
+      // if(err.response.data.email){
+      //       this.setState({
+      //       emailInvalid: true
+      //     });
+      //   }
+      //   if(err.response.data.password){
+      //     this.setState({
+      //       passwordInvalid: true
+      //     });
+      //   }
+      //   if(err.response.data.confirmPassword){
+      //     this.setState({
+      //       confirmPasswordInvalid: true,
+      //       passwordInvalid: true // For both input fields have warning border
+      //     });
+      //   }
+      //   if(err.response.data.handle){
+      //     this.setState({
+      //       handleInvalid: true
+      //     });
+      //   }
+    // ************************** Before Redux End **************************
 
     return (
       <Fragment>
@@ -393,4 +389,19 @@ class Register extends Component {
   }
 }
 
-export default Register;
+Register.propTypes = {
+  user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
+  signupUser: PropTypes.func.isRequired
+}
+
+export const mapStateToProps = (state) => ({
+  user: state.user,
+  UI: state.UI
+})
+
+export const mapActionsToProps = {
+  signupUser
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(Register);

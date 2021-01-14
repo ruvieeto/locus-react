@@ -79,3 +79,6 @@
     to {transform: rotate(360deg);}
 }
 /* End Loading Spinner */
+.nochange, .nochange:hover, .nochange:visited {
+  color: #fff;
+}

@@ -15,6 +15,7 @@
 
 */
 import React, { Component, Fragment } from "react";
+import PropTypes from 'prop-types';
 // nodejs library that concatenates classes
 import classnames from "classnames";
 // reactstrap components
@@ -39,11 +40,15 @@ import { Link } from 'react-router-dom';
 
 import axios from 'axios';
 
+// Redux
+import { connect } from 'react-redux';
+import { loginUser } from '../../../redux/actions/userActions';
+
 class Login extends Component {
   constructor(){
     super();
     this.state = {
-      loading: false,
+      // loading: false,
       email: "",
       password: "",
       errors: {},
@@ -52,10 +57,15 @@ class Login extends Component {
     };
   }
 
+  // UNSAFE_componentWillReceiveProps(nextProps){
+  //   if(nextProps.UI.errors){
+  //     this.setState({ errors: nextProps.UI.errors });
+  //   }
+  // }
+
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ 
-      loading: true,
       errors: {},
       emailInvalid: false,
       passwordInvalid: false
@@ -66,31 +76,7 @@ class Login extends Component {
       password: this.state.password
     }
 
-    axios.post('/login', userData)
-      .then(res => {
-        localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`);
-        this.setState({ loading: false });
-
-        //redirect to home feed
-        this.props.history.push('/admin/dashboard');
-      })
-      .catch(err => {
-        this.setState({
-          errors: err.response.data,
-          loading: false
-        })
-
-        if(err.response.data.email){
-            this.setState({
-            emailInvalid: true
-          });
-        }
-        if(err.response.data.password){
-          this.setState({
-            passwordInvalid: true
-          });
-        }
-      })
+    this.props.loginUser(userData, this.props.history);
   }
 
   handleChange = (event) => {
@@ -104,7 +90,29 @@ class Login extends Component {
   }
 
   render() {
-    const { errors, loading } = this.state;
+    // const { errors } = this.state;
+
+    // ************************** Before Redux Start **************************
+        // this.setState({
+        //   errors: err.response.data,
+        //   loading: false
+        // })
+
+        // if(err.response.data.email){
+        //     this.setState({
+        //     emailInvalid: true
+        //   });
+        // }
+        // if(err.response.data.password){
+        //   this.setState({
+        //     passwordInvalid: true
+        //   });
+        // }
+        // ************************** Before Redux End **************************
+
+        // Change to check emailInvalid and passwordInvalid and store as booleans
+
+    const { UI: { loading, errors } } = this.props;
 
     return (
       <Fragment>
@@ -170,10 +178,10 @@ class Login extends Component {
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
-                          placeholder="Email"
-                          type="email"
-                          name="email"
-                          id="email"
+                          placeholder="Email" 
+                          type="email" 
+                          name="email" 
+                          id="email" 
                           onChange={this.handleChange}
                           onFocus={() => this.setState({ focusedEmail: true })}
                           onBlur={() => this.setState({ focusedEmail: false })}
@@ -280,4 +288,19 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
+  loginUser: PropTypes.func.isRequired
+}
+
+export const mapStateToProps = (state) => ({
+  user: state.user,
+  UI: state.UI
+})
+
+export const mapActionsToProps = {
+  loginUser
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(Login);

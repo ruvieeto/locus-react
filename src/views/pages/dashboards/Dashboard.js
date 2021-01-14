@@ -14,7 +14,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { Fragment } from "react";
+import React, { Component, Fragment } from "react";
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
 // javascipt plugin for creating charts
@@ -54,6 +54,7 @@ import {
 import SimpleHeader from "components/Headers/SimpleHeader.js";
 import PlainHeader from "components/Headers/PlainHeader.js";
 import Postcard from '../components/Postcard';
+import ProfileCard from '../components/ProfileCard';
 
 import {
   chartOptions,
@@ -64,7 +65,12 @@ import {
 
 import axios from "axios";
 
-class Dashboard extends React.Component {
+// Redux
+import { connect } from 'react-redux';
+import { getUserData } from '../../../redux/actions/userActions';
+import { SET_AUTHENTICATED } from '../../../redux/types';
+
+class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -77,14 +83,24 @@ class Dashboard extends React.Component {
     }
   }
 
-  componentDidMount(){
+  componentDidMount(props){
     axios.get('/posts')
       .then(res => {
         this.setState(prevState =>{
           return { posts: res.data }
         })
       })
+      .catch(err => {
+        console.log(err); 
+      })
+
+      const { user: { authenticated }, dispatch } = this.props;
+      if(authenticated){
+        axios.defaults.headers.common['Authorization'] = localStorage.FBIdToken;
+        dispatch(getUserData());
+      }
   }
+
   toggleNavs = (e, index) => {
     e.preventDefault();
     this.setState({
@@ -106,7 +122,8 @@ class Dashboard extends React.Component {
           <Row>
             <Col xl="8">
               {recentPostsMarkup}
-              <Card>
+              
+              {/*<Card>
                 <CardHeader>
                   <h5 className="h3 mb-0">Activity feed</h5>
                 </CardHeader>
@@ -622,89 +639,10 @@ class Dashboard extends React.Component {
                     </Media>
                   </div>
                 </CardBody>
-              </Card>
+              </Card>*/}
             </Col>
             <Col className="order-xl-2" xl="4">
-                <Card className="card-profile card-profile-home">
-                  <CardImg
-                    alt="..."
-                    src={require("assets/img/theme/img-1-1000x600.jpg")}
-                    top
-                  />
-                  <Row className="justify-content-center">
-                    <Col className="order-lg-2" lg="3">
-                      <div className="card-profile-image">
-                        <a href="#pablo" onClick={e => e.preventDefault()}>
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("assets/img/theme/team-4.jpg")}
-                          />
-                        </a>
-                      </div>
-                    </Col>
-                  </Row>
-                  <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                    <div className="d-flex justify-content-between">
-                      <Button
-                        className="mr-4"
-                        color="info"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                        size="sm"
-                      >
-                        Connect
-                      </Button>
-                      <Button
-                        className="float-right"
-                        color="default"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                        size="sm"
-                      >
-                        Message
-                      </Button>
-                    </div>
-                  </CardHeader>
-                  <CardBody className="pt-0">
-                    <Row>
-                      <div className="col">
-                        <div className="card-profile-stats d-flex justify-content-center">
-                          <div>
-                            <span className="heading">22</span>
-                            <span className="description">Friends</span>
-                          </div>
-                          <div>
-                            <span className="heading">10</span>
-                            <span className="description">Photos</span>
-                          </div>
-                          <div>
-                            <span className="heading">89</span>
-                            <span className="description">Comments</span>
-                          </div>
-                        </div>
-                      </div>
-                    </Row>
-                    <div className="text-center">
-                      <h5 className="h3">
-                        Jessica Jones
-                        <span className="font-weight-light">, 27</span>
-                      </h5>
-                      <div className="h5 font-weight-300">
-                        <i className="ni location_pin mr-2" />
-                        Bucharest, Romania
-                      </div>
-                      <div className="h5 mt-4">
-                        <i className="ni business_briefcase-24 mr-2" />
-                        Solution Manager - Creative Tim Officer
-                      </div>
-                      <div>
-                        <i className="ni education_hat mr-2" />
-                        University of Computer Science
-                      </div>
-                    </div>
-                  </CardBody>
-                </Card>
+                <ProfileCard />
             </Col>
           </Row>
         </Container>
@@ -713,4 +651,8 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+  user: state.user
+});
+
+export default connect(mapStateToProps)(Dashboard);

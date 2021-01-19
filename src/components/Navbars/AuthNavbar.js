@@ -35,7 +35,7 @@ import {
 class AdminNavbar extends React.Component {
   render() {
     return (
-      <>
+      <Fragment>
         <Navbar
           className="navbar-horizontal navbar-main navbar-dark navbar-transparent"
           expand="lg"
@@ -202,7 +202,7 @@ class AdminNavbar extends React.Component {
             </UncontrolledCollapse>
           </Container>
         </Navbar>
-      </>
+      </Fragment>
     );
   }
 }

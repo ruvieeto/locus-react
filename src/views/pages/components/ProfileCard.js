@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -8,36 +8,16 @@ import dayjs from 'dayjs';
 import { connect } from 'react-redux';
 
 import {
-  Badge,
   Button,
   Card,
   CardHeader,
   CardImg,
   CardBody,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
-  UncontrolledDropdown,
-  Form,
-  Input,
-  ListGroupItem,
-  ListGroup,
-  Media,
-  NavItem,
-  NavLink,
-  Nav,
-  Progress,
-  Table,
-  Container,
   Row,
-  Col,
-  UncontrolledTooltip
+  Col
 } from "reactstrap";
 
 class ProfileCard extends Component{
-  constructor(props){
-      super(props);
-    }
 
   render(){
     const { user: { loading } } = this.props;
@@ -46,14 +26,9 @@ class ProfileCard extends Component{
       return (<p>loading</p>)
     }
 
-    // if(this.props.authenticated){
-    // 
-    // }
-
     const {
       user: { 
         credentials: { handle, createdAt, website, bio, imgUrl, location }
-        // authenticated
       }
     } = this.props;
 

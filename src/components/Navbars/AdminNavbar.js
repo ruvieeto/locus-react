@@ -23,6 +23,14 @@ import PropTypes from "prop-types";
 import '../../assets/css/argon-overrides.css';
 //overrides to design system
 
+import { Link } from 'react-router-dom';
+// import dayjs from 'dayjs';
+
+//Redux
+import { connect } from 'react-redux';
+import { logoutUser } from '../../redux/actions/userActions';
+
+
 import {
   Collapse,
   DropdownMenu,
@@ -74,7 +82,25 @@ class AdminNavbar extends React.Component {
       document.body.classList.remove("g-navbar-search-hidden");
     }, 500);
   };
+
+  handleLogout = () =>{
+    const { history, logoutUser } = this.props;
+    logoutUser(history);
+  }
+
   render() {
+    const { user: { loading } } = this.props;
+
+    if(loading){
+      return (<p>loading</p>)
+    }
+
+    const {
+      user: { 
+        credentials: { handle, imgUrl }
+      }
+    } = this.props;
+
     return (
       <Fragment>
         <Navbar
@@ -86,6 +112,7 @@ class AdminNavbar extends React.Component {
         >
           <Container fluid>
             <Collapse navbar isOpen={true}>
+              {/* Search bar end*/}
               <Form
                 className={classnames(
                   "navbar-search form-inline mr-sm-3",
@@ -112,6 +139,7 @@ class AdminNavbar extends React.Component {
                   <span aria-hidden={true}>×</span>
                 </button>
               </Form>
+              {/* Search bar end*/}
 
               <Nav className="align-items-center ml-md-auto" navbar>
                 <NavItem className="d-xl-none">
@@ -135,6 +163,8 @@ class AdminNavbar extends React.Component {
                     <i className="ni ni-zoom-split-in" />
                   </NavLink>
                 </NavItem>
+
+              {/*Notifications  Dropdow Start */}
                 <UncontrolledDropdown nav>
                   <DropdownToggle className="nav-link" color="" tag="a">
                     <i className="ni ni-bell-55" />
@@ -307,6 +337,9 @@ class AdminNavbar extends React.Component {
                     </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
+                {/*Notifications  Dropdow End */}
+
+                {/* Alternate Dropdown Menu
                 <UncontrolledDropdown nav>
                   <DropdownToggle className="nav-link" color="" tag="a">
                     <i className="ni ni-ungroup" />
@@ -391,7 +424,10 @@ class AdminNavbar extends React.Component {
                     </Row>
                   </DropdownMenu>
                 </UncontrolledDropdown>
+              */}
               </Nav>
+
+              {/*Options dropdown start*/}
               <Nav className="align-items-center ml-auto ml-md-0" navbar>
                 <UncontrolledDropdown nav>
                   <DropdownToggle className="nav-link pr-0" color="" tag="a">
@@ -399,12 +435,12 @@ class AdminNavbar extends React.Component {
                       <span className="avatar avatar-sm rounded-circle">
                         <img
                           alt="..."
-                          src={require("assets/img/theme/team-4.jpg")}
+                          src={imgUrl}
                         />
                       </span>
                       <Media className="ml-2 d-none d-lg-block">
                         <span className="mb-0 text-sm font-weight-bold">
-                          John Snow
+                          {handle}
                         </span>
                       </Media>
                     </Media>
@@ -413,38 +449,27 @@ class AdminNavbar extends React.Component {
                     <DropdownItem className="noti-title" header tag="div">
                       <h6 className="text-overflow m-0">Welcome!</h6>
                     </DropdownItem>
-                    <DropdownItem
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                    >
-                      <i className="ni ni-single-02" />
-                      <span>My profile</span>
-                    </DropdownItem>
-                    <DropdownItem
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                    >
-                      <i className="ni ni-settings-gear-65" />
-                      <span>Settings</span>
-                    </DropdownItem>
-                    <DropdownItem
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                    >
-                      <i className="ni ni-calendar-grid-58" />
-                      <span>Activity</span>
-                    </DropdownItem>
-                    <DropdownItem
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                    >
-                      <i className="ni ni-support-16" />
-                      <span>Support</span>
-                    </DropdownItem>
+                    <Link to={`/users/${handle}`}>
+                      <DropdownItem>
+                        <i className="ni ni-single-02" />
+                        <span>My profile</span>
+                      </DropdownItem>
+                    </Link>
+                    <Link to={`/admin/profile`}>
+                      <DropdownItem>
+                        <i className="ni ni-settings-gear-65" />
+                        <span>Edit account</span>
+                      </DropdownItem>
+                    </Link>
+                    <Link to={`/`}>
+                      <DropdownItem>
+                        <i className="ni ni-support-16" />
+                        <span>Support</span>
+                      </DropdownItem>
+                    </Link>
                     <DropdownItem divider />
                     <DropdownItem
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
+                      onClick={this.handleLogout}
                     >
                       <i className="ni ni-user-run" />
                       <span>Logout</span>
@@ -452,6 +477,8 @@ class AdminNavbar extends React.Component {
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </Nav>
+              {/*Options dropdown start*/}
+
             </Collapse>
           </Container>
         </Navbar>
@@ -459,6 +486,14 @@ class AdminNavbar extends React.Component {
     );
   }
 }
+const mapStateToProps = (state) => ({
+  user: state.user
+});
+
+const mapActionsToProps = {
+  logoutUser
+};
+
 AdminNavbar.defaultProps = {
   toggleSidenav: () => {},
   sidenavOpen: false,
@@ -467,7 +502,9 @@ AdminNavbar.defaultProps = {
 AdminNavbar.propTypes = {
   toggleSidenav: PropTypes.func,
   sidenavOpen: PropTypes.bool,
-  theme: PropTypes.oneOf(["dark", "light"])
+  theme: PropTypes.oneOf(["dark", "light"]),
+  user: PropTypes.object.isRequired,
+  logoutUser: PropTypes.func.isRequired
 };
 
-export default AdminNavbar;
+export default connect(mapStateToProps, mapActionsToProps)(AdminNavbar);

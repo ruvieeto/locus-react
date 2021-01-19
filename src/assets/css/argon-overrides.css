@@ -3,6 +3,27 @@
 	position: sticky;
 	top: 110px;
 }
+.engage-button{
+  background-color: transparent;
+  box-shadow: none !important;
+  border: none;
+}
+.icon-actions > .like {
+  color: var(--gray-dark) 
+}
+.icon-actions > .like:hover {
+  cursor: pointer;
+  transform: translateY(0px);
+}
+.icon-actions > .like:hover,
+.icon-actions > .like:active, 
+.icon-actions > .like.active {
+  color: var(--blue) !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
 .invalid-form-input-message {
   width: 100%;
   margin-top: 0.25rem;

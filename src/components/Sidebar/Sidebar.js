@@ -178,6 +178,8 @@ class Sidebar extends React.Component {
           </NavItem>
         );
       }
+
+      return null;
     });
   };
 

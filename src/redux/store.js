@@ -1,4 +1,4 @@
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -19,15 +19,6 @@ const rootReducer = combineReducers({
 	UI: uiReducer
 });
 
-// const store = createStore(
-// 	rootReducer, 
-// 	initialState, 
-// 	compose(
-// 		applyMiddleware(...middleware), 
-// 		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-// 	)
-// )
-
 const composeEnhancers = composeWithDevTools({ 
     actionCreators, 
     trace: true, 
@@ -38,6 +29,15 @@ const store = createStore(rootReducer, initialState, composeEnhancers(
     applyMiddleware(...middleware) 
 ));
 
+// const store = createStore(
+// 	rootReducer, 
+// 	initialState, 
+// 	compose(
+// 		applyMiddleware(...middleware), 
+// 		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+// 	)
+// )
+//
 // const store = createStore(
 // 	rootReducer, 
 // 	initialState, 

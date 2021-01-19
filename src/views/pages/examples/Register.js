@@ -38,8 +38,6 @@ import {
 import AuthHeader from "components/Headers/AuthHeader.js";
 import { Link } from 'react-router-dom';
 
-import axios from 'axios';
-
 // Redux
 import { connect } from 'react-redux';
 import { signupUser } from '../../../redux/actions/userActions';
@@ -75,7 +73,7 @@ class Register extends Component {
   }
 
   checkPasswordStrength = (event) => {
-    const strong = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&amp;\*])(?=.{8,})");
+    const strong = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&amp;*])(?=.{8,})");
     const medium = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
 
     const password = event.target.value;

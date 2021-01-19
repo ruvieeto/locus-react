@@ -18,14 +18,11 @@ import React, { Component, Fragment } from "react";
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
 
 // Redux
 import { connect } from 'react-redux';
-import { logoutUser, uploadImage } from '../../../redux/actions/userActions';
-
-// JS plugin that creates for file dropzones ----- CAN REMOVE
-import Dropzone from "dropzone";
+import { uploadImage, editUserDetails } from '../../../redux/actions/userActions';
 
 // reactstrap components
 import {
@@ -42,7 +39,6 @@ import {
   Input,
   ListGroupItem,
   ListGroup,
-  Progress,
   Container,
   Row,
   Col
@@ -57,7 +53,10 @@ class Profile extends Component {
     this.state = {
       imageFile: null,
       emptyImage: true,
-      previewImage: null
+      previewImage: null,
+      bio: "",
+      location: "",
+      website: ""
     }
   }
 
@@ -80,11 +79,18 @@ class Profile extends Component {
         imageFile: null
       });
     }
+  }
 
+  handleInputChange = (event) =>{
+    const { value, name } = event.target;
+
+    this.setState({
+      [name]: value
+    })
   }
 
   handleSubmit = () => {
-    const { imageFile } = this.state;
+    const { imageFile, bio, website, location } = this.state;
 
     // Preparing image file for upload 
     if(imageFile){
@@ -99,6 +105,13 @@ class Profile extends Component {
         imageFile: null
       });
     }
+
+    // Update other user details
+    this.props.editUserDetails({
+      bio, 
+      website, 
+      location
+    });
   }
 
   render() {
@@ -108,13 +121,9 @@ class Profile extends Component {
       return (<p>loading</p>)
     }
 
-    // if(this.props.authenticated){
-    // }
-
     const {
       user: { 
-        credentials: { handle, createdAt, website, bio, imgUrl, location }
-        // authenticated
+        credentials: { handle, website, bio, imgUrl, location, email }
       }
     } = this.props;
 
@@ -124,8 +133,6 @@ class Profile extends Component {
         <Container className="mt--6" fluid>
           <Row>
             <Col className="order-xl-2" xl="4">
-
-
 
             {/*Working Remotely card*/}
               <Card>
@@ -145,9 +152,7 @@ class Profile extends Component {
                     <div className="col ml--2">
                       <h4 className="mb-0">
                         <Link 
-                        to={`/users/${handle}`}
-                        // className="nochange"
-                        >
+                        to={`/users/${handle}`}>
                           @{handle}
                         </Link>
                       </h4>
@@ -157,11 +162,6 @@ class Profile extends Component {
                       <span className="text-success mr-1">●</span>
                       <small>Active</small>
                     </div>
-                    {/*<Col className="col-auto">
-                      <Button color="primary" size="sm" type="button">
-                        Add
-                      </Button>
-                    </Col>*/}
                   </Row>
                 </CardBody>
               </Card>
@@ -191,7 +191,6 @@ class Profile extends Component {
 
             </Col>
             <Col className="order-xl-1" xl="8">
-
 
             {/*Main profile section*/}
               <Card>
@@ -227,10 +226,11 @@ class Profile extends Component {
                               Username
                             </label>
                             <Input
-                              // defaultValue="lucky.jesse"
+                              defaultValue={handle}
                               id="input-username"
                               placeholder="Username"
                               type="text"
+                              readOnly="readonly"
                             />
                           </FormGroup>
                         </Col>
@@ -243,9 +243,11 @@ class Profile extends Component {
                               Email address
                             </label>
                             <Input
+                              defaultValue={email}
                               id="input-email"
                               placeholder="you@email.com"
                               type="email"
+                              readOnly="readonly"
                             />
                           </FormGroup>
                         </Col>
@@ -264,15 +266,17 @@ class Profile extends Component {
                           <FormGroup>
                             <label
                               className="form-control-label"
-                              htmlFor="input-address"
+                              htmlFor="input-location"
                             >
                               Location
                             </label>
                             <Input
-                              // defaultValue="Lucky"
-                              id="input-address"
+                              defaultValue={location}
+                              id="input-location"
                               placeholder="Location"
                               type="text"
+                              name="location"
+                              onChange={this.handleInputChange}
                             />
                           </FormGroup>
                         </Col>
@@ -280,15 +284,17 @@ class Profile extends Component {
                           <FormGroup>
                             <label
                               className="form-control-label"
-                              htmlFor="input-last-name"
+                              htmlFor="input-website"
                             >
                               Website
                             </label>
                             <Input
-                              // defaultValue="Jesse"
-                              id="input-last-name"
+                              defaultValue={website}
+                              id="input-website"
                               placeholder="https://www.example.com"
                               type="text"
+                              name="website"
+                              onChange={this.handleInputChange}
                             />
                           </FormGroup>
                         </Col>
@@ -304,7 +310,9 @@ class Profile extends Component {
                           placeholder="Tell others about yourself in a few words ..."
                           rows="4"
                           type="textarea"
-                          // defaultValue="This will show up on your profile"
+                          defaultValue={bio}
+                          name="bio"
+                          onChange={this.handleInputChange}
                         />
                       </FormGroup>
                     </div>
@@ -330,7 +338,6 @@ class Profile extends Component {
                       </label>
                     </div>
 
-                  {/* From dropzone - multiple preview */}
                   {
                     !this.state.emptyImage ?
                     (<ListGroup
@@ -375,11 +382,8 @@ class Profile extends Component {
                     :
                     (null)
                   }
-                    
-
 
                     </FormGroup>
-
                   </Form>
                 </CardBody>
               </Card>
@@ -396,14 +400,14 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = {
-  logoutUser,
-  uploadImage
+  uploadImage,
+  editUserDetails
 };
 
 Profile.propTypes = {
   user: PropTypes.object.isRequired,
   uploadImage: PropTypes.func.isRequired,
-  logoutUser: PropTypes.func.isRequired
+  editUserDetails: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(Profile);

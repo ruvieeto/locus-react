@@ -38,8 +38,6 @@ import {
 import AuthHeader from "components/Headers/AuthHeader.js";
 import { Link } from 'react-router-dom';
 
-import axios from 'axios';
-
 // Redux
 import { connect } from 'react-redux';
 import { loginUser } from '../../../redux/actions/userActions';

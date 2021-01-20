@@ -34,6 +34,14 @@
 	border: 1px solid #fb6340;
 	color: #fb6340;
 }
+.modal-body-lean{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.modal-footer-lean{
+  padding-top: 0px;
+  /*padding-bottom: 5px;*/
+}
 .navbar-top{
 	position: fixed;
 	top: 0;
@@ -102,4 +110,12 @@
 /* End Loading Spinner */
 .nochange, .nochange:hover, .nochange:visited {
   color: #fff;
+}
+.hide-navbar-button-text {
+  margin-left: -15px;
+  padding: 10px 10px;
+}
+.hide-navbar-button-text > .show-icon-only{
+  transition: 0.3s ease;
+  display: none;
 }

@@ -32,7 +32,7 @@ import Pricing from "views/pages/examples/Pricing.js";
 import Profile from "views/pages/examples/Profile.js";
 // import ReactBSTables from "views/pages/tables/ReactBSTables.js";
 import Register from "views/pages/examples/Register.js";
-import RTLSupport from "views/pages/examples/RTLSupport.js";
+// import RTLSupport from "views/pages/examples/RTLSupport.js";
 // import Sortable from "views/pages/tables/Sortable.js";
 // import Tables from "views/pages/tables/Tables.js";
 import Timeline from "views/pages/examples/Timeline.js";
@@ -115,13 +115,6 @@ const routes = [
     miniName: "P",
     component: Profile,
     layout: "/admin"
-  },
-  {
-    path: "/rtl-support",
-    name: "RTL Support",
-    miniName: "RS",
-    component: RTLSupport,
-    layout: "/rtl"
   }
 ];
 
@@ -186,3 +179,11 @@ export default routes;
   //     }
   //   ]
   // },
+  // 
+  // {
+  //   path: "/rtl-support",
+  //   name: "RTL Support",
+  //   miniName: "RS",
+  //   component: RTLSupport,
+  //   layout: "/rtl"
+  // }

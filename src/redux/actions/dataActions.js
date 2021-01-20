@@ -3,7 +3,11 @@ import {
 	LOADING_DATA,
 	LIKE_POST,
 	UNLIKE_POST,
-	DELETE_POST
+	DELETE_POST,
+	ADD_POST,
+	LOADING_UI,
+	SET_ERRORS,
+	CLEAR_ERRORS
 } from "../types";
 
 import axios from 'axios';
@@ -60,4 +64,28 @@ export const deletePost = (postId) => (dispatch) =>{
 			})
 		})
 		.catch(err => console.log(err))
+}
+
+//  Add a new post
+export const addNewPost = (newPost) => (dispatch) =>{
+	dispatch({ type: LOADING_UI });
+
+	axios.post('/post', newPost)
+		.then(res => {
+			dispatch({ 
+				type: ADD_POST,
+				payload: res.data
+			});
+			dispatch({ type: CLEAR_ERRORS });
+		})
+		.catch(err => {
+			dispatch({
+				type: SET_ERRORS,
+				payload: err.response.data
+			})
+		})
+}
+
+export const clearErrors = () => (dispatch) => {
+	dispatch({ type: CLEAR_ERRORS });
 }

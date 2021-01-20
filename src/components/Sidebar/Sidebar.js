@@ -33,6 +33,8 @@ import {
   Nav
 } from "reactstrap";
 
+import AddPost from '../../views/pages/components/AddPost';
+
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
@@ -49,12 +51,17 @@ class Sidebar extends React.Component {
   onMouseEnterSidenav = () => {
     if (!document.body.classList.contains("g-sidenav-pinned")) {
       document.body.classList.add("g-sidenav-show");
+      // Post button
+      document.getElementById("navbar-post-button").classList.remove("hide-navbar-button-text");
     }
   };
   // makes the sidenav mini on mouseleave
   onMouseLeaveSidenav = () => {
     if (!document.body.classList.contains("g-sidenav-pinned")) {
       document.body.classList.remove("g-sidenav-show");
+      // Post button
+      document.getElementById("navbar-post-button").classList.add("hide-navbar-button-text");
+
     }
   };
   // toggles collapse between opened and closed (true/false)
@@ -227,14 +234,13 @@ class Sidebar extends React.Component {
         <div className="navbar-inner">
           <Collapse navbar isOpen={true}>
             <Nav navbar>{this.createLinks(routes)}</Nav>
+            
+            {/*Break before new post button*/}
             <hr className="my-3" />
             <Nav className="mb-md-3" navbar>
               <NavItem>
-                <NavLink
-                  href="#"
-                >
-                  <i className="ni ni-spaceship" />
-                  <span className="nav-link-text">New Post</span>
+                <NavLink>
+                  <AddPost />
                 </NavLink>
               </NavItem>
             </Nav>

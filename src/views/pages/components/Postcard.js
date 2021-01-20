@@ -216,6 +216,7 @@ class Postcard extends Component {
                       placeholder="Write your comment..."
                       rows="1"
                       type="textarea"
+                      resize="none"
                     />
                   </Form>
                 </Media>

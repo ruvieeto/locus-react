@@ -35,6 +35,9 @@ import {
 
 import AddPost from '../../views/pages/components/AddPost';
 
+import { clearPostClick } from '../../redux/actions/dataActions';
+import { connect } from 'react-redux';
+
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
@@ -165,7 +168,7 @@ class Sidebar extends React.Component {
             <NavLink
               to={prop.layout + prop.path}
               activeClassName=""
-              onClick={this.closeSidenav}
+              onClick={()=>{this.closeSidenav(); this.props.clearPostClick(); }}
               tag={NavLinkRRD}
             >
               {prop.icon !== undefined ? (
@@ -297,4 +300,7 @@ Sidebar.propTypes = {
   rtlActive: PropTypes.bool
 };
 
-export default Sidebar;
+const mapActionsToProps = {
+  clearPostClick
+}
+export default connect(null, mapActionsToProps)(Sidebar);

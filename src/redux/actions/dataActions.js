@@ -5,9 +5,13 @@ import {
 	UNLIKE_POST,
 	DELETE_POST,
 	ADD_POST,
+	SET_POST,
 	LOADING_UI,
+	STOP_LOADING_UI,
 	SET_ERRORS,
-	CLEAR_ERRORS
+	CLEAR_ERRORS,
+	COMMENT_CLICK,
+	NEW_POST_CLICK
 } from "../types";
 
 import axios from 'axios';
@@ -66,6 +70,15 @@ export const deletePost = (postId) => (dispatch) =>{
 		.catch(err => console.log(err))
 }
 
+// New post click check
+export const newPostClick = () => (dispatch) =>{
+	dispatch({ type: NEW_POST_CLICK });
+}
+// Comment click check
+export const clearPostClick = () => (dispatch) =>{
+	dispatch({ type: COMMENT_CLICK });
+}
+
 //  Add a new post
 export const addNewPost = (newPost) => (dispatch) =>{
 	dispatch({ type: LOADING_UI });
@@ -88,4 +101,19 @@ export const addNewPost = (newPost) => (dispatch) =>{
 
 export const clearErrors = () => (dispatch) => {
 	dispatch({ type: CLEAR_ERRORS });
+}
+
+// Retrieve individual post
+export const getPost = (postId) => (dispatch) => {
+	dispatch({ type: LOADING_UI });
+
+	axios.get(`/post/${postId}`)
+		.then(res => {
+			dispatch({ 
+				type: SET_POST,
+				payload: res.data
+			});
+			dispatch({ type: STOP_LOADING_UI });
+		})
+		.catch(err => console.log(err));
 }

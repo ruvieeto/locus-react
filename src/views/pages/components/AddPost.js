@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 
 // Redux
 import { connect } from 'react-redux';
-import { addNewPost, clearErrors } from '../../../redux/actions/dataActions';
+import { addNewPost, clearErrors, newPostClick, clearPostClick } from '../../../redux/actions/dataActions';
 
 import PropTypes from 'prop-types';
 
@@ -16,14 +16,20 @@ import {
 } from "reactstrap";
 
 class AddPost extends Component {
-	state = {
-		defaultModal: false,
-		body: "",
-		errors: {}
-  	};
+	constructor(){
+		super();
+		this.state = {
+			defaultModal: false,
+			body: "",
+			errors: {}
+	  	};
+	}
 
-  	toggleModal = () => {
+  	toggleModal = (event) => {
   		this.props.clearErrors();
+
+  		this.props.clearPostClick();
+
 	    this.setState({
 	      defaultModal: !this.state.defaultModal,
 	      body: "",
@@ -46,11 +52,13 @@ class AddPost extends Component {
   		}
 
   		if(!nextProps.UI.errors.body && !nextProps.UI.loading){
-  			this.setState({
-		      defaultModal: !this.state.defaultModal,
-		      body: "",
-		      errors: {}
-		    });
+  			if(nextProps.data.newPostClick){
+  				this.setState({
+			      defaultModal: !this.state.defaultModal,
+			      body: "",
+			      errors: {}
+			    });
+  			}	
   		}
   	}
 
@@ -64,7 +72,7 @@ class AddPost extends Component {
 		            className="btn-icon"
 		            color="primary"
 		            id="navbar-post-button"
-		            onClick={this.toggleModal}
+		            onClick={()=>{this.toggleModal(); this.props.newPostClick();}}
 		          >
 		            <span className="btn-inner--icon mr-1">
 		              <i className="ni ni-spaceship" />
@@ -138,16 +146,21 @@ class AddPost extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	UI: state.UI
+	UI: state.UI,
+	data: state.data
 });
 
 const mapActionsToProps = {
 	addNewPost,
-	clearErrors
+	clearErrors,
+	newPostClick,
+	clearPostClick
 }
 
 AddPost.propTypes = {
 	addNewPost: PropTypes.func.isRequired,
+	newPostClick: PropTypes.func.isRequired,
+	clearPostClick: PropTypes.func.isRequired,
 	UI: PropTypes.object.isRequired
 }
 

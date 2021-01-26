@@ -119,3 +119,15 @@
   transition: 0.3s ease;
   display: none;
 }
+
+hr.thin-rule{
+  margin-bottom: 1rem;
+  border-color: rgba(0,0,0,0.05);
+}
+
+@media (min-width: 576px){
+  .engagement-bar{
+    flex: 0 0 80% !important;
+    max-width: 100% !important;
+  }
+}

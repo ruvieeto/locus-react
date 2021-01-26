@@ -58,24 +58,7 @@ class Dashboard extends Component {
   }
 
   componentDidMount(props){
-
       this.props.getPosts();
-
-    // axios.get('/posts')
-    //   .then(res => {
-    //     this.setState(prevState =>{
-    //       return { posts: res.data }
-    //     })
-    //   })
-    //   .catch(err => {
-    //     console.log(err); 
-    //   })
-
-      // const { user: { authenticated }, dispatch } = this.props;
-      // if(authenticated){
-      //   axios.defaults.headers.common['Authorization'] = localStorage.FBIdToken;
-      //   dispatch(getUserData());
-      // }
   }
 
   toggleNavs = (e, index) => {

@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 // utitlity to conditionally join class names
 import classnames from 'classnames';
 
+// Redux
 import { connect } from 'react-redux';
-import { likePost, unlikePost } from '../../../redux/actions/dataActions';
+import { likePost, unlikePost, getPost, clearPostClick } from '../../../redux/actions/dataActions';
 
 // reactstrap components
 import {
@@ -14,14 +15,16 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Form,
-  Input,
-  Media,
+  Modal,
   Row,
   Col
 } from "reactstrap";
 
+// Delete post button and confirmation dialog
 import DeletePost from './DeletePost';
+
+// Post details and commenting modal
+import PostDialog from './PostDialog';
 
 // Post date management
 import dayjs from 'dayjs';
@@ -30,6 +33,32 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
 
 class Postcard extends Component {
+  constructor(){
+    super();
+    this.state = {
+      // defaultModal: false,
+      postModal: false,
+      body: "",
+      errors: {}
+    };
+  }
+
+    // Modal Stuff Start
+  togglePostModal = () => {
+    // this.props.clearErrors();
+    this.setState({
+      postModal: !this.state.postModal,
+    });
+  };
+
+  handleOpen = () => {
+    this.props.getPost(this.props.post.postId);
+
+    this.setState({
+      postModal: true,
+    });
+  }
+
   // Checks if post is liked by user
   likedPost = (likes) => {
     if(
@@ -59,14 +88,14 @@ class Postcard extends Component {
     const { body, createdAt, userHandle, likeCount, commentCount, userImage, postId } = this.props.post;
     const { index } = this.props;
 
-    // Redux mapped  props
+    // Redux mapped props
     if(this.props.user.loading){
       return null
     }
 
     const {
       user: { 
-        credentials: { imgUrl, handle },
+        credentials: { handle },
         authenticated,
         likes
       }
@@ -142,86 +171,37 @@ class Postcard extends Component {
             <p className="mb-4">
               {body}
             </p>
-            {/*<img
-              alt="..."
-              className="img-fluid rounded"
-              src={require("assets/img/theme/img-1-1000x600.jpg")}
-            />
-            <hr/>
-            */}
-
-            <Row className="align-items-center my-3 pb-3 border-bottom">
-              <Col sm="6">
+            <hr className="thin-rule" />
+            {/* <Row className="align-items-center my-3 pb-3 border-bottom"> */}
+            <Row className="align-items-center">
+              <Col sm="6" className="engagement-bar">
                 <div className="icon-actions">
                   {likeButton}
-                  <a href="#pablo" onClick={e => e.preventDefault()}>
+                  <Button
+                    className="like engage-button"
+                    onClick={()=>{this.handleOpen(); this.props.clearPostClick()}}
+                  >
                     <i className="ni ni-chat-round" />
                     <span className="text-muted">
-                    {commentCount === 0 ? "No": commentCount} 
-                    {commentCount === 1 ? " comment": " comments"} 
-                    {commentCount === 0 ? " yet": ""}
+                      {commentCount === 0 ? "No": commentCount} 
+                      {commentCount === 1 ? " comment": " comments"} 
+                      {commentCount === 0 ? " yet": ""}
                     </span>
-                  </a>
+                  </Button>
                 </div>
               </Col>
             </Row>
-
-            {/* Comments start */}
-            <div className="mb-1">
-              <Media className="media-comment">
-                <img
-                  alt="..."
-                  className="avatar avatar-lg media-comment-avatar rounded-circle"
-                  src={require("assets/img/theme/team-1.jpg")}
-                />
-                <Media>
-                  <div className="media-comment-text">
-                    <h6 className="h5 mt-0">Michael Lewis</h6>
-                    <p className="text-sm lh-160">
-                      Cras sit amet nibh libero nulla vel metus
-                      scelerisque ante sollicitudin. Cras purus odio
-                      vestibulum in vulputate viverra turpis.
-                    </p>
-                  </div>
-                </Media>
-              </Media>
-              <Media className="media-comment">
-                <img
-                  alt="..."
-                  className="avatar avatar-lg media-comment-avatar rounded-circle"
-                  src={require("assets/img/theme/team-2.jpg")}
-                />
-                <Media>
-                  <div className="media-comment-text">
-                    <h6 className="h5 mt-0">Jessica Stones</h6>
-                    <p className="text-sm lh-160">
-                      Cras sit amet nibh libero, in gravida nulla. Nulla
-                      vel metus scelerisque ante sollicitudin. Cras purus
-                      odio, vestibulum in vulputate at, tempus viverra
-                      turpis.
-                    </p>
-                  </div>
-                </Media>
-              </Media>
-              <hr/>
-              <Media className="align-items-center">
-                <img
-                  alt="..."
-                  className="avatar avatar-lg rounded-circle mr-4"
-                  src={imgUrl}
-                />
-                <Media body>
-                  <Form>
-                    <Input
-                      placeholder="Write your comment..."
-                      rows="1"
-                      type="textarea"
-                      resize="none"
-                    />
-                  </Form>
-                </Media>
-              </Media>
-            </div>
+            <Modal
+              // className="modal-dialog-centered"
+              size="lg"
+              style={{maxHeight: "90vh", overflowY: "auto"}}
+              isOpen={this.state.postModal}
+              toggle={this.togglePostModal}
+            >
+              <PostDialog />
+            {/*<PostDialog postId={postId} post={this.props.post} userHandle={userHandle} />*/}
+            </Modal>
+          
           </CardBody>
         </Card>
       </Fragment>
@@ -235,13 +215,16 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
   likePost,
-  unlikePost
+  unlikePost,
+  getPost,
+  clearPostClick
 };
 
 Postcard.propTypes = {
   user: PropTypes.object.isRequired,
   likePost: PropTypes.func.isRequired,
   unlikePost: PropTypes.func.isRequired,
+  getPost: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired
 }

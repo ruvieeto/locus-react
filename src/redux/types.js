@@ -20,3 +20,4 @@ export const DELETE_POST = 'DELETE_POST';
 export const ADD_POST = 'ADD_POST';
 export const NEW_POST_CLICK = 'NEW_POST_CLICK';
 export const COMMENT_CLICK = 'COMMENT_CLICK';
+export const SUMBIT_COMMENT = 'SUMBIT_COMMENT';

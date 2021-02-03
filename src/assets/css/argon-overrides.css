@@ -190,3 +190,9 @@ hr.thin-rule{
 .media-comment-avatar:hover {
   transform: scale(1.1) !important;
 }
+
+.post-comments-modal{
+  max-height: 90vh;
+  overflow-y: auto;
+  /*style={{maxHeight: "90vh", overflowY: "auto"}}*/
+}

@@ -15,15 +15,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Form,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Media,
-  // ModalHeader,
-  // ModalBody,
-  // ModalFooter,
   Row,
   Col
 } from "reactstrap";
@@ -89,7 +80,7 @@ class PostDialog extends Component {
 
     const {
       user: { 
-        credentials: { imgUrl, handle },
+        credentials: { handle },
         authenticated,
         likes
       }
@@ -131,7 +122,7 @@ class PostDialog extends Component {
 
     return(
       <Fragment>
-        <Card>
+        <Card className="mb-0">
           <CardHeader className="d-flex align-items-center">
             <div className="d-flex align-items-center">
               <Link to={`/users/${userHandle}`}>
@@ -178,7 +169,7 @@ class PostDialog extends Component {
               </Col>
             </Row>
 
-            <Comments comments={comments} imgUrl={imgUrl} postId={postId} />
+            <Comments comments={comments} postId={postId} />
 
           </CardBody>
         </Card>

@@ -11,7 +11,8 @@ import {
 	SET_ERRORS,
 	CLEAR_ERRORS,
 	COMMENT_CLICK,
-	NEW_POST_CLICK
+	NEW_POST_CLICK,
+	SUMBIT_COMMENT
 } from "../types";
 
 import axios from 'axios';
@@ -89,7 +90,7 @@ export const addNewPost = (newPost) => (dispatch) =>{
 				type: ADD_POST,
 				payload: res.data
 			});
-			dispatch({ type: CLEAR_ERRORS });
+			dispatch(clearErrors());
 		})
 		.catch(err => {
 			dispatch({
@@ -116,4 +117,22 @@ export const getPost = (postId) => (dispatch) => {
 			dispatch({ type: STOP_LOADING_UI });
 		})
 		.catch(err => console.log(err));
+}
+
+// Submit comment
+export const submitComment = (postId, commentData) => (dispatch) => {
+	axios.post(`/post/${postId}/comment`, commentData)
+		.then(res => {
+			dispatch({ 
+				type: SUMBIT_COMMENT,
+				payload: res.data
+			});
+			dispatch(clearErrors());
+		})
+		.catch(err => {
+			dispatch({
+				type: SET_ERRORS,
+				payload: err.response.data
+			});
+		});
 }

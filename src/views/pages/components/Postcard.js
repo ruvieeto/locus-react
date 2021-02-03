@@ -7,7 +7,7 @@ import classnames from 'classnames';
 
 // Redux
 import { connect } from 'react-redux';
-import { likePost, unlikePost, getPost, clearPostClick } from '../../../redux/actions/dataActions';
+import { likePost, unlikePost, getPost, clearPostClick, clearErrors } from '../../../redux/actions/dataActions';
 
 // reactstrap components
 import {
@@ -45,13 +45,13 @@ class Postcard extends Component {
 
     // Modal Stuff Start
   togglePostModal = () => {
-    // this.props.clearErrors();
     this.setState({
       postModal: !this.state.postModal,
     });
   };
 
   handleOpen = () => {
+    this.props.clearErrors();
     this.props.getPost(this.props.post.postId);
 
     this.setState({
@@ -192,14 +192,12 @@ class Postcard extends Component {
               </Col>
             </Row>
             <Modal
-              // className="modal-dialog-centered"
+              className="modal-dialog-centered"
               size="lg"
-              style={{maxHeight: "90vh", overflowY: "auto"}}
               isOpen={this.state.postModal}
               toggle={this.togglePostModal}
             >
               <PostDialog />
-            {/*<PostDialog postId={postId} post={this.props.post} userHandle={userHandle} />*/}
             </Modal>
           
           </CardBody>
@@ -217,7 +215,8 @@ const mapActionsToProps = {
   likePost,
   unlikePost,
   getPost,
-  clearPostClick
+  clearPostClick,
+  clearErrors
 };
 
 Postcard.propTypes = {
@@ -225,6 +224,7 @@ Postcard.propTypes = {
   likePost: PropTypes.func.isRequired,
   unlikePost: PropTypes.func.isRequired,
   getPost: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired
 }

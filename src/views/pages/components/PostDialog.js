@@ -17,6 +17,9 @@ import {
   CardBody,
   Form,
   Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
   Media,
   // ModalHeader,
   // ModalBody,
@@ -28,6 +31,9 @@ import {
 // Delete post button and confirmation dialog
 import DeletePost from './DeletePost';
 
+// Comments
+import Comments from './Comments';
+
 // Post date management
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -35,30 +41,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
 
 class PostDialog extends Component {
-  // state = {
-  //   defaultModal: false,
-  //   body: "",
-  //   errors: {}
-  //   };
-
-  //   // Modal Stuff Start
-  // toggleModal = () => {
-  //   // this.props.clearErrors();
-  //   this.setState({
-  //     defaultModal: !this.state.defaultModal,
-  //   });
-  // };
-
-  // handleOpen = () => {
-  //   this.setState({
-  //     defaultModal: true,
-  //   });
-
-  //   this.props.getPost(this.props.postId);
-  // }
-
-  // // Modal Stuff End
-
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   }
@@ -98,8 +80,7 @@ class PostDialog extends Component {
     }
 
     // Post data
-    // const { UI: { loading } } = this.props;
-    const { body, createdAt, userHandle, likeCount, commentCount, userImage, postId } = this.props.post;
+    const { body, createdAt, userHandle, likeCount, commentCount, userImage, postId, comments } = this.props.post;
 
     // Redux mapped  props
     if(this.props.user.loading){
@@ -196,116 +177,8 @@ class PostDialog extends Component {
                 </div>
               </Col>
             </Row>
-            {/*Comments start*/}
-            <div className="mb-1">
-              <Media className="media-comment">
-                <img
-                  alt="..."
-                  className="avatar avatar-lg media-comment-avatar rounded-circle"
-                  src={require("assets/img/theme/team-1.jpg")}
-                />
-                <Media>
-                  <div className="media-comment-text">
-                    <h6 className="h5 mt-0">Michael Lewis</h6>
-                    <p className="text-sm lh-160">
-                      Cras sit amet nibh libero nulla vel metus
-                      scelerisque ante sollicitudin. Cras purus odio
-                      vestibulum in vulputate viverra turpis.
-                    </p>
-                  </div>
-                </Media>
-              </Media>
-              <Media className="media-comment">
-                <img
-                  alt="..."
-                  className="avatar avatar-lg media-comment-avatar rounded-circle"
-                  src={require("assets/img/theme/team-2.jpg")}
-                />
-                <Media>
-                  <div className="media-comment-text">
-                    <h6 className="h5 mt-0">Jessica Stones</h6>
-                    <p className="text-sm lh-160">
-                      Cras sit amet nibh libero, in gravida nulla. Nulla
-                      vel metus scelerisque ante sollicitudin. Cras purus
-                      odio, vestibulum in vulputate at, tempus viverra
-                      turpis.
-                    </p>
-                  </div>
-                </Media>
-              </Media>
-              <Media className="media-comment">
-                <img
-                  alt="..."
-                  className="avatar avatar-lg media-comment-avatar rounded-circle"
-                  src={require("assets/img/theme/team-1.jpg")}
-                />
-                <Media>
-                  <div className="media-comment-text">
-                    <h6 className="h5 mt-0">Michael Lewis</h6>
-                    <p className="text-sm lh-160">
-                      Cras sit amet nibh libero nulla vel metus
-                      scelerisque ante sollicitudin. Cras purus odio
-                      vestibulum in vulputate viverra turpis.
-                    </p>
-                  </div>
-                </Media>
-              </Media>
-              <Media className="media-comment">
-                <img
-                  alt="..."
-                  className="avatar avatar-lg media-comment-avatar rounded-circle"
-                  src={require("assets/img/theme/team-1.jpg")}
-                />
-                <Media>
-                  <div className="media-comment-text">
-                    <h6 className="h5 mt-0">Michael Lewis</h6>
-                    <p className="text-sm lh-160">
-                      Cras sit amet nibh libero nulla vel metus
-                      scelerisque ante sollicitudin. Cras purus odio
-                      vestibulum in vulputate viverra turpis.
-                    </p>
-                  </div>
-                </Media>
-              </Media>
-              <Media className="media-comment">
-                <img
-                  alt="..."
-                  className="avatar avatar-lg media-comment-avatar rounded-circle"
-                  src={require("assets/img/theme/team-1.jpg")}
-                />
-                <Media>
-                  <div className="media-comment-text">
-                    <h6 className="h5 mt-0">Michael Lewis</h6>
-                    <p className="text-sm lh-160">
-                      Cras sit amet nibh libero nulla vel metus
-                      scelerisque ante sollicitudin. Cras purus odio
-                      vestibulum in vulputate viverra turpis.
-                    </p>
-                  </div>
-                </Media>
-              </Media>
-              {/* Field to add your comment start*/}
-              <hr/>
-              <Media className="align-items-center">
-                <img
-                  alt="..."
-                  className="avatar avatar-lg rounded-circle mr-4"
-                  src={imgUrl}
-                />
-                <Media body>
-                  <Form>
-                    <Input
-                      placeholder="Write your comment..."
-                      rows="1"
-                      type="textarea"
-                      resize="none"
-                    />
-                  </Form>
-                </Media>
-              </Media>
-            {/* Field to add your comment end*/}
-            </div>
-          {/*Comments End*/}
+
+            <Comments comments={comments} imgUrl={imgUrl} postId={postId} />
 
           </CardBody>
         </Card>
@@ -330,10 +203,7 @@ PostDialog.propTypes = {
   UI: PropTypes.object.isRequired,
   likePost: PropTypes.func.isRequired,
   unlikePost: PropTypes.func.isRequired,
-  // getPost: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
-  // postId: PropTypes.string.isRequired,
-  // userHandle: PropTypes.string.isRequired
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(PostDialog);

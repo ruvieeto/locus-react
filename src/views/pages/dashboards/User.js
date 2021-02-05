@@ -1,19 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard PRO React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React, { Component, Fragment } from "react";
 import PropTypes from 'prop-types';
 
@@ -30,7 +14,7 @@ import {
 // core components
 import PlainHeader from "components/Headers/PlainHeader.js";
 import Postcard from '../components/Postcard';
-import ProfileCard from '../components/ProfileCard';
+import UserProfileCard from '../components/UserProfileCard';
 
 import {
   chartOptions,
@@ -39,9 +23,9 @@ import {
 
 // Redux
 import { connect } from 'react-redux';
-import { getPosts } from '../../../redux/actions/dataActions';
+import { getUserData } from '../../../redux/actions/dataActions';
 
-class Dashboard extends Component {
+class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,7 +39,7 @@ class Dashboard extends Component {
   }
 
   componentDidMount(props){
-      this.props.getPosts();
+    this.props.getUserData(this.props.match.params.handle);
   }
 
   toggleNavs = (e, index) => {
@@ -69,25 +53,31 @@ class Dashboard extends Component {
 
   render() {
     const { posts, loading } = this.props.data;
-
-    let recentPostsMarkup = loading ? (
-      <p>Loading...</p>
-      ) : posts === null ? (
-      null
-      ) : (
-        posts.map((post, index) => <Postcard key={post.postId} index={index} post={post} />)
-      )
+    const { handle } = this.props.match.params;
+    
+    let userPostsMarkup;
+    if(loading){
+      userPostsMarkup = [<p key={handle}>Loading...</p>]
+    } else if (posts === null){
+      // Check if user exists
+      userPostsMarkup = [<p key={handle}>@{handle} doesn't exist</p>]
+    } else if (posts.length === 0){
+      // Check if there are are any posts
+      userPostsMarkup = [<p key={handle}>@{handle} has no posts yet</p>]
+    } else {
+      userPostsMarkup = posts.map((post, index) => <Postcard key={post.postId} index={index} post={post} />)
+    }
 
     return (
       <Fragment>
-        <PlainHeader name="Home" parentName="Timeline" />
+        <PlainHeader name="User Page" parentName="Timeline" />
         <Container className="mt--6" fluid>
           <Row>
             <Col xl="8">
-              {recentPostsMarkup}
+              {userPostsMarkup}
             </Col>
             <Col className="order-xl-2" xl="4">
-                <ProfileCard />
+                {posts !== null ? (<UserProfileCard handle={handle}/>) : null}
             </Col>
           </Row>
         </Container>
@@ -101,12 +91,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = {
-  getPosts
+  getUserData
 }
 
-Dashboard.propTypes = {
-  getPosts: PropTypes.func.isRequired,
+User.propTypes = {
+  getUserData: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(Dashboard);
+export default connect(mapStateToProps, mapActionsToProps)(User);

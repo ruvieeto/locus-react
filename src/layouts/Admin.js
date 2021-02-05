@@ -14,7 +14,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { Fragment } from "react";
+import React, { Fragment, Component } from "react";
 // react library for routing
 import { Route, Switch, Redirect } from "react-router-dom";
 // core components
@@ -22,12 +22,16 @@ import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
+// User Pages Route
+import User from "../views/pages/dashboards/User.js";
+
 import routes from "routes.js";
 
-class Admin extends React.Component {
+class Admin extends Component {
   state = {
     sidenavOpen: true
   };
+
   componentDidUpdate(e) {
     if (e.history.pathname !== e.location.pathname) {
       document.documentElement.scrollTop = 0;
@@ -35,6 +39,7 @@ class Admin extends React.Component {
       this.refs.mainContent.scrollTop = 0;
     }
   }
+
   getRoutes = routes => {
     return routes.map((prop, key) => {
       if (prop.collapse) {
@@ -53,6 +58,7 @@ class Admin extends React.Component {
       }
     });
   };
+
   getBrandText = path => {
     for (let i = 0; i < routes.length; i++) {
       if (
@@ -65,6 +71,7 @@ class Admin extends React.Component {
     }
     return "Brand";
   };
+
   // toggles collapse between mini sidenav and normal
   toggleSidenav = e => {
     if (document.body.classList.contains("g-sidenav-pinned")) {
@@ -78,6 +85,7 @@ class Admin extends React.Component {
       sidenavOpen: !this.state.sidenavOpen
     });
   };
+
   getNavbarTheme = () => {
     return this.props.location.pathname.indexOf(
       "admin/alternative-dashboard"
@@ -85,6 +93,7 @@ class Admin extends React.Component {
       ? "dark"
       : "light";
   };
+
   render() {
     return (
       <Fragment>
@@ -94,6 +103,7 @@ class Admin extends React.Component {
           toggleSidenav={this.toggleSidenav}
           sidenavOpen={this.state.sidenavOpen}
           logo={{
+            // innerLink: "/admin/dashboard",
             innerLink: "/",
             imgSrc: require("assets/img/brand/locus-logo.png"),
             imgAlt: "Locus Logo"
@@ -113,6 +123,7 @@ class Admin extends React.Component {
           />
           <Switch>
             {this.getRoutes(routes)}
+            <Route path="/users/:handle" component={User} />
             <Redirect from="*" to="/admin/dashboard" />
           </Switch>
           <AdminFooter />

@@ -58,17 +58,17 @@ const routes = [
     layout: "/admin",
     sidebar: true
   },
-  {
-    path: "/bookmarks",
-    name: "Bookmarks",
-    icon: "ni ni-single-copy-04 text-pink",
-    component: Notifications,
-    layout: "/admin",
-    sidebar: true
-  },
+  // {
+  //   path: "/bookmarks",
+  //   name: "Bookmarks",
+  //   icon: "ni ni-single-copy-04 text-pink",
+  //   component: Notifications,
+  //   layout: "/admin",
+  //   sidebar: true
+  // },
   {
     path: "/profile",
-    name: "Profile",
+    name: "Account",
     icon: "ni ni-ui-04 text-info",
     component: Profile,
     layout: "/admin",

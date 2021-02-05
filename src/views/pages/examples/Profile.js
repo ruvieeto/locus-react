@@ -170,7 +170,7 @@ class Profile extends Component {
               <Card className="bg-dark text-white border-0">
                 <CardImg
                   alt="..."
-                  src={require("assets/img/theme/img-1-1000x600.jpg")}
+                  src={require("assets/img/theme/pattern4.jpg")}
                 />
                 <CardImgOverlay className="d-flex align-items-center">
                   <div>

@@ -38,6 +38,7 @@ const App = () => {
     <Router>
       <Switch>
         <HomeRoute path="/admin" component={HomeLayout} />
+        <HomeRoute exact path="/users/:handle" component={HomeLayout} />
         <AuthRoute path="/auth" component={AuthLayout} />
         <Route exact path="/" render={props => <IndexView {...props} />} />
         <Redirect from="*" to="/" />

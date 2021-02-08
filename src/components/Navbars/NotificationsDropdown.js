@@ -50,7 +50,6 @@ class NotificationsDropdown extends Component{
 		if(notifications && notifications.length > 0){
 			unreadNotificationCount = notifications.filter(notification => notification.read === false).length;
 
-			// notificationIcon = (this.state.unreadNotifs) ?
 			notificationIcon = (unreadNotificationCount  > 0) ?
 			(<Badge color="warning" style={{color: "#ff5252", marginLeft: "2px"}}>
 				{unreadNotificationCount}
@@ -111,15 +110,7 @@ class NotificationsDropdown extends Component{
 				)
 			})
 		} else{
-			notificationsMarkup = (
-				<ListGroupItem>
-                	<Row className="align-items-center">
-	                	<div className="px-3 py-3">
-	                    	<h6 className="text-sm text-muted m-0">You have no notifications yet!</h6>
-                    	</div>
-	                </Row>
-	              </ListGroupItem>
-				)
+			notificationsMarkup = null
 		}
 
 
@@ -143,7 +134,10 @@ class NotificationsDropdown extends Component{
                       <h6 className="text-sm text-muted m-0">
                         {
                         	unreadNotificationCount > 0 ? (
-                        		<Fragment>You have <strong className="text-info">{unreadNotificationCount}</strong> new notifications</Fragment>
+                        		<Fragment>
+                        			You have <strong className="text-info">{unreadNotificationCount}</strong> new notification
+                        			{unreadNotificationCount === 1 ? null : "s"}
+                        		</Fragment>
                         		):(
                         		<span>No unread notifications</span>
                         		)
@@ -153,155 +147,6 @@ class NotificationsDropdown extends Component{
 
                     <ListGroup flush>
                     	{notificationsMarkup}
-                    	
-                    	{/* Placeholder Notification Start */}
-                      {/*<ListGroupItem
-                        className="list-group-item-action"
-                        onClick={e => e.preventDefault()}
-                      >
-                      
-                        <Row className="align-items-center">
-                          <Col className="col-auto">
-                            <img
-                              alt="..."
-                              className="avatar rounded-circle"
-                              src={require("assets/img/theme/team-1.jpg")}
-                            />
-                          </Col>
-                          <div className="col ml--2">
-                            <div className="d-flex justify-content-between align-items-center">
-                              <div>
-                                <h4 className="mb-0 text-sm">John Snow</h4>
-                              </div>
-                              <div className="text-right text-muted">
-                                <span className="text-info mr-1">●</span><small>2 hrs ago</small>
-                              </div>
-                            </div>
-                            <p className="text-sm mb-0">
-                              Let's meet at Starbucks at 11:30. Wdyt?
-                            </p>
-                          </div>
-                        </Row>
-                      </ListGroupItem>
-                      <ListGroupItem
-                        className="list-group-item-action"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                        tag="a"
-                      >
-                        <Row className="align-items-center">
-                          <Col className="col-auto">
-                            <img
-                              alt="..."
-                              className="avatar rounded-circle"
-                              src={require("assets/img/theme/team-2.jpg")}
-                            />
-                          </Col>
-                          <div className="col ml--2">
-                            <div className="d-flex justify-content-between align-items-center">
-                              <div>
-                                <h4 className="mb-0 text-sm">John Snow</h4>
-                              </div>
-                              <div className="text-right text-muted">
-                                <small>3 hrs ago</small>
-                              </div>
-                            </div>
-                            <p className="text-sm mb-0">
-                              A new issue has been reported for Argon.
-                            </p>
-                          </div>
-                        </Row>
-                      </ListGroupItem>
-                      <ListGroupItem
-                        className="list-group-item-action"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                        tag="a"
-                      >
-                        <Row className="align-items-center">
-                          <Col className="col-auto">
-                            <img
-                              alt="..."
-                              className="avatar rounded-circle"
-                              src={require("assets/img/theme/team-3.jpg")}
-                            />
-                          </Col>
-                          <div className="col ml--2">
-                            <div className="d-flex justify-content-between align-items-center">
-                              <div>
-                                <h4 className="mb-0 text-sm">John Snow</h4>
-                              </div>
-                              <div className="text-right text-muted">
-                                <small>5 hrs ago</small>
-                              </div>
-                            </div>
-                            <p className="text-sm mb-0">
-                              Your posts have been liked a lot.
-                            </p>
-                          </div>
-                        </Row>
-                      </ListGroupItem>
-                      <ListGroupItem
-                        className="list-group-item-action"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                        tag="a"
-                      >
-                        <Row className="align-items-center">
-                          <Col className="col-auto">
-                            <img
-                              alt="..."
-                              className="avatar rounded-circle"
-                              src={require("assets/img/theme/team-4.jpg")}
-                            />
-                          </Col>
-                          <div className="col ml--2">
-                            <div className="d-flex justify-content-between align-items-center">
-                              <div>
-                                <h4 className="mb-0 text-sm">John Snow</h4>
-                              </div>
-                              <div className="text-right text-muted">
-                                <small>2 hrs ago</small>
-                              </div>
-                            </div>
-                            <p className="text-sm mb-0">
-                              Let's meet at Starbucks at 11:30. Wdyt?
-                            </p>
-                          </div>
-                        </Row>
-                      </ListGroupItem>
-                      <ListGroupItem
-                        className="list-group-item-action"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                        tag="a"
-                      >
-                        <Row className="align-items-center">
-                          <Col className="col-auto">
-                            <img
-                              alt="..."
-                              className="avatar rounded-circle"
-                              src={require("assets/img/theme/team-5.jpg")}
-                            />
-                          </Col>
-                          <div className="col ml--2">
-                            <div className="d-flex justify-content-between align-items-center">
-                              <div>
-                                <h4 className="mb-0 text-sm">John Snow</h4>
-                              </div>
-                              <div className="text-right text-muted">
-                                <small>3 hrs ago</small>
-                              </div>
-                            </div>
-                            <p className="text-sm mb-0">
-                              A new issue has been reported for Argon.
-                            </p>
-                          </div>
-                        </Row>
-                      </ListGroupItem>
-                  	*/}
-                  	{/* Placeholder Notifications End */}
-
                     </ListGroup>
 
                     <DropdownItem

@@ -123,7 +123,8 @@ class Admin extends Component {
           />
           <Switch>
             {this.getRoutes(routes)}
-            <Route path="/users/:handle" component={User} />
+            <Route exact path="/users/:handle" component={User} />
+            <Route exact path="/users/:handle/post/:postId" component={User} />
             <Redirect from="*" to="/admin/dashboard" />
           </Switch>
           <AdminFooter />

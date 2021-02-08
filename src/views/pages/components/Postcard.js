@@ -39,23 +39,43 @@ class Postcard extends Component {
       // defaultModal: false,
       postModal: false,
       body: "",
-      errors: {}
+      errors: {},
+      oldPath: '',
+      newPath: ''
     };
   }
 
     // Modal Stuff Start
   togglePostModal = () => {
+    if(this.state.postModal){
+      window.history.pushState(null, null, this.state.oldPath);
+    }
+
     this.setState({
       postModal: !this.state.postModal,
     });
   };
 
   handleOpen = () => {
+    const { userHandle, postId } = this.props.post;
+
+    let oldPath = window.location.pathname;
+    const newPath = `/users/${userHandle}/post/${postId}`;
+
+    if(oldPath === newPath){
+      // Edge case for when going directly to single post
+      oldPath = `/users/${userHandle}/`;
+    }
+
+    window.history.pushState(null, null, newPath);
+
     this.props.clearErrors();
     this.props.getPost(this.props.post.postId);
 
     this.setState({
       postModal: true,
+      oldPath,
+      newPath
     });
   }
 
@@ -81,6 +101,13 @@ class Postcard extends Component {
   // Unlikes post
   unlikePost = () => {
     this.props.unlikePost(this.props.post.postId);
+  }
+  
+  componentDidMount(props){
+    // If route is to single post
+    if (this.props.openModal) {
+      this.handleOpen();
+    }
   }
 
   render(){
@@ -226,7 +253,8 @@ Postcard.propTypes = {
   getPost: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
-  index: PropTypes.number.isRequired
+  index: PropTypes.number.isRequired,
+  openModal: PropTypes.bool
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(Postcard);

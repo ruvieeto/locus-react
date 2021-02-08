@@ -31,7 +31,8 @@ class User extends Component {
     this.state = {
       activeNav: 1,
       chartExample1Data: "data1",
-      posts: null
+      posts: null,
+      postIdParam: null
     };
     if (window.Chart) {
       parseOptions(Chart, chartOptions());
@@ -40,6 +41,11 @@ class User extends Component {
 
   componentDidMount(props){
     this.props.getUserData(this.props.match.params.handle);
+
+    const postId = this.props.match.params.postId;
+    if(postId){
+      this.setState({ postIdParam: postId })
+    }
   }
 
   toggleNavs = (e, index) => {
@@ -54,18 +60,28 @@ class User extends Component {
   render() {
     const { posts, loading } = this.props.data;
     const { handle } = this.props.match.params;
-    
+    const { postIdParam } = this.state;
+
     let userPostsMarkup;
     if(loading){
-      userPostsMarkup = [<p key={handle}>Loading...</p>]
+        userPostsMarkup = [<p key={handle}>Loading...</p>]
     } else if (posts === null){
-      // Check if user exists
-      userPostsMarkup = [<p key={handle}>@{handle} doesn't exist</p>]
+        // Check if user exists
+        userPostsMarkup = [<p key={handle}>@{handle} doesn't exist</p>]
     } else if (posts.length === 0){
-      // Check if there are are any posts
-      userPostsMarkup = [<p key={handle}>@{handle} has no posts yet</p>]
+        // Check if there are are any posts
+        userPostsMarkup = [<p key={handle}>@{handle} has no posts yet</p>]
+    } else if (!postIdParam){
+      // Checks that route isn't to an individual/specific post
+        userPostsMarkup = posts.map((post, index) => <Postcard key={post.postId} index={index} post={post} />)
     } else {
-      userPostsMarkup = posts.map((post, index) => <Postcard key={post.postId} index={index} post={post} />)
+        userPostsMarkup = posts.map((post, index) => {
+          if(post.postId !== postIdParam){
+            return (<Postcard key={post.postId} index={index} post={post} />)
+          } else{
+            return (<Postcard key={post.postId} index={index} post={post} openModal />)
+          }
+        })
     }
 
     return (

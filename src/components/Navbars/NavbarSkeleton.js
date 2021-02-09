@@ -23,16 +23,8 @@ import PropTypes from "prop-types";
 import '../../assets/css/argon-overrides.css';
 //overrides to design system
 
-import { Link } from 'react-router-dom';
-
-//Redux
-import { connect } from 'react-redux';
-import { logoutUser } from '../../redux/actions/userActions';
-
 import {
   Collapse,
-  DropdownMenu,
-  DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
   Media,
@@ -42,28 +34,11 @@ import {
   Container
 } from "reactstrap";
 
-import Notifications from './NotificationsDropdown';
-import NavbarSkeleton from './NavbarSkeleton';
+import noImg from '../../assets/img/theme/no-img.png'
 
-class AdminNavbar extends React.Component {
-
-  handleLogout = () =>{
-    const { history, logoutUser } = this.props;
-    logoutUser(history);
-  }
+class NavbarSkeleton extends React.Component {
 
   render() {
-    const { user: { loading } } = this.props;
-
-    if(loading){
-      return (<NavbarSkeleton />)
-    }
-
-    const {
-      user: { 
-        credentials: { handle, imgUrl }
-      }
-    } = this.props;
 
     return (
       <Fragment>
@@ -94,8 +69,14 @@ class AdminNavbar extends React.Component {
                   </div>
                 </NavItem>
 
-                {/*Notifications  Dropdown */}
-                <Notifications />
+                {/*Notifications  Dropdown Start */}
+                <UncontrolledDropdown nav>
+                  <DropdownToggle className="nav-link" color="" tag="a">
+                    <i className="ni ni-bell-55" /> 
+                  </DropdownToggle>
+                </UncontrolledDropdown>
+                {/*Notifications  Dropdown End */}
+
               </Nav>
 
               {/*Options dropdown start*/}
@@ -106,46 +87,16 @@ class AdminNavbar extends React.Component {
                       <span className="avatar avatar-sm rounded-circle">
                         <img
                           alt="..."
-                          src={imgUrl}
+                          src={noImg}
                         />
                       </span>
                       <Media className="ml-2 d-none d-lg-block">
                         <span className="mb-0 text-sm font-weight-bold">
-                          {handle}
+                          <div className="skeleton-line"></div>
                         </span>
                       </Media>
                     </Media>
                   </DropdownToggle>
-                  <DropdownMenu right>
-                    <DropdownItem className="noti-title" header tag="div">
-                      <h6 className="text-overflow m-0">Welcome!</h6>
-                    </DropdownItem>
-                    <Link to={`/users/${handle}`}>
-                      <DropdownItem>
-                        <i className="ni ni-single-02" />
-                        <span>My profile</span>
-                      </DropdownItem>
-                    </Link>
-                    <Link to={`/admin/profile`}>
-                      <DropdownItem>
-                        <i className="ni ni-settings-gear-65" />
-                        <span>Edit account</span>
-                      </DropdownItem>
-                    </Link>
-                    <Link to={`/`}>
-                      <DropdownItem>
-                        <i className="ni ni-support-16" />
-                        <span>Support</span>
-                      </DropdownItem>
-                    </Link>
-                    <DropdownItem divider />
-                    <DropdownItem
-                      onClick={this.handleLogout}
-                    >
-                      <i className="ni ni-user-run" />
-                      <span>Logout</span>
-                    </DropdownItem>
-                  </DropdownMenu>
                 </UncontrolledDropdown>
               </Nav>
               {/*Options dropdown start*/}
@@ -157,25 +108,16 @@ class AdminNavbar extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => ({
-  user: state.user
-});
 
-const mapActionsToProps = {
-  logoutUser
-};
-
-AdminNavbar.defaultProps = {
+NavbarSkeleton.defaultProps = {
   toggleSidenav: () => {},
   sidenavOpen: false,
   theme: "dark"
 };
-AdminNavbar.propTypes = {
+NavbarSkeleton.propTypes = {
   toggleSidenav: PropTypes.func,
   sidenavOpen: PropTypes.bool,
-  theme: PropTypes.oneOf(["dark", "light"]),
-  user: PropTypes.object.isRequired,
-  logoutUser: PropTypes.func.isRequired
+  theme: PropTypes.oneOf(["dark", "light"])
 };
 
-export default connect(mapStateToProps, mapActionsToProps)(AdminNavbar);
+export default NavbarSkeleton;

@@ -19,6 +19,8 @@ import {
   Col
 } from "reactstrap";
 
+import ProfileSkeleton from './UserProfileCardSkeleton';
+
 class UserProfileCard extends Component{
   state = {
     profile: null
@@ -34,10 +36,8 @@ class UserProfileCard extends Component{
   }
 
   render(){
-    // const { user: { loading } } = this.props;
-
     if(!this.state.profile){
-      return (<p>loading</p>)
+      return (<ProfileSkeleton />)
     }
 
     const { handle, createdAt, website, bio, imgUrl, location } = this.state.profile;
@@ -86,14 +86,14 @@ class UserProfileCard extends Component{
             <h5 className="h3">
               @{handle}
             </h5>
-            <div className="h5 mt-4 font-weight-300"> {/**/}
+            <div className="h5 mt-4 font-weight-300">
               Joined {dayjs(createdAt).format('MMM YYYY')}
             </div>
             <div className="h5 font-weight-300">
               <i className="ni ni-world-2 mr-2" />
               <a href={website} target="_blank" rel="noopener noreferrer">{website}</a>
             </div>
-            <div className="h5 description font-weight-300"> {/*h5 mt-4 font-weight-300*/}
+            <div className="h5 description font-weight-300">
               {bio}
             </div>
             <div className="h5 mt-4 font-weight-300">

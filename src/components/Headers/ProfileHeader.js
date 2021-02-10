@@ -14,15 +14,15 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, { Fragment, Component } from "react";
 
 // reactstrap components
-import { Button, Container, Row, Col } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
-class ProfileHeader extends React.Component {
+class ProfileHeader extends Component {
   render() {
     return (
-      <>
+      <Fragment>
         <div
           className="header pb-6 d-flex align-items-center"
           style={{
@@ -43,19 +43,11 @@ class ProfileHeader extends React.Component {
                   This is your profile page. You can see the progress you've
                   made with your work and manage your projects or assigned tasks
                 </p>
-                <Button
-                  className="btn-neutral"
-                  color="default"
-                  href="#pablo"
-                  onClick={e => e.preventDefault()}
-                >
-                  Edit profile
-                </Button>
               </Col>
             </Row>
           </Container>
         </div>
-      </>
+      </Fragment>
     );
   }
 }

@@ -1,20 +1,4 @@
-/*!
-
-=========================================================
-* Argon Dashboard PRO React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React, { Fragment } from "react";
+import React, { Fragment, Component } from "react";
 // nodejs library that concatenates classes
 import classnames from "classnames";
 // nodejs library to set properties for components
@@ -36,7 +20,7 @@ import {
 
 import noImg from '../../assets/img/theme/no-img.png'
 
-class NavbarSkeleton extends React.Component {
+class NavbarSkeleton extends Component {
 
   render() {
 

@@ -1,11 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-
-import dayjs from 'dayjs';
-
-// Redux
-import { connect } from 'react-redux';
 
 import {
   Button,
@@ -17,23 +10,11 @@ import {
   Col
 } from "reactstrap";
 
-import Skeleton from './ProfileCardSkeleton';
+import noImg from '../../../assets/img/theme/no-img.png';
 
-class ProfileCard extends Component{
+class ProfileCardSkeleton extends Component{
 
   render(){
-    const { user: { loading } } = this.props;
-
-    if(loading){
-      return (<Skeleton />)
-    }
-
-    const {
-      user: { 
-        credentials: { handle, createdAt, website, bio, imgUrl, location }
-      }
-    } = this.props;
-
     return(
       <Card className="card-profile card-profile-home">
         <CardImg
@@ -44,13 +25,11 @@ class ProfileCard extends Component{
         <Row className="justify-content-center">
           <Col className="order-lg-2" lg="3">
             <div className="card-profile-image">
-              <Link to={`/users/${handle}`}>
                 <img
                   alt="..."
                   className="rounded-circle"
-                  src={imgUrl}
+                  src={noImg}
                 />
-              </Link>
             </div>
           </Col>
         </Row>
@@ -61,39 +40,33 @@ class ProfileCard extends Component{
               color="info"
               size="sm"
             >
-              <Link to={`/users/${handle}`} className="nochange">
               View
-              </Link>
             </Button>
             <Button
               className="float-right"
               color="default"
               size="sm"
             >
-              <Link to="/admin/profile" className="nochange">
-                Edit
-              </Link>
+              Edit
             </Button>
           </div>
         </CardHeader>
         <CardBody className="pt-0">
           <div className="text-center">
             <h5 className="h3">
-              @{handle}
+              <div className="skeleton-line-h2"></div>
             </h5>
             <div className="h5 mt-4 font-weight-300"> {/**/}
-              Joined {dayjs(createdAt).format('MMM YYYY')}
+              <div className="skeleton-line-p"></div>
             </div>
             <div className="h5 font-weight-300">
-              <i className="ni ni-world-2 mr-2" />
-              <a href={website} target="_blank" rel="noopener noreferrer">{website}</a>
+              <div className="skeleton-line-p"></div>
             </div>
-            <div className="h5 description font-weight-300"> {/*h5 mt-4 font-weight-300*/}
-              {bio}
+            <div className="h5 description font-weight-300">
+              <div className="skeleton-line-p bio"></div>
             </div>
             <div className="h5 mt-4 font-weight-300">
-              <i className="ni ni-pin-3 mr-2" />
-              {location}
+              <div className="skeleton-line-p"></div>
             </div>
           </div>
         </CardBody>
@@ -102,12 +75,4 @@ class ProfileCard extends Component{
   }
 }
 
-const mapStateToProps = (state) => ({
-  user: state.user
-});
-
-ProfileCard.propTypes = {
-  user: PropTypes.object.isRequired
-}
-
-export default connect(mapStateToProps)(ProfileCard);
+export default ProfileCardSkeleton;

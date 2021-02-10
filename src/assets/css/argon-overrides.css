@@ -206,9 +206,63 @@ hr.thin-rule{
   overflow-y: auto;
   /*style={{maxHeight: "90vh", overflowY: "auto"}}*/
 }
+
+/*Skeleton loaders*/
 .skeleton-line{
-  background-color: #ffffff44 ;
+  background-color: #ffffff44;
   height: 10px;
   width: 50px;
   border-radius: 5px;
+}
+.skeleton-line-p{
+  display: inline-block;
+  background-color: #00000011;
+  height: 10px;
+  width: 100%;
+  max-width: 130px;
+  border-radius: 5px;
+}
+.skeleton-line-post{
+  background-color: #00000011;
+  max-width: 95%;
+  height: 10px;
+  border-radius: 5px;
+}
+.half-post{
+  max-width: 50%;
+}
+.skeleton-line-h2{
+  display: inline-block;
+  background-color: #32325d77;
+  height: 15px;
+  width: 100%;
+  max-width: 100px;
+  border-radius: 10px;
+}
+.bio{
+  max-width: 270px;
+}
+.skeleton-line-post-name{
+  display: inline-block;
+  background-color: #32325d77;
+  height: 10px;
+  width: 100px;
+  border-radius: 10px;
+}
+.post-date{
+  width: 70%;
+}
+.like-count{
+  background-color: #00000011;
+  height: 10px;
+  padding: 0px;
+  width: 90px;
+  border-radius: 5px;
+}
+.skeleton-delete{
+  display: inline-block;
+  background-color: #5e72e477;
+  height: 20px;
+  width: 75px;
+  border-radius: 3px;
 }

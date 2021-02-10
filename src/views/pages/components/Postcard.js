@@ -36,7 +36,6 @@ class Postcard extends Component {
   constructor(){
     super();
     this.state = {
-      // defaultModal: false,
       postModal: false,
       body: "",
       errors: {},
@@ -176,7 +175,7 @@ class Postcard extends Component {
                 <img
                   alt="..."
                   className="avatar"
-                  src={userImage || require("assets/img/theme/team-1.jpg")}
+                  src={userImage || require("assets/img/theme/no-img.png")}
                 />
               </Link>
               <div className="mx-3">
@@ -199,7 +198,6 @@ class Postcard extends Component {
               {body}
             </p>
             <hr className="thin-rule" />
-            {/* <Row className="align-items-center my-3 pb-3 border-bottom"> */}
             <Row className="align-items-center">
               <Col sm="6" className="engagement-bar">
                 <div className="icon-actions">
@@ -258,5 +256,3 @@ Postcard.propTypes = {
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(Postcard);
-
-// export default Postcard;

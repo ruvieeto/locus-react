@@ -1,9 +1,6 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from 'prop-types';
 
-// javascipt plugin for creating charts
-import Chart from "chart.js";
-
 // reactstrap components
 import {
   Container,
@@ -15,11 +12,7 @@ import {
 import PlainHeader from "components/Headers/PlainHeader.js";
 import Postcard from '../components/Postcard';
 import UserProfileCard from '../components/UserProfileCard';
-
-import {
-  chartOptions,
-  parseOptions
-} from "variables/charts.js";
+import PostcardSkeleton from '../components/PostcardSkeleton';
 
 // Redux
 import { connect } from 'react-redux';
@@ -29,14 +22,9 @@ class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeNav: 1,
-      chartExample1Data: "data1",
       posts: null,
       postIdParam: null
     };
-    if (window.Chart) {
-      parseOptions(Chart, chartOptions());
-    }
   }
 
   componentDidMount(props){
@@ -48,23 +36,20 @@ class User extends Component {
     }
   }
 
-  toggleNavs = (e, index) => {
-    e.preventDefault();
-    this.setState({
-      activeNav: index,
-      chartExample1Data:
-        this.state.chartExample1Data === "data1" ? "data2" : "data1"
-    });
-  };
-
   render() {
     const { posts, loading } = this.props.data;
+    const { loading: userLoading } = this.props.user;
+
     const { handle } = this.props.match.params;
     const { postIdParam } = this.state;
 
+    const loadingPosts = Array.from({ length: 4 }).map((item, index) => {
+        return <PostcardSkeleton index={index} key={index}/>
+      })
+
     let userPostsMarkup;
-    if(loading){
-        userPostsMarkup = [<p key={handle}>Loading...</p>]
+    if(loading || userLoading){
+        userPostsMarkup = loadingPosts;
     } else if (posts === null){
         // Check if user exists
         userPostsMarkup = [<p key={handle}>@{handle} doesn't exist</p>]
@@ -86,11 +71,11 @@ class User extends Component {
 
     return (
       <Fragment>
-        <PlainHeader name="User Page" parentName="Timeline" />
+        <PlainHeader name="User Page" parentName="Profile" />
         <Container className="mt--6" fluid>
           <Row>
             <Col xl="8">
-              {userPostsMarkup}
+            {userPostsMarkup}
             </Col>
             <Col className="order-xl-2" xl="4">
                 {posts !== null ? (<UserProfileCard handle={handle}/>) : null}
@@ -103,7 +88,8 @@ class User extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  data: state.data
+  data: state.data,
+  user: state.user
 });
 
 const mapActionsToProps = {
@@ -112,7 +98,8 @@ const mapActionsToProps = {
 
 User.propTypes = {
   getUserData: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(User);

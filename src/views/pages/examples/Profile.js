@@ -107,11 +107,13 @@ class Profile extends Component {
     }
 
     // Update other user details
-    this.props.editUserDetails({
-      bio, 
-      website, 
-      location
-    });
+    if(bio || website || location){
+      this.props.editUserDetails({
+        bio, 
+        website, 
+        location
+      });
+    }
   }
 
   render() {

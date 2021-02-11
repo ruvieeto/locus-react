@@ -56,7 +56,8 @@ export default function(state = initialState, action){
 
 			// For open post to show correct likeCount
 			if(state.post.postId === action.payload.postId){
-				state.post = action.payload;
+				const comments = state.post.comments;
+				state.post = {...action.payload, comments};
 			}
 			return {
 				...state,
@@ -75,6 +76,10 @@ export default function(state = initialState, action){
 				posts: [action.payload, ...state.posts]
 			};
 		case SUMBIT_COMMENT:
+			index = state.posts.findIndex((post) => post.postId === action.payload.postId);
+			state.posts[index].commentCount++;
+
+			state.post.commentCount++;
 			return {
 				...state,
 				newPostClick: false,

@@ -92,6 +92,20 @@ class Postcard extends Component {
     }
   }
 
+  // Checks if post is commented on by user
+  commentedOnPost = (likes) => {
+    if(
+      likes && 
+      likes.find(
+        like => like.postId === this.props.post.postId
+        )
+      ){
+      return true
+    } else{
+      return false
+    }
+  }
+
   // Likes post
   likePost = () => {
     this.props.likePost(this.props.post.postId);
@@ -156,6 +170,20 @@ class Postcard extends Component {
       </Button>
     ) 
 
+    const commentButton = (
+      <Button
+        className="like engage-button"
+        onClick={()=>{this.handleOpen(); this.props.clearPostClick()}}
+      >
+        <i className="ni ni-chat-round" />
+        <span className="text-muted">
+          {commentCount === 0 ? "No": commentCount} 
+          {commentCount === 1 ? " comment": " comments"} 
+          {commentCount === 0 ? " yet": ""}
+        </span>
+      </Button>
+    )
+
     // Delete post button
     const deleteButton = authenticated && userHandle === handle ? (
       <DeletePost postId={postId} />
@@ -202,17 +230,7 @@ class Postcard extends Component {
               <Col sm="6" className="engagement-bar">
                 <div className="icon-actions">
                   {likeButton}
-                  <Button
-                    className="like engage-button"
-                    onClick={()=>{this.handleOpen(); this.props.clearPostClick()}}
-                  >
-                    <i className="ni ni-chat-round" />
-                    <span className="text-muted">
-                      {commentCount === 0 ? "No": commentCount} 
-                      {commentCount === 1 ? " comment": " comments"} 
-                      {commentCount === 0 ? " yet": ""}
-                    </span>
-                  </Button>
+                  {commentButton}
                 </div>
               </Col>
             </Row>

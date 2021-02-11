@@ -20,10 +20,11 @@ import {
 } from "reactstrap";
 
 // Delete post button and confirmation dialog
-import DeletePost from './DeletePost';
+// import DeletePost from './DeletePost';
 
 // Comments
 import Comments from './Comments';
+import PostcardSkeleton from './PostcardSkeleton';
 
 // Post date management
 import dayjs from 'dayjs';
@@ -66,8 +67,10 @@ class PostDialog extends Component {
 
   render(){
 
-    if(!this.props.post.body){
-      return(<div className="html-spinner"></div>)
+    if(this.props.UI.loading){
+      return(
+          <PostcardSkeleton index={1} />
+        )
     }
 
     // Post data
@@ -80,7 +83,7 @@ class PostDialog extends Component {
 
     const {
       user: { 
-        credentials: { handle },
+        // credentials: { handle },
         authenticated,
         likes
       }
@@ -113,12 +116,27 @@ class PostDialog extends Component {
           {likeCount === 0 ? " yet": ""}
         </span>
       </Button>
-    ) 
+    )
+
+    // Comment Button
+    const commentButton = (
+      <Button
+        className="like engage-button"
+        onClick={e => e.preventDefault()}
+      >
+        <i className="ni ni-chat-round" />
+        <span className="text-muted">
+          {commentCount === 0 ? "No": commentCount} 
+          {commentCount === 1 ? " comment": " comments"} 
+          {commentCount === 0 ? " yet": ""}
+        </span>
+      </Button>
+    )
 
     // Delete post button
-    const deleteButton = authenticated && userHandle === handle ? (
-      <DeletePost postId={postId} />
-      ) : (null)
+    // const deleteButton = authenticated && userHandle === handle ? (
+    //   <DeletePost postId={postId} />
+    //   ) : (null)
 
     return(
       <Fragment>
@@ -142,10 +160,9 @@ class PostDialog extends Component {
                 <small className="d-block text-muted">{dayjs(createdAt.toString()).fromNow()}</small>
               </div>
             </div>
-            <div className="text-right ml-auto">
+            {/*<div className="text-right ml-auto">
               {deleteButton}
-              
-            </div>
+            </div>*/}
           </CardHeader>
           <CardBody>
             <p className="mb-4">
@@ -153,24 +170,14 @@ class PostDialog extends Component {
             </p>
             <hr className="thin-rule" />
             <Row className="align-items-center my-3 pb-3 border-bottom">
-            {/*<Row className="align-items-center"> */}
               <Col sm="6">
                 <div className="icon-actions">
                   {likeButton}
-                  <a href="#pablo" onClick={e => e.preventDefault()}>
-                    <i className="ni ni-chat-round" />
-                    <span className="text-muted">
-                    {commentCount === 0 ? "No": commentCount} 
-                    {commentCount === 1 ? " comment": " comments"} 
-                    {commentCount === 0 ? " yet": ""}
-                    </span>
-                  </a>
+                  {commentButton}
                 </div>
               </Col>
             </Row>
-
-            <Comments comments={comments} postId={postId} />
-
+              <Comments comments={comments} postId={postId} />
           </CardBody>
         </Card>
       </Fragment>

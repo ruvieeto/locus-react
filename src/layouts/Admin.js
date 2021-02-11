@@ -86,14 +86,6 @@ class Admin extends Component {
     });
   };
 
-  getNavbarTheme = () => {
-    return this.props.location.pathname.indexOf(
-      "admin/alternative-dashboard"
-    ) === -1
-      ? "dark"
-      : "light";
-  };
-
   render() {
     return (
       <Fragment>
@@ -116,7 +108,7 @@ class Admin extends Component {
         >
           <AdminNavbar
             {...this.props}
-            theme={this.getNavbarTheme()}
+            theme="dark"
             toggleSidenav={this.toggleSidenav}
             sidenavOpen={this.state.sidenavOpen}
             brandText={this.getBrandText(this.props.location.pathname)}

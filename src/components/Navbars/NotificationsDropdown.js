@@ -149,13 +149,11 @@ class NotificationsDropdown extends Component{
                     	{notificationsMarkup}
                     </ListGroup>
 
-                    <DropdownItem
-                      className="text-center text-info font-weight-bold py-3"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                    >
-                      View all
-                    </DropdownItem>
+                    <Link to="/admin/notifications">
+	                    <DropdownItem className="text-center text-info font-weight-bold py-3">
+	                      View all
+	                    </DropdownItem>
+                    </Link>
                   </DropdownMenu>
                 </UncontrolledDropdown>
 			</Fragment>

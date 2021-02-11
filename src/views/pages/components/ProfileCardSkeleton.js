@@ -56,7 +56,7 @@ class ProfileCardSkeleton extends Component{
             <h5 className="h3">
               <div className="skeleton-line-h2"></div>
             </h5>
-            <div className="h5 mt-4 font-weight-300"> {/**/}
+            <div className="h5 mt-4 font-weight-300">
               <div className="skeleton-line-p"></div>
             </div>
             <div className="h5 font-weight-300">

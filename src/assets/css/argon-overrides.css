@@ -252,6 +252,12 @@ hr.thin-rule{
 .post-date{
   width: 70%;
 }
+.notif-post-date{
+  width: 70px;
+}
+.notif-post-name{
+  width: 100px;
+}
 .like-count{
   background-color: #00000011;
   height: 10px;
@@ -265,4 +271,21 @@ hr.thin-rule{
   height: 20px;
   width: 75px;
   border-radius: 3px;
+}
+@media (max-width: 991.98px) {
+  .d-small-block{
+    display: block !important;
+    background: #f5365cee;
+    border-radius: 5px;
+    box-shadow: 0px 0px 15px 5px #f5365caa;
+  }
+  .d-small-block .nav-link-inner--text, .btn-inner--icon {
+    color: #ffffff;
+  }
+  .d-small{
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 20px; 
+    display: block !important;
+  }
 }

@@ -22,6 +22,10 @@ import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
+import Dashboard from "views/pages/dashboards/Dashboard.js";
+import Notifications from "views/pages/components/Notifications.js";
+import Profile from "views/pages/examples/Profile.js";
+
 // User Pages Route
 import User from "../views/pages/dashboards/User.js";
 
@@ -39,25 +43,6 @@ class Admin extends Component {
       this.refs.mainContent.scrollTop = 0;
     }
   }
-
-  getRoutes = routes => {
-    return routes.map((prop, key) => {
-      if (prop.collapse) {
-        return this.getRoutes(prop.views);
-      }
-      if (prop.layout === "/admin") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      } else {
-        return null;
-      }
-    });
-  };
 
   getBrandText = path => {
     for (let i = 0; i < routes.length; i++) {
@@ -95,8 +80,8 @@ class Admin extends Component {
           toggleSidenav={this.toggleSidenav}
           sidenavOpen={this.state.sidenavOpen}
           logo={{
-            // innerLink: "/admin/dashboard",
-            innerLink: "/",
+            innerLink: "/admin/dashboard",
+            // innerLink: "/",
             imgSrc: require("assets/img/brand/locus-logo.png"),
             imgAlt: "Locus Logo"
           }}
@@ -114,9 +99,13 @@ class Admin extends Component {
             brandText={this.getBrandText(this.props.location.pathname)}
           />
           <Switch>
-            {this.getRoutes(routes)}
-            <Route exact path="/users/:handle" component={User} />
-            <Route exact path="/users/:handle/post/:postId" component={User} />
+            <Route exact path="/admin/dashboard" render={(props) => <Dashboard {...props} key={Date.now()} />} />
+            <Route exact path="/admin/notifications" render={(props) => <Notifications {...props} key={Date.now()} />} />
+            <Route exact path="/admin/profile" render={(props) => <Profile {...props} key={Date.now()} />} />
+            <Route exact path="/users/:handle" render={(props) => <User {...props} key={Date.now()} />} />
+            <Route exact path="/users/:handle/post/:postId" render={(props) => <User {...props} key={Date.now()} />} />
+            {/* Keys needs passed in so component is unmounted and remounted 
+            when navigating from the one component to the same component */}
             <Redirect from="*" to="/admin/dashboard" />
           </Switch>
           <AdminFooter />

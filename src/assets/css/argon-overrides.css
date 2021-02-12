@@ -289,3 +289,21 @@ hr.thin-rule{
     display: block !important;
   }
 }
+img.avatar {
+  object-fit: cover;
+}
+.avatar-xl img {
+  width: 74px;
+  height: 74px;
+  object-fit: cover; 
+}
+.avatar-sm img {
+  width: 36px;
+  height: 36px;
+  object-fit: cover; 
+}
+.card-profile-image img{
+  width: 140px;
+  height: 140px;
+  object-fit: cover; 
+}

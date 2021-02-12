@@ -84,17 +84,23 @@ class ProfileCard extends Component{
             <div className="h5 mt-4 font-weight-300"> {/**/}
               Joined {dayjs(createdAt).format('MMM YYYY')}
             </div>
-            <div className="h5 font-weight-300">
-              <i className="ni ni-world-2 mr-2" />
-              <a href={website} target="_blank" rel="noopener noreferrer">{website}</a>
-            </div>
-            <div className="h5 description font-weight-300"> {/*h5 mt-4 font-weight-300*/}
+            {website && 
+              (<div className="h5 font-weight-300">
+                <i className="ni ni-world-2 mr-2" />
+                <a href={website} target="_blank" rel="noopener noreferrer">{website}</a>
+              </div>)
+            }
+            {bio &&
+            (<div className="h5 description font-weight-300"> {/*h5 mt-4 font-weight-300*/}
               {bio}
-            </div>
-            <div className="h5 mt-4 font-weight-300">
+            </div>)
+            }
+            {location &&
+            (<div className="h5 mt-4 font-weight-300">
               <i className="ni ni-pin-3 mr-2" />
               {location}
-            </div>
+            </div>)
+            }
           </div>
         </CardBody>
       </Card>

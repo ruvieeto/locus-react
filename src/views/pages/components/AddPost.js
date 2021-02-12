@@ -147,7 +147,8 @@ class AddPost extends Component {
 
 const mapStateToProps = (state) => ({
 	UI: state.UI,
-	data: state.data
+	data: state.data,
+	user: state.data
 });
 
 const mapActionsToProps = {

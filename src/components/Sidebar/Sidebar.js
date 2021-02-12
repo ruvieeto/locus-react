@@ -39,13 +39,13 @@ import { clearPostClick } from '../../redux/actions/dataActions';
 import { connect } from 'react-redux';
 
 class Sidebar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      collapseOpen: false,
-      ...this.getCollapseStates(props.routes)
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     collapseOpen: false,
+  //     ...this.getCollapseStates(props.routes)
+  //   };
+  // }
   // verifies if routeName is the one active (in browser input)
   activeRoute = routeName => {
     return this.props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
@@ -67,47 +67,47 @@ class Sidebar extends React.Component {
 
     }
   };
-  // toggles collapse between opened and closed (true/false)
-  toggleCollapse = () => {
-    this.setState({
-      collapseOpen: !this.state.collapseOpen
-    });
-  };
-  // closes the collapse
-  closeCollapse = () => {
-    this.setState({
-      collapseOpen: false
-    });
-  };
-  // this creates the intial state of this component based on the collapse routes
-  // that it gets through this.props.routes
-  getCollapseStates = routes => {
-    let initialState = {};
-    routes.map((prop, key) => {
-      if (prop.collapse) {
-        initialState = {
-          [prop.state]: this.getCollapseInitialState(prop.views),
-          ...this.getCollapseStates(prop.views),
-          ...initialState
-        };
-      }
-      return null;
-    });
-    return initialState;
-  };
-  // this verifies if any of the collapses should be default opened on a rerender of this component
-  // for example, on the refresh of the page,
-  // while on the src/views/forms/RegularForms.js - route /admin/regular-forms
-  getCollapseInitialState(routes) {
-    for (let i = 0; i < routes.length; i++) {
-      if (routes[i].collapse && this.getCollapseInitialState(routes[i].views)) {
-        return true;
-      } else if (window.location.href.indexOf(routes[i].path) !== -1) {
-        return true;
-      }
-    }
-    return false;
-  }
+  // // toggles collapse between opened and closed (true/false)
+  // toggleCollapse = () => {
+  //   this.setState({
+  //     collapseOpen: !this.state.collapseOpen
+  //   });
+  // };
+  // // closes the collapse
+  // closeCollapse = () => {
+  //   this.setState({
+  //     collapseOpen: false
+  //   });
+  // };
+  // // this creates the intial state of this component based on the collapse routes
+  // // that it gets through this.props.routes
+  // getCollapseStates = routes => {
+  //   let initialState = {};
+  //   routes.map((prop, key) => {
+  //     if (prop.collapse) {
+  //       initialState = {
+  //         [prop.state]: this.getCollapseInitialState(prop.views),
+  //         ...this.getCollapseStates(prop.views),
+  //         ...initialState
+  //       };
+  //     }
+  //     return null;
+  //   });
+  //   return initialState;
+  // };
+  // // this verifies if any of the collapses should be default opened on a rerender of this component
+  // // for example, on the refresh of the page,
+  // // while on the src/views/forms/RegularForms.js - route /admin/regular-forms
+  // getCollapseInitialState(routes) {
+  //   for (let i = 0; i < routes.length; i++) {
+  //     if (routes[i].collapse && this.getCollapseInitialState(routes[i].views)) {
+  //       return true;
+  //     } else if (window.location.href.indexOf(routes[i].path) !== -1) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
   // this is used on mobile devices, when a user navigates
   // the sidebar will autoclose
   closeSidenav = () => {
@@ -194,6 +194,10 @@ class Sidebar extends React.Component {
   };
 
   render() {
+    const postablePage = window.location.pathname.includes("/admin") ? true : false;
+    // let userpage = window.location.pathname.includes("/users");
+    // alert(userpage);
+
     const { routes, logo } = this.props;
     let navbarBrandProps;
     if (logo && logo.innerLink) {
@@ -237,16 +241,20 @@ class Sidebar extends React.Component {
         <div className="navbar-inner">
           <Collapse navbar isOpen={true}>
             <Nav navbar>{this.createLinks(routes)}</Nav>
-            
-            {/*Break before new post button*/}
-            <hr className="my-3" />
-            <Nav className="mb-md-3" navbar>
-              <NavItem>
-                <NavLink>
-                  <AddPost />
-                </NavLink>
-              </NavItem>
-            </Nav>
+            {
+              postablePage ? (
+                <Fragment>
+                  <hr className="my-3" />
+                  <Nav className="mb-md-3" navbar>
+                    <NavItem>
+                      <NavLink>
+                        <AddPost />
+                      </NavLink>
+                    </NavItem>
+                  </Nav>
+                </Fragment>
+              ):(null)
+            }
           </Collapse>
         </div>
       </div>

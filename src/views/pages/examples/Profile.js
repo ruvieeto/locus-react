@@ -43,6 +43,53 @@ class Profile extends Component {
     }
   }
 
+  clearForm = () => {
+    const { bio, location, website } = this.props.user.credentials;
+
+    const bioInput = document.getElementById("input-bio");
+    const locationInput = document.getElementById("input-location");
+    const websiteInput = document.getElementById("input-website");
+
+    if(bio){
+      bioInput.value = bio;
+    } else{
+      bioInput.value = "";
+    }
+
+    if(location){
+      locationInput.value = location;
+    } else{
+      locationInput.value = "";
+    }
+
+    if(website){
+      websiteInput.value = website;
+    }else{
+      websiteInput.value = "";
+    }
+
+    this.setState({
+      bio: "",
+      location: "",
+      website: ""
+    });
+
+    this.removeImage();
+  }
+
+  removeImage = () => {
+    this.setState({ 
+      emptyImage: true,
+      previewImage: null,
+      imageFile: null
+    });
+
+    const imageInput = document.getElementById("profileImageInputField");
+    if(imageInput){
+      imageInput.value = "";
+    }
+  }
+
   handleImageChange = (event) => {
     const inputField = event.target;
     const image = inputField.files[0];
@@ -197,6 +244,16 @@ class Profile extends Component {
                       >
                         Save
                       </Button>
+                      { (this.state.bio || this.state.location || this.state.website || !this.state.emptyImage) ?(
+                        <Button
+                          color="danger"
+                          onClick={this.clearForm}
+                          size="sm"
+                        >
+                          Cancel
+                        </Button>
+                        ):(null)
+                    }
                     </Col>
                   </Row>
                 </CardHeader>
@@ -302,6 +359,7 @@ class Profile extends Component {
                           type="textarea"
                           defaultValue={bio}
                           name="bio"
+                          id="input-bio"
                           onChange={this.handleInputChange}
                         />
                       </FormGroup>
@@ -359,7 +417,7 @@ class Profile extends Component {
                             </div>
 
                             <Col className=" col-auto">
-                              <Button size="sm" color="danger" data-dz-remove onClick={()=>{}}>
+                              <Button size="sm" color="danger" data-dz-remove onClick={this.removeImage}>
                                 <i className="fas fa-trash" />
                                 {` Clear`}
                               </Button>

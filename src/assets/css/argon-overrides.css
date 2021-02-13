@@ -130,6 +130,18 @@
   display: none;
 }
 
+@media (max-width: 1199.98px){
+  .hide-navbar-button-text {
+    transition: 0.3s ease;
+    margin-left: 0px;
+    padding: 10px 20px;
+  }
+  .hide-navbar-button-text > .show-icon-only{
+    transition: 0.3s ease;
+    display: inline-block;
+  }
+}
+
 hr.thin-rule{
   margin-bottom: 1rem;
   border-color: rgba(0,0,0,0.05);

@@ -194,10 +194,22 @@ class Sidebar extends React.Component {
   };
 
   render() {
-    const postablePage = window.location.pathname.includes("/admin") ? true : false;
-    // let userpage = window.location.pathname.includes("/users");
-    // alert(userpage);
+    // Determining if on a page where user should post from
 
+    let postablePage = false;
+
+    if(this.props.location.pathname.includes("/admin")){
+      postablePage = true;
+    }
+
+    if(this.props.user.credentials){
+      if(
+        window.location.pathname.includes(`/users/${this.props.user.credentials.handle}/`) || 
+        this.props.location.pathname === `/users/${this.props.user.credentials.handle}`
+      ){postablePage = true;}
+    }
+
+    // Custom Routes
     const { routes, logo } = this.props;
     let navbarBrandProps;
     if (logo && logo.innerLink) {
@@ -229,6 +241,8 @@ class Sidebar extends React.Component {
                 active: this.props.sidenavOpen
               })}
               onClick={this.props.toggleSidenav}
+              role="img"
+              aria-label="menu toggler"
             >
               <div className="sidenav-toggler-inner">
                 <i className="sidenav-toggler-line" />
@@ -311,4 +325,9 @@ Sidebar.propTypes = {
 const mapActionsToProps = {
   clearPostClick
 }
-export default connect(null, mapActionsToProps)(Sidebar);
+
+const mapStateToProps = (state) =>({
+  user: state.user
+})
+
+export default connect(mapStateToProps, mapActionsToProps)(Sidebar);

@@ -34,7 +34,7 @@ class NotificationsDropdown extends Component{
 			.filter(notif => !notif.read)
 			.map(notif => notif.notificationId);
 
-			this.props.markNotificationsAsRead(unreadNotificationsIds);
+		this.props.markNotificationsAsRead(unreadNotificationsIds);
 	}
 
 	dropdownToggle = () => {

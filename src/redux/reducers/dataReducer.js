@@ -60,15 +60,13 @@ export default function(state = initialState, action){
 				state.post = {...action.payload, comments};
 			}
 			return {
-				...state,
-				newPostClick: false
+				...state
 			};
 		case DELETE_POST:
 			index = state.posts.findIndex((post) => post.postId === action.payload);
 			state.posts.splice(index, 1);
 			return {
-				...state,
-				newPostClick: false
+				...state
 			};
 		case ADD_POST:
 			return {
@@ -82,7 +80,6 @@ export default function(state = initialState, action){
 			state.post.commentCount++;
 			return {
 				...state,
-				newPostClick: false,
 				post: {
 					...state.post,
 					comments: [action.payload, ...state.post.comments]

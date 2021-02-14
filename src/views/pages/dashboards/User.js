@@ -16,7 +16,7 @@ import PostcardSkeleton from '../components/PostcardSkeleton';
 
 // Redux
 import { connect } from 'react-redux';
-import { getUserData } from '../../../redux/actions/dataActions';
+import { getUserData, clearPostClick } from '../../../redux/actions/dataActions';
 
 class User extends Component {
   constructor(props) {
@@ -28,6 +28,7 @@ class User extends Component {
   }
 
   componentDidMount(props){
+    this.props.clearPostClick();
     this.props.getUserData(this.props.match.params.handle);
 
     const postId = this.props.match.params.postId;
@@ -93,11 +94,13 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = {
-  getUserData
+  getUserData,
+  clearPostClick
 }
 
 User.propTypes = {
   getUserData: PropTypes.func.isRequired,
+  clearPostClick: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired
 }

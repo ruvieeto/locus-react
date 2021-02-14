@@ -319,3 +319,11 @@ img.avatar {
   height: 140px;
   object-fit: cover; 
 }
+.auth-form-header img{
+  display: block;
+  max-height: 30px; 
+  margin: 10px auto;
+}
+.auth-form-header {
+  /**/
+}

@@ -14,16 +14,18 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, { Component, Fragment } from "react";
 // react library for routing
 import { Link } from "react-router-dom";
 // reactstrap components
-import { Button, Card, CardBody, Container, Row, Col } from "reactstrap";
+import { Button, Card, CardImg, Container, Row, Col } from "reactstrap";
 
-class IndexHeader extends React.Component {
+import landingImg from '../../assets/img/theme/landing.jpg';
+
+class IndexHeader extends Component {
   render() {
     return (
-      <>
+      <Fragment>
         <div className="header bg-info pt-5 pb-7">
           <Container>
             <div className="header-body">
@@ -31,37 +33,45 @@ class IndexHeader extends React.Component {
                 <Col lg="6">
                   <div className="pr-5">
                     <h1 className="display-2 text-white font-weight-bold mb-0">
-                      Argon Dashboard PRO React
+                      Join Locus today 
                     </h1>
                     <h2 className="display-4 text-white font-weight-light">
-                      A beautiful premium dashboard for Bootstrap 4, React and
-                      Reactstrap.
+                      Connect with fellow techies and science geeks from around the world.
                     </h2>
-                    <p className="text-white mt-4">
-                      Argon perfectly combines reusable HTML and modular CSS
-                      with a modern styling and beautiful markup throughout each
-                      HTML template in the pack.
-                    </p>
                     <div className="mt-5">
                       <Button
-                        className="btn-neutral my-2"
+                        className="btn btn-neutral my-2"
                         color="default"
                         to="/admin/dashboard"
                         tag={Link}
                       >
-                        Explore Dashboard
+                        <span className="btn-inner--icon">
+                          <i className="ni ni ni-spaceship mr-2" />
+                        </span>
+                        <span>Try Demo</span>
                       </Button>
                       <Button
                         className="my-2"
                         color="default"
-                        href="https://www.creative-tim.com/product/argon-dashboard-pro-react?ref=adpr-auth-navbar"
+                        to="/auth/login"
+                        tag={Link}
                       >
-                        Purchase now
+                        Login
                       </Button>
                     </div>
                   </div>
                 </Col>
-                <Col lg="6">
+                <Col className="mb-lg-auto col-lg-5">
+                  <div className="transform-perspective-right">
+                    <Card>
+                    <CardImg
+                      alt="female face in the stars"
+                      src={landingImg}
+                    />
+                    </Card>
+                  </div>
+                </Col>
+                {/*<Col lg="6">
                   <Row className="pt-5">
                     <Col md="6">
                       <Card>
@@ -114,11 +124,11 @@ class IndexHeader extends React.Component {
                       </Card>
                     </Col>
                   </Row>
-                </Col>
+                </Col>*/}
               </Row>
             </div>
           </Container>
-          <div className="separator separator-bottom separator-skew zindex-100">
+          {/*<div className="separator separator-bottom separator-skew zindex-100">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               preserveAspectRatio="none"
@@ -132,9 +142,9 @@ class IndexHeader extends React.Component {
                 points="2560 0 2560 100 0 100"
               />
             </svg>
-          </div>
+          </div>*/}
         </div>
-      </>
+      </Fragment>
     );
   }
 }

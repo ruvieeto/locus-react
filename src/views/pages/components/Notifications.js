@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 // Redux
 import { connect } from 'react-redux';
 import { markNotificationsAsRead } from '../../../redux/actions/userActions';
+import { clearPostClick } from '../../../redux/actions/dataActions';
 
 import {
   Card,
@@ -27,6 +28,10 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
 
 class Notifications extends Component {
+  componentDidMount(props){
+    this.props.clearPostClick();
+  }
+
   componentWillUnmount(props){
     if(this.props.user.notifications.length > 0){
       let unreadNotificationsIds = this.props.user.notifications
@@ -146,11 +151,13 @@ const mapStateToProps = (state) => ({
 })
 
 const mapActionsToProps = {
-  markNotificationsAsRead
+  markNotificationsAsRead,
+  clearPostClick
 }
 
 Notifications.propTypes = {
   markNotificationsAsRead: PropTypes.func.isRequired,
+  clearPostClick: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired
 }
 

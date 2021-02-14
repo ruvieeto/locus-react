@@ -42,6 +42,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signupUser } from '../../../redux/actions/userActions';
 
+import logo from '../../../assets/img/brand/locus-logo.png';
+
 class Register extends Component {
   constructor(){
     super();
@@ -106,6 +108,11 @@ class Register extends Component {
 
     this.props.signupUser(newUserData, this.props.history);
   }
+  
+  componentWillUnmount(){
+    document.documentElement.scrollTop = 0;
+    document.scrollingElement.scrollTop = 0;
+  }
 
   render() {
     const { passwordStrength } = this.state;
@@ -139,50 +146,20 @@ class Register extends Component {
       <Fragment>
         <AuthHeader
           title="Create an account"
-          lead="Connect with your fellow techies and science geeks."
+          lead="Explore your interests and connect with fascinating people around the world."
         />
         <Container className="mt--8 pb-5">
           <Row className="justify-content-center">
             <Col lg="6" md="8">
               <Card className="bg-secondary border-0">
-                <CardHeader className="bg-transparent pb-5">
-                  <div className="text-muted text-center mt-2 mb-4">
-                    <small>Sign up with</small>
-                  </div>
-                  <div className="text-center">
-                    <Button
-                      className="btn-neutral btn-icon mr-4"
-                      color="default"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                    >
-                      <span className="btn-inner--icon mr-1">
-                        <img
-                          alt="..."
-                          src={require("assets/img/icons/common/github.svg")}
-                        />
-                      </span>
-                      <span className="btn-inner--text">Github</span>
-                    </Button>
-                    <Button
-                      className="btn-neutral btn-icon"
-                      color="default"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                    >
-                      <span className="btn-inner--icon mr-1">
-                        <img
-                          alt="..."
-                          src={require("assets/img/icons/common/google.svg")}
-                        />
-                      </span>
-                      <span className="btn-inner--text">Google</span>
-                    </Button>
+                <CardHeader className="bg-transparent pb-4 auth-form-header">
+                  <div>
+                    <img src={logo} alt="logo"/>
                   </div>
                 </CardHeader>
                 <CardBody className="px-lg-5 py-lg-5">
                   <div className="text-center text-muted mb-4">
-                    <small>Or sign up with credentials</small>
+                    <small>Sign up with credentials</small>
                   </div>
                   <Form role="form" onSubmit={this.handleSubmit} noValidate>
                     <FormGroup

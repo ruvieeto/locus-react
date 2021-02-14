@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 // Redux
 import { connect } from 'react-redux';
 import { uploadImage, editUserDetails } from '../../../redux/actions/userActions';
+import { clearPostClick } from '../../../redux/actions/dataActions';
 
 // reactstrap components
 import {
@@ -144,6 +145,10 @@ class Profile extends Component {
         location
       });
     }
+  }
+  
+  componentDidMount(props){
+    this.props.clearPostClick();
   }
 
   render() {
@@ -447,13 +452,15 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
   uploadImage,
-  editUserDetails
+  editUserDetails,
+  clearPostClick
 };
 
 Profile.propTypes = {
   user: PropTypes.object.isRequired,
   uploadImage: PropTypes.func.isRequired,
-  editUserDetails: PropTypes.func.isRequired
+  editUserDetails: PropTypes.func.isRequired,
+  clearPostClick: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(Profile);

@@ -99,7 +99,7 @@ class IndexNavbar extends Component {
                 </NavItem>
                 <NavItem>
                   <NavLink to="/auth/register" tag={Link}>
-                    <span className="nav-link-inner--text">Register</span>
+                    <span className="nav-link-inner--text">Sign Up</span>
                   </NavLink>
                 </NavItem>
                 <hr className="d-none d-small" />

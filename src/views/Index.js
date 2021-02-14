@@ -15,7 +15,7 @@
 
 */
 /*eslint-disable*/
-import React from "react";
+import React, { Component, Fragment } from "react";
 // react library for routing
 import { Link } from "react-router-dom";
 // reactstrap components
@@ -34,13 +34,14 @@ import IndexNavbar from "components/Navbars/IndexNavbar.js";
 import IndexHeader from "components/Headers/IndexHeader.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
-class Index extends React.Component {
+class Index extends Component {
   render() {
     return (
-      <>
+      <Fragment>
         <IndexNavbar />
         <div className="main-content">
           <IndexHeader />
+          {/*
           <section className="py-6 pb-9 bg-default">
             <Container fluid>
               <Row className="justify-content-center text-center">
@@ -49,7 +50,7 @@ class Index extends React.Component {
                     A complete React solution
                   </h2>
                   <p className="lead text-white">
-                    Argon is a completly new product built on our newest
+                    Argon is a completely new product built on our newest
                     re-built from scratch framework structure that is meant to
                     make our products more intuitive, more adaptive and,
                     needless to say, so much easier to customize. Let Argon
@@ -555,10 +556,10 @@ class Index extends React.Component {
                 </Col>
               </Row>
             </Container>
-          </section>
+          </section>*/}
         </div>
         <AuthFooter />
-      </>
+      </Fragment>
     );
   }
 }

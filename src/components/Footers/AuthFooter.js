@@ -11,10 +11,10 @@ class AuthFooter extends Component {
           <Container>
             <Row className="align-items-center justify-content-xl-between">
               <Col xl="6">
-                <div className="copyright text-center text-xl-left text-muted">
+                <div className="copyright text-center text-xl-left text-muted home-link">
                   © {new Date().getFullYear()}{" "}
                   <a
-                    className="font-weight-bold ml-1"
+                    className="font-weight-bold ml-1 home-link"
                     href="https://www.ruvieeto.com"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -30,6 +30,7 @@ class AuthFooter extends Component {
                       href="https://www.ruvieeto.com"
                       target="_blank"
                       rel="noopener noreferrer"
+                      className="home-link"
                     >
                       Locus Technologies, Inc
                     </NavLink>

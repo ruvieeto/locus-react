@@ -19,9 +19,6 @@ import {
   Col
 } from "reactstrap";
 
-// Delete post button and confirmation dialog
-// import DeletePost from './DeletePost';
-
 // Comments
 import Comments from './Comments';
 import PostcardSkeleton from './PostcardSkeleton';
@@ -121,7 +118,7 @@ class PostDialog extends Component {
     // Comment Button
     const commentButton = (
       <Button
-        className="like engage-button"
+        className="like engage-button btn-no-ml"
         onClick={e => e.preventDefault()}
       >
         <i className="ni ni-chat-round" />
@@ -133,10 +130,17 @@ class PostDialog extends Component {
       </Button>
     )
 
-    // Delete post button
-    // const deleteButton = authenticated && userHandle === handle ? (
-    //   <DeletePost postId={postId} />
-    //   ) : (null)
+    // Close post button
+    const closePostButton = (
+      <button
+        aria-label="Close"
+        className="close"
+        type="button"
+        onClick={this.props.toggler}
+      >
+        <span aria-hidden={true}>×</span>
+      </button>
+    )
 
     return(
       <Fragment>
@@ -160,9 +164,9 @@ class PostDialog extends Component {
                 <small className="d-block text-muted">{dayjs(createdAt.toString()).fromNow()}</small>
               </div>
             </div>
-            {/*<div className="text-right ml-auto">
-              {deleteButton}
-            </div>*/}
+            {<div className="text-right ml-auto">
+              {closePostButton}
+            </div>}
           </CardHeader>
           <CardBody>
             <p className="mb-4">

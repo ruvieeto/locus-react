@@ -1,19 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard PRO React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React, { Fragment, Component } from "react";
 // react library for routing
 import { Link } from "react-router-dom";
@@ -27,16 +11,17 @@ import {
   Nav,
   Container,
   Row,
-  Col,
-  Button
+  Col
 } from "reactstrap";
+
+import DemoLogin from '../../util/DemoLogin';
 
 class IndexNavbar extends Component {
   render() {
     return (
       <Fragment>
         <Navbar
-          className="navbar-horizontal navbar-main navbar-dark bg-info"
+          className="navbar-horizontal navbar-main navbar-dark"
           expand="lg"
           id="navbar-main"
         >
@@ -104,24 +89,10 @@ class IndexNavbar extends Component {
                 </NavItem>
                 <hr className="d-none d-small" />
                 <NavItem className="d-none d-small-block">
-                  <NavLink onClick={()=>alert("Trying it")}>
-                    <span className="btn-inner--icon ml-2">
-                      <i className="ni ni ni-spaceship mr-2" />
-                    </span>
-                    <span className="nav-link-inner--text">Try Demo</span>
-                  </NavLink>
+                  <DemoLogin type="navlink" /> 
                 </NavItem>
                 <NavItem className="d-none d-lg-block ml-lg-4">
-                  <Button
-                    className="btn-neutral btn-icon"
-                    color="default"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <span className="btn-inner--icon">
-                      <i className="ni ni ni-spaceship mr-2" />
-                    </span>
-                    <span className="nav-link-inner--text">Try Demo</span>
-                  </Button>
+                  <DemoLogin type="nav-button" />
                 </NavItem>
               </Nav>
             </UncontrolledCollapse>

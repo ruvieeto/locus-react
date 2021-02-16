@@ -106,6 +106,10 @@ export const markNotificationsAsRead = (notificationIds) => (dispatch) => {
 		.catch(err => console.log(err))
 }
 
+export const clearUserErrors = () => (dispatch) => {
+	dispatch({ type: CLEAR_ERRORS });
+}
+
 const setAuthorizationHeader = (token) => {
 	const FBIdToken = `Bearer ${token}`;
     localStorage.setItem('FBIdToken', FBIdToken);

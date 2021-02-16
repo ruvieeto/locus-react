@@ -172,7 +172,7 @@ class Postcard extends Component {
 
     const commentButton = (
       <Button
-        className="like engage-button"
+        className="like engage-button btn-no-ml"
         onClick={()=>{this.handleOpen(); this.props.clearPostClick()}}
       >
         <i className="ni ni-chat-round" />
@@ -218,7 +218,6 @@ class Postcard extends Component {
             </div>
             <div className="text-right ml-auto">
               {deleteButton}
-              
             </div>
           </CardHeader>
           <CardBody>
@@ -240,7 +239,7 @@ class Postcard extends Component {
               isOpen={this.state.postModal}
               toggle={this.togglePostModal}
             >
-              <PostDialog />
+              <PostDialog toggler={this.togglePostModal}/>
             </Modal>
           
           </CardBody>

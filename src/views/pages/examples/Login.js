@@ -1,19 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard PRO React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React, { Component, Fragment } from "react";
 import PropTypes from 'prop-types';
 // nodejs library that concatenates classes
@@ -40,7 +24,7 @@ import { Link } from 'react-router-dom';
 
 // Redux
 import { connect } from 'react-redux';
-import { loginUser } from '../../../redux/actions/userActions';
+import { loginUser, clearUserErrors } from '../../../redux/actions/userActions';
 
 import logo from '../../../assets/img/brand/locus-logo.png';
 
@@ -48,28 +32,13 @@ class Login extends Component {
   constructor(){
     super();
     this.state = {
-      // loading: false,
       email: "",
-      password: "",
-      errors: {},
-      emailInvalid: false,
-      passwordInvalid: false
+      password: ""
     };
   }
 
-  // UNSAFE_componentWillReceiveProps(nextProps){
-  //   if(nextProps.UI.errors){
-  //     this.setState({ errors: nextProps.UI.errors });
-  //   }
-  // }
-
   handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({ 
-      errors: {},
-      emailInvalid: false,
-      passwordInvalid: false
-    });
 
     const userData = {
       email: this.state.email,
@@ -81,42 +50,20 @@ class Login extends Component {
 
   handleChange = (event) => {
     const { value, name } = event.target;
-    this.setState({
-      [name]: value,
-      errors: {},
-      emailInvalid: false,
-      passwordInvalid: false
-    });
+    this.setState({ [name]: value });
+
+    if(this.props.UI.errors){
+      this.props.clearUserErrors();
+    }
   }
 
   componentWillUnmount(){
+    this.props.clearUserErrors();
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
   }
 
   render() {
-    // const { errors } = this.state;
-
-    // ************************** Before Redux Start **************************
-        // this.setState({
-        //   errors: err.response.data,
-        //   loading: false
-        // })
-
-        // if(err.response.data.email){
-        //     this.setState({
-        //     emailInvalid: true
-        //   });
-        // }
-        // if(err.response.data.password){
-        //   this.setState({
-        //     passwordInvalid: true
-        //   });
-        // }
-        // ************************** Before Redux End **************************
-
-        // Change to check emailInvalid and passwordInvalid and store as booleans
-
     const { UI: { loading, errors } } = this.props;
 
     return (
@@ -145,7 +92,7 @@ class Login extends Component {
                       })}
                     >
                       <InputGroup className={classnames("input-group-merge input-group-alternative", {
-                        "is-invalid-input": this.state.emailInvalid
+                        "is-invalid-input": errors.email
                       })}>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
@@ -174,7 +121,7 @@ class Login extends Component {
                       })}
                     >
                       <InputGroup className={classnames("input-group-merge input-group-alternative", {
-                        "is-invalid-input": this.state.passwordInvalid
+                        "is-invalid-input": errors.password
                       })}>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
@@ -253,7 +200,8 @@ class Login extends Component {
 Login.propTypes = {
   user: PropTypes.object.isRequired,
   UI: PropTypes.object.isRequired,
-  loginUser: PropTypes.func.isRequired
+  loginUser: PropTypes.func.isRequired,
+  clearUserErrors: PropTypes.func.isRequired
 }
 
 export const mapStateToProps = (state) => ({
@@ -262,7 +210,8 @@ export const mapStateToProps = (state) => ({
 })
 
 export const mapActionsToProps = {
-  loginUser
+  loginUser,
+  clearUserErrors
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(Login);

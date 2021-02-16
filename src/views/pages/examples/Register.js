@@ -1,19 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard PRO React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React, { Fragment, Component } from "react";
 import PropTypes from 'prop-types';
 // nodejs library that concatenates classes
@@ -40,7 +24,7 @@ import { Link } from 'react-router-dom';
 
 // Redux
 import { connect } from 'react-redux';
-import { signupUser } from '../../../redux/actions/userActions';
+import { signupUser, clearUserErrors } from '../../../redux/actions/userActions';
 
 import logo from '../../../assets/img/brand/locus-logo.png';
 
@@ -53,25 +37,17 @@ class Register extends Component {
       handle: "",
       password: "",
       confirmPassword: "",
-      passwordStrength: "weak",
-      errors: {},
-      emailInvalid: false,
-      passwordInvalid: false,
-      confirmPasswordInvalid: false,
-      handleInvalid: false
+      passwordStrength: "weak"
     }
   }
 
   handleChange = (event) => {
     const { value, name } = event.target;
-    this.setState({
-      [name]: value,
-      errors: {},
-      emailInvalid: false,
-      passwordInvalid: false,
-      confirmPasswordInvalid: false,
-      handleInvalid: false
-    });
+    this.setState({ [name]: value });
+
+    if(this.props.UI.errors){
+      this.props.clearUserErrors();
+    }
   }
 
   checkPasswordStrength = (event) => {
@@ -91,13 +67,6 @@ class Register extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({ 
-      errors: {},
-      emailInvalid: false,
-      passwordInvalid: false,
-      confirmPasswordInvalid: false,
-      handleInvalid: false
-    });
 
     const newUserData = {
       email: this.state.email,
@@ -110,6 +79,7 @@ class Register extends Component {
   }
   
   componentWillUnmount(){
+    this.props.clearUserErrors();
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
   }
@@ -117,30 +87,6 @@ class Register extends Component {
   render() {
     const { passwordStrength } = this.state;
     const { UI: { loading, errors } } = this.props;
-
-    // ************************** Before Redux Start **************************
-      // if(err.response.data.email){
-      //       this.setState({
-      //       emailInvalid: true
-      //     });
-      //   }
-      //   if(err.response.data.password){
-      //     this.setState({
-      //       passwordInvalid: true
-      //     });
-      //   }
-      //   if(err.response.data.confirmPassword){
-      //     this.setState({
-      //       confirmPasswordInvalid: true,
-      //       passwordInvalid: true // For both input fields have warning border
-      //     });
-      //   }
-      //   if(err.response.data.handle){
-      //     this.setState({
-      //       handleInvalid: true
-      //     });
-      //   }
-    // ************************** Before Redux End **************************
 
     return (
       <Fragment>
@@ -168,7 +114,7 @@ class Register extends Component {
                       })}
                     >
                       <InputGroup className={classnames("input-group-merge input-group-alternative mb-3", {
-                        "is-invalid-input": this.state.handleInvalid
+                        "is-invalid-input": errors.handle
                       })}>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
@@ -197,7 +143,7 @@ class Register extends Component {
                       })}
                     >
                       <InputGroup className={classnames("input-group-merge input-group-alternative mb-3", {
-                        "is-invalid-input": this.state.emailInvalid
+                        "is-invalid-input": errors.email
                       })}>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
@@ -226,7 +172,7 @@ class Register extends Component {
                       })}
                     >
                       <InputGroup className={classnames("input-group-merge input-group-alternative", {
-                        "is-invalid-input": this.state.passwordInvalid
+                        "is-invalid-input": errors.confirmPassword || errors.password
                       })}>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
@@ -264,7 +210,7 @@ class Register extends Component {
                       })}
                     >
                       <InputGroup className={classnames("input-group-merge input-group-alternative", {
-                        "is-invalid-input": this.state.confirmPasswordInvalid
+                        "is-invalid-input": errors.confirmPassword
                       })}>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
@@ -367,7 +313,8 @@ class Register extends Component {
 Register.propTypes = {
   user: PropTypes.object.isRequired,
   UI: PropTypes.object.isRequired,
-  signupUser: PropTypes.func.isRequired
+  signupUser: PropTypes.func.isRequired,
+  clearUserErrors: PropTypes.func.isRequired
 }
 
 export const mapStateToProps = (state) => ({
@@ -376,7 +323,8 @@ export const mapStateToProps = (state) => ({
 })
 
 export const mapActionsToProps = {
-  signupUser
+  signupUser,
+  clearUserErrors
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(Register);

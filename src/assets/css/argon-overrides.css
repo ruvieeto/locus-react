@@ -324,6 +324,41 @@ img.avatar {
   max-height: 30px; 
   margin: 10px auto;
 }
-.auth-form-header {
-  /**/
+.home-bg {
+  background-color: transparent !important;
+
+}
+.home-overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+  background-color: var(--blue);
+  opacity: 0.3;
+  /*background: linear-gradient(87deg, #11cdef 0, #1171ef 100%) !important;*/
+  /*opacity: 0.87;*/
+}
+
+.home-container{
+  /*background-image: url("../img/theme/home6-91.jpeg");*/
+  background-image: url("../img/theme/home1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+
+.landing-page-footer a.home-link{
+  color: #ffffff77 !important;
+}
+.landing-page-footer a.home-link:hover{
+  color: #ffffffbb !important;
+}
+.landing-page-footer div.home-link{
+  color: #ffffff55 !important;
+}
+.btn-no-ml{
+  margin-left: 0px !important;
 }

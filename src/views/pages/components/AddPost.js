@@ -73,74 +73,74 @@ class AddPost extends Component {
 		            color="primary"
 		            id="navbar-post-button"
 		            onClick={()=>{this.toggleModal(); this.props.newPostClick();}}
-		          >
+		        >
 		            <span className="btn-inner--icon mr-1">
 		              <i className="ni ni-spaceship" />
 		            </span>
 		            <span className="btn-inner--text show-icon-only">New Post</span>
-		          </Button>
-		          <Modal
-                        className="modal-dialog-centered"
-                        isOpen={this.state.defaultModal}
-                        toggle={this.toggleModal}
-                      >
-                        <div className="modal-header">
-                          <h6 className="modal-title" id="modal-title-default">
-                            Create a new post
-                          </h6>
-                          <button
-                            aria-label="Close"
-                            className="close"
-                            data-dismiss="modal"
-                            type="button"
-                            onClick={this.toggleModal}
-                          >
-                            <span aria-hidden={true}>×</span>
-                          </button>
-                        </div>
-                        <Form role="form" onSubmit={this.handleSubmit}>
-	                        <div className="modal-body modal-body-lean">	
-	                            <FormGroup>
-	                              <InputGroup className="input-group-merge">
-	                                <Input
-	                                  placeholder="What's on your mind?"
-	                                  type="textarea"
-	                                  rows="4"
-	                                  resize="none"
-	                                  id="new-post-input"
-	                                  name="body"
-	                                  onChange={(event)=>this.handleChange(event)}
-	                                />
-	                              </InputGroup>
-	                              {errors.body &&
-                  					<div className="invalid-form-input-message">
-                      					<span>{errors.body}</span>
-			                      	</div>
-				                    }
-	                            </FormGroup>      
-	                        </div>
-	                        <div className="modal-footer modal-footer-lean">
-			                        <Button 
-			                        	color="primary" 
-			                        	type="submit"
-			                        	disabled={loading}
-			                        	onClick={(event) => this.handleSubmit(event)}
-			                        >
-			                        	{loading ? <div className="html-spinner"></div> : "Post"}
-			                        </Button>
-		                          	<Button
-			                            className="ml-auto"
-			                            color="link"
-			                            data-dismiss="modal"
-			                            type="button"
-			                            onClick={this.toggleModal}
-			                        >
-		                            	Cancel
-		                          	</Button>
-	                        </div>
-                        </Form>
-                      </Modal>
-	          </Fragment>
+		        </Button>
+		        <Modal
+	                className="modal-dialog-centered"
+	                isOpen={this.state.defaultModal}
+	                toggle={this.toggleModal}
+	            >
+	                <div className="modal-header">
+		                <h6 className="modal-title" id="modal-title-default">
+		                    Create a new post
+		                </h6>
+		                <button
+		                    aria-label="Close"
+		                    className="close"
+		                    data-dismiss="modal"
+		                    type="button"
+		                    onClick={this.toggleModal}
+		                >
+		                	<span aria-hidden={true}>×</span>
+		                </button>
+	                </div>
+	                <Form role="form" onSubmit={this.handleSubmit}>
+	                    <div className="modal-body modal-body-lean">	
+	                        <FormGroup>
+	                          <InputGroup className="input-group-merge">
+	                            <Input
+	                              placeholder="What's on your mind?"
+	                              type="textarea"
+	                              rows="4"
+	                              resize="none"
+	                              id="new-post-input"
+	                              name="body"
+	                              onChange={(event)=>this.handleChange(event)}
+	                            />
+	                          </InputGroup>
+	                          {errors.body &&
+	          					<div className="invalid-form-input-message">
+	              					<span>{errors.body}</span>
+		                      	</div>
+			                    }
+	                        </FormGroup>      
+	                    </div>
+	                    <div className="modal-footer modal-footer-lean">
+	                        <Button 
+	                        	color="primary" 
+	                        	type="submit"
+	                        	disabled={loading}
+	                        	onClick={(event) => this.handleSubmit(event)}
+	                        >
+	                        	{loading ? <div className="html-spinner"></div> : "Post"}
+	                        </Button>
+	                      	<Button
+	                            className="ml-auto"
+	                            color="link"
+	                            data-dismiss="modal"
+	                            type="button"
+	                            onClick={this.toggleModal}
+	                        >
+	                        	Cancel
+	                      	</Button>
+	                    </div>
+	                </Form>
+	            </Modal>
+	        </Fragment>
 		)
 	}
 }

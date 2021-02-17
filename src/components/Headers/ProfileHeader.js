@@ -1,36 +1,21 @@
-/*!
-
-=========================================================
-* Argon Dashboard PRO React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React from "react";
+import React, { Fragment, Component } from "react";
 
 // reactstrap components
-import { Button, Container, Row, Col } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
-class ProfileHeader extends React.Component {
+class ProfileHeader extends Component {
   render() {
     return (
-      <>
+      <Fragment>
         <div
           className="header pb-6 d-flex align-items-center"
           style={{
             minHeight: "500px",
             backgroundImage:
-              'url("' + require("assets/img/theme/profile-cover.jpg") + '")',
+              'url("' + require("assets/img/theme/pthe-crop2.jpg") + '")',
             backgroundSize: "cover",
-            backgroundPosition: "center top"
+            backgroundPosition: "center top",
+            filter: "brightness(1.05)"
           }}
         >
           <span className="mask bg-gradient-info opacity-8" />
@@ -38,24 +23,16 @@ class ProfileHeader extends React.Component {
           <Container className="d-flex align-items-center" fluid>
             <Row>
               <Col lg="7" md="10">
-                <h1 className="display-2 text-white">Hello Jesse</h1>
+                <h1 className="display-2 text-white">Hello {this.props.handle}</h1>
                 <p className="text-white mt-0 mb-5">
-                  This is your profile page. You can see the progress you've
-                  made with your work and manage your projects or assigned tasks
+                  This is your account page. You can easily update the information
+                  that you would like others in the Locus family to know about you.
                 </p>
-                <Button
-                  className="btn-neutral"
-                  color="default"
-                  href="#pablo"
-                  onClick={e => e.preventDefault()}
-                >
-                  Edit profile
-                </Button>
               </Col>
             </Row>
           </Container>
         </div>
-      </>
+      </Fragment>
     );
   }
 }

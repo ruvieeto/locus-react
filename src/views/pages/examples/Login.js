@@ -1,20 +1,5 @@
-/*!
-
-=========================================================
-* Argon Dashboard PRO React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React, { Component, Fragment } from "react";
+import PropTypes from 'prop-types';
 // nodejs library that concatenates classes
 import classnames from "classnames";
 // reactstrap components
@@ -37,74 +22,49 @@ import {
 import AuthHeader from "components/Headers/AuthHeader.js";
 import { Link } from 'react-router-dom';
 
-import axios from 'axios';
+// Redux
+import { connect } from 'react-redux';
+import { loginUser, clearUserErrors } from '../../../redux/actions/userActions';
+
+import logo from '../../../assets/img/brand/locus-logo.png';
 
 class Login extends Component {
   constructor(){
     super();
     this.state = {
-      loading: false,
       email: "",
-      password: "",
-      errors: {},
-      emailInvalid: false,
-      passwordInvalid: false
+      password: ""
     };
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({ 
-      loading: true,
-      errors: {},
-      emailInvalid: false,
-      passwordInvalid: false
-    });
 
     const userData = {
       email: this.state.email,
       password: this.state.password
     }
 
-    axios.post('/login', userData)
-      .then(res => {
-        localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`);
-        this.setState({ loading: false });
-
-        //redirect to home feed
-        this.props.history.push('/admin/dashboard');
-      })
-      .catch(err => {
-        this.setState({
-          errors: err.response.data,
-          loading: false
-        })
-
-        if(err.response.data.email){
-            this.setState({
-            emailInvalid: true
-          });
-        }
-        if(err.response.data.password){
-          this.setState({
-            passwordInvalid: true
-          });
-        }
-      })
+    this.props.loginUser(userData, this.props.history);
   }
 
   handleChange = (event) => {
     const { value, name } = event.target;
-    this.setState({
-      [name]: value,
-      errors: {},
-      emailInvalid: false,
-      passwordInvalid: false
-    });
+    this.setState({ [name]: value });
+
+    if(this.props.UI.errors){
+      this.props.clearUserErrors();
+    }
+  }
+
+  componentWillUnmount(){
+    this.props.clearUserErrors();
+    document.documentElement.scrollTop = 0;
+    document.scrollingElement.scrollTop = 0;
   }
 
   render() {
-    const { errors, loading } = this.state;
+    const { UI: { loading, errors } } = this.props;
 
     return (
       <Fragment>
@@ -116,44 +76,14 @@ class Login extends Component {
           <Row className="justify-content-center">
             <Col lg="5" md="7">
               <Card className="bg-secondary border-0 mb-0">
-                <CardHeader className="bg-transparent pb-5">
-                  <div className="text-muted text-center mt-2 mb-3">
-                    <small>Sign in with</small>
-                  </div>
-                  <div className="btn-wrapper text-center">
-                    <Button
-                      className="btn-neutral btn-icon"
-                      color="default"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                    >
-                      <span className="btn-inner--icon mr-1">
-                        <img
-                          alt="..."
-                          src={require("assets/img/icons/common/github.svg")}
-                        />
-                      </span>
-                      <span className="btn-inner--text">Github</span>
-                    </Button>
-                    <Button
-                      className="btn-neutral btn-icon"
-                      color="default"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                    >
-                      <span className="btn-inner--icon mr-1">
-                        <img
-                          alt="..."
-                          src={require("assets/img/icons/common/google.svg")}
-                        />
-                      </span>
-                      <span className="btn-inner--text">Google</span>
-                    </Button>
+                <CardHeader className="bg-transparent pb-4 auth-form-header">
+                  <div>
+                    <img src={logo} alt="logo"/>
                   </div>
                 </CardHeader>
                 <CardBody className="px-lg-5 py-lg-5">
-                  <div className="text-center text-muted mb-4">
-                    <small>Or sign in with credentials</small>
+                <div className="text-muted text-center mb-4">
+                    <small>Sign in with your credentials:</small>
                   </div>
                   <Form role="form" onSubmit={this.handleSubmit} noValidate>
                     <FormGroup
@@ -162,7 +92,7 @@ class Login extends Component {
                       })}
                     >
                       <InputGroup className={classnames("input-group-merge input-group-alternative", {
-                        "is-invalid-input": this.state.emailInvalid
+                        "is-invalid-input": errors.email
                       })}>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
@@ -170,10 +100,10 @@ class Login extends Component {
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
-                          placeholder="Email"
-                          type="email"
-                          name="email"
-                          id="email"
+                          placeholder="Email" 
+                          type="email" 
+                          name="email" 
+                          id="email" 
                           onChange={this.handleChange}
                           onFocus={() => this.setState({ focusedEmail: true })}
                           onBlur={() => this.setState({ focusedEmail: false })}
@@ -191,7 +121,7 @@ class Login extends Component {
                       })}
                     >
                       <InputGroup className={classnames("input-group-merge input-group-alternative", {
-                        "is-invalid-input": this.state.passwordInvalid
+                        "is-invalid-input": errors.password
                       })}>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
@@ -218,19 +148,6 @@ class Login extends Component {
                       </div>
                       }
                     </FormGroup>
-                    {/*<div className="custom-control custom-control-alternative custom-checkbox">
-                      <input
-                        className="custom-control-input"
-                        id=" customCheckLogin"
-                        type="checkbox"
-                      />
-                      <label
-                        className="custom-control-label"
-                        htmlFor=" customCheckLogin"
-                      >
-                        <span className="text-muted">Remember me</span>
-                      </label>
-                    </div>*/}
                     <div className="text-center">
                       {errors.general &&
                       <div className="invalid-form-input-message">
@@ -280,4 +197,21 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
+  loginUser: PropTypes.func.isRequired,
+  clearUserErrors: PropTypes.func.isRequired
+}
+
+export const mapStateToProps = (state) => ({
+  user: state.user,
+  UI: state.UI
+})
+
+export const mapActionsToProps = {
+  loginUser,
+  clearUserErrors
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(Login);

@@ -33,14 +33,11 @@ import {
   Nav
 } from "reactstrap";
 
+import AddPost from '../../views/pages/components/AddPost';
+
+import { connect } from 'react-redux';
+
 class Sidebar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      collapseOpen: false,
-      ...this.getCollapseStates(props.routes)
-    };
-  }
   // verifies if routeName is the one active (in browser input)
   activeRoute = routeName => {
     return this.props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
@@ -49,55 +46,20 @@ class Sidebar extends React.Component {
   onMouseEnterSidenav = () => {
     if (!document.body.classList.contains("g-sidenav-pinned")) {
       document.body.classList.add("g-sidenav-show");
+      // Post button
+      document.getElementById("navbar-post-button").classList.remove("hide-navbar-button-text");
     }
   };
   // makes the sidenav mini on mouseleave
   onMouseLeaveSidenav = () => {
     if (!document.body.classList.contains("g-sidenav-pinned")) {
       document.body.classList.remove("g-sidenav-show");
+      // Post button
+      document.getElementById("navbar-post-button").classList.add("hide-navbar-button-text");
+
     }
   };
-  // toggles collapse between opened and closed (true/false)
-  toggleCollapse = () => {
-    this.setState({
-      collapseOpen: !this.state.collapseOpen
-    });
-  };
-  // closes the collapse
-  closeCollapse = () => {
-    this.setState({
-      collapseOpen: false
-    });
-  };
-  // this creates the intial state of this component based on the collapse routes
-  // that it gets through this.props.routes
-  getCollapseStates = routes => {
-    let initialState = {};
-    routes.map((prop, key) => {
-      if (prop.collapse) {
-        initialState = {
-          [prop.state]: this.getCollapseInitialState(prop.views),
-          ...this.getCollapseStates(prop.views),
-          ...initialState
-        };
-      }
-      return null;
-    });
-    return initialState;
-  };
-  // this verifies if any of the collapses should be default opened on a rerender of this component
-  // for example, on the refresh of the page,
-  // while on the src/views/forms/RegularForms.js - route /admin/regular-forms
-  getCollapseInitialState(routes) {
-    for (let i = 0; i < routes.length; i++) {
-      if (routes[i].collapse && this.getCollapseInitialState(routes[i].views)) {
-        return true;
-      } else if (window.location.href.indexOf(routes[i].path) !== -1) {
-        return true;
-      }
-    }
-    return false;
-  }
+  
   // this is used on mobile devices, when a user navigates
   // the sidebar will autoclose
   closeSidenav = () => {
@@ -111,44 +73,7 @@ class Sidebar extends React.Component {
       if (prop.redirect) {
         return null;
       }
-      // *********** No collapsed options anymore so this isn't really needed. Keeping in case needed later.
-      // if (prop.collapse) {
-      //   var st = {};
-      //   st[prop["state"]] = !this.state[prop.state];
-      //   return (
-      //     <NavItem key={key}>
-      //       <NavLink
-      //         href="#pablo"
-      //         data-toggle="collapse"
-      //         aria-expanded={this.state[prop.state]}
-      //         className={classnames({
-      //           active: this.getCollapseInitialState(prop.views)
-      //         })}
-      //         onClick={e => {
-      //           e.preventDefault();
-      //           this.setState(st);
-      //         }}
-      //       >
-      //         {prop.icon ? (
-      //           <Fragment>
-      //             <i className={prop.icon} />
-      //             <span className="nav-link-text">{prop.name}</span>
-      //           </Fragment>
-      //         ) : prop.miniName ? (
-      //           <Fragment>
-      //             <span className="sidenav-mini-icon"> {prop.miniName} </span>
-      //             <span className="sidenav-normal"> {prop.name} </span>
-      //           </Fragment>
-      //         ) : null}
-      //       </NavLink>
-      //       <Collapse isOpen={this.state[prop.state]}>
-      //         <Nav className="nav-sm flex-column">
-      //           {this.createLinks(prop.views)}
-      //         </Nav>
-      //       </Collapse>
-      //     </NavItem>
-      //   );
-      // }
+
       if (prop.sidebar) {
         return (
           <NavItem
@@ -178,10 +103,27 @@ class Sidebar extends React.Component {
           </NavItem>
         );
       }
+
+      return null;
     });
   };
 
   render() {
+    // Determining if on a page where user should post from
+    let postablePage = false;
+
+    if(this.props.location.pathname.includes("/admin")){
+      postablePage = true;
+    }
+
+    if(this.props.user.credentials){
+      if(
+        window.location.pathname.includes(`/users/${this.props.user.credentials.handle}/`) || 
+        this.props.location.pathname === `/users/${this.props.user.credentials.handle}`
+      ){postablePage = true;}
+    }
+
+    // Custom Routes
     const { routes, logo } = this.props;
     let navbarBrandProps;
     if (logo && logo.innerLink) {
@@ -213,6 +155,8 @@ class Sidebar extends React.Component {
                 active: this.props.sidenavOpen
               })}
               onClick={this.props.toggleSidenav}
+              role="img"
+              aria-label="menu toggler"
             >
               <div className="sidenav-toggler-inner">
                 <i className="sidenav-toggler-line" />
@@ -225,17 +169,20 @@ class Sidebar extends React.Component {
         <div className="navbar-inner">
           <Collapse navbar isOpen={true}>
             <Nav navbar>{this.createLinks(routes)}</Nav>
-            <hr className="my-3" />
-            <Nav className="mb-md-3" navbar>
-              <NavItem>
-                <NavLink
-                  href="#"
-                >
-                  <i className="ni ni-spaceship" />
-                  <span className="nav-link-text">New Post</span>
-                </NavLink>
-              </NavItem>
-            </Nav>
+            {
+              postablePage ? (
+                <Fragment>
+                  <hr className="my-3" />
+                  <Nav className="mb-md-3" navbar>
+                    <NavItem>
+                      <NavLink>
+                        <AddPost />
+                      </NavLink>
+                    </NavItem>
+                  </Nav>
+                </Fragment>
+              ):(null)
+            }
           </Collapse>
         </div>
       </div>
@@ -261,8 +208,7 @@ class Sidebar extends React.Component {
 Sidebar.defaultProps = {
   routes: [{}],
   toggleSidenav: () => {},
-  sidenavOpen: false,
-  rtlActive: false
+  sidenavOpen: false
 };
 
 Sidebar.propTypes = {
@@ -274,19 +220,19 @@ Sidebar.propTypes = {
   routes: PropTypes.arrayOf(PropTypes.object),
   // logo
   logo: PropTypes.shape({
-    // innerLink is for links that will direct the user within the app
-    // it will be rendered as <Link to="...">...</Link> tag
+    // innerLink links within the app with <Link to="...">...</Link> tag
     innerLink: PropTypes.string,
-    // outterLink is for links that will direct the user outside the app
-    // it will be rendered as simple <a href="...">...</a> tag
+    // outterLink links outside the app with <a href="...">...</a> tag
     outterLink: PropTypes.string,
     // the image src of the logo
     imgSrc: PropTypes.string.isRequired,
     // the alt for the img
     imgAlt: PropTypes.string.isRequired
-  }),
-  // rtl active, this will make the sidebar to stay on the right side
-  rtlActive: PropTypes.bool
+  })
 };
 
-export default Sidebar;
+const mapStateToProps = (state) =>({
+  user: state.user
+})
+
+export default connect(mapStateToProps, null)(Sidebar);

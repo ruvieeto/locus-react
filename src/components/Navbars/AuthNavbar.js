@@ -28,14 +28,13 @@ import {
   Container,
   Row,
   Col,
-  UncontrolledTooltip,
   Button
 } from "reactstrap";
 
 class AdminNavbar extends React.Component {
   render() {
     return (
-      <>
+      <Fragment>
         <Navbar
           className="navbar-horizontal navbar-main navbar-dark navbar-transparent"
           expand="lg"
@@ -71,7 +70,7 @@ class AdminNavbar extends React.Component {
                     <Link to="/admin/dashboard">
                       <img
                         alt="..."
-                        src={require("assets/img/brand/blue.png")}
+                        src={require("assets/img/brand/locus-logo.png")}
                       />
                     </Link>
                   </Col>
@@ -92,17 +91,7 @@ class AdminNavbar extends React.Component {
                   </Col>
                 </Row>
               </div>
-              <Nav className="mr-auto" navbar>
-                <NavItem>
-                  <NavLink to="/admin/dashboard" tag={Link}>
-                    <span className="nav-link-inner--text">Dashboard</span>
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink to="/auth/pricing" tag={Link}>
-                    <span className="nav-link-inner--text">Pricing</span>
-                  </NavLink>
-                </NavItem>
+              <Nav className="align-items-lg-center ml-lg-auto" navbar>
                 <NavItem>
                   <NavLink to="/auth/login" tag={Link}>
                     <span className="nav-link-inner--text">Login</span>
@@ -110,99 +99,35 @@ class AdminNavbar extends React.Component {
                 </NavItem>
                 <NavItem>
                   <NavLink to="/auth/register" tag={Link}>
-                    <span className="nav-link-inner--text">Register</span>
+                    <span className="nav-link-inner--text">Sign Up</span>
                   </NavLink>
                 </NavItem>
-                <NavItem>
-                  <NavLink to="/auth/lock" tag={Link}>
-                    <span className="nav-link-inner--text">Lock</span>
-                  </NavLink>
-                </NavItem>
-              </Nav>
-              <hr className="d-lg-none" />
-              <Nav className="align-items-lg-center ml-lg-auto" navbar>
-                <NavItem>
-                  <NavLink
-                    className="nav-link-icon"
-                    href="https://www.facebook.com/creativetim?ref=creative-tim"
-                    id="tooltip601201423"
-                    target="_blank"
-                  >
-                    <i className="fab fa-facebook-square" />
-                    <span className="nav-link-inner--text d-lg-none">
-                      Facebook
+                <hr className="d-none d-small" />
+                <NavItem className="d-none d-small-block">
+                  <NavLink onClick={()=>alert("Trying it")}>
+                    <span className="btn-inner--icon ml-2">
+                      <i className="ni ni ni-spaceship mr-2" />
                     </span>
+                    <span className="nav-link-inner--text">Try Demo</span>
                   </NavLink>
-                  <UncontrolledTooltip delay={0} target="tooltip601201423">
-                    Like us on Facebook
-                  </UncontrolledTooltip>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    className="nav-link-icon"
-                    href="https://www.instagram.com/creativetimofficial?ref=creative-tim"
-                    id="tooltip871243015"
-                    target="_blank"
-                  >
-                    <i className="fab fa-instagram" />
-                    <span className="nav-link-inner--text d-lg-none">
-                      Instagram
-                    </span>
-                  </NavLink>
-                  <UncontrolledTooltip delay={0} target="tooltip871243015">
-                    Follow us on Instagram
-                  </UncontrolledTooltip>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    className="nav-link-icon"
-                    href="https://twitter.com/creativetim?ref=creative-tim"
-                    id="tooltip366258619"
-                    target="_blank"
-                  >
-                    <i className="fab fa-twitter-square" />
-                    <span className="nav-link-inner--text d-lg-none">
-                      Twitter
-                    </span>
-                  </NavLink>
-                  <UncontrolledTooltip delay={0} target="tooltip366258619">
-                    Follow us on Twitter
-                  </UncontrolledTooltip>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    className="nav-link-icon"
-                    href="https://github.com/creativetimofficial?ref=creative-tim"
-                    id="tooltip931502898"
-                    target="_blank"
-                  >
-                    <i className="fab fa-github" />
-                    <span className="nav-link-inner--text d-lg-none">
-                      Github
-                    </span>
-                  </NavLink>
-                  <UncontrolledTooltip delay={0} target="tooltip931502898">
-                    Star us on Github
-                  </UncontrolledTooltip>
                 </NavItem>
                 <NavItem className="d-none d-lg-block ml-lg-4">
                   <Button
                     className="btn-neutral btn-icon"
                     color="default"
-                    href="https://www.creative-tim.com/product/argon-dashboard-pro-react?ref=adpr-auth-navbar"
-                    target="_blank"
+                    onClick={(e) => e.preventDefault()}
                   >
                     <span className="btn-inner--icon">
-                      <i className="fas fa-shopping-cart mr-2" />
+                      <i className="ni ni ni-spaceship mr-2" />
                     </span>
-                    <span className="nav-link-inner--text">Purchase now</span>
+                    <span className="nav-link-inner--text">Try Demo</span>
                   </Button>
                 </NavItem>
               </Nav>
             </UncontrolledCollapse>
           </Container>
         </Navbar>
-      </>
+      </Fragment>
     );
   }
 }

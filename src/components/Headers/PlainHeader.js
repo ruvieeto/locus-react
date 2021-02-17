@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import {
   Breadcrumb,
   BreadcrumbItem,
-  Button,
   Container,
   Row,
   Col
@@ -15,7 +14,7 @@ class PlainHeader extends Component {
   render() {
     return (
       <Fragment>
-        <div className="header header-dark bg-gradient-info pb-6 content__title content__title--calendar">
+        <div className="header header-dark bg-gradient-info pb-6 drop-margin content__title content__title--calendar">
           <Container fluid>
             <div className="header-body">
               <Row className="align-items-center py-4">

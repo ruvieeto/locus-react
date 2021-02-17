@@ -1,20 +1,5 @@
-/*!
-
-=========================================================
-* Argon Dashboard PRO React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React, { Fragment, Component } from "react";
+import PropTypes from 'prop-types';
 // nodejs library that concatenates classes
 import classnames from "classnames";
 // reactstrap components
@@ -37,7 +22,11 @@ import {
 import AuthHeader from "components/Headers/AuthHeader.js";
 import { Link } from 'react-router-dom';
 
-import axios from 'axios';
+// Redux
+import { connect } from 'react-redux';
+import { signupUser, clearUserErrors } from '../../../redux/actions/userActions';
+
+import logo from '../../../assets/img/brand/locus-logo.png';
 
 class Register extends Component {
   constructor(){
@@ -48,29 +37,21 @@ class Register extends Component {
       handle: "",
       password: "",
       confirmPassword: "",
-      passwordStrength: "weak",
-      errors: {},
-      emailInvalid: false,
-      passwordInvalid: false,
-      confirmPasswordInvalid: false,
-      handleInvalid: false
+      passwordStrength: "weak"
     }
   }
 
   handleChange = (event) => {
     const { value, name } = event.target;
-    this.setState({
-      [name]: value,
-      errors: {},
-      emailInvalid: false,
-      passwordInvalid: false,
-      confirmPasswordInvalid: false,
-      handleInvalid: false
-    });
+    this.setState({ [name]: value });
+
+    if(this.props.UI.errors){
+      this.props.clearUserErrors();
+    }
   }
 
   checkPasswordStrength = (event) => {
-    const strong = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&amp;\*])(?=.{8,})");
+    const strong = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&amp;*])(?=.{8,})");
     const medium = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
 
     const password = event.target.value;
@@ -86,14 +67,6 @@ class Register extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({ 
-      loading: true,
-      errors: {},
-      emailInvalid: false,
-      passwordInvalid: false,
-      confirmPasswordInvalid: false,
-      handleInvalid: false
-    });
 
     const newUserData = {
       email: this.state.email,
@@ -102,93 +75,37 @@ class Register extends Component {
       handle: this.state.handle
     }
 
-    axios.post('/signup', newUserData)
-      .then(res => {
-        localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`);
-        this.setState({ loading: false });
-        this.props.history.push('/admin/dashboard');
-      })
-      .catch(err => {
-        this.setState({
-          errors: err.response.data,
-          loading: false
-        })
-
-        if(err.response.data.email){
-            this.setState({
-            emailInvalid: true
-          });
-        }
-        if(err.response.data.password){
-          this.setState({
-            passwordInvalid: true
-          });
-        }
-        if(err.response.data.confirmPassword){
-          this.setState({
-            confirmPasswordInvalid: true,
-            passwordInvalid: true // For both input fields have warning border
-          });
-        }
-        if(err.response.data.handle){
-          this.setState({
-            handleInvalid: true
-          });
-        }
-      })
+    this.props.signupUser(newUserData, this.props.history);
+  }
+  
+  componentWillUnmount(){
+    this.props.clearUserErrors();
+    document.documentElement.scrollTop = 0;
+    document.scrollingElement.scrollTop = 0;
   }
 
   render() {
-    const { errors, loading, passwordStrength } = this.state;
+    const { passwordStrength } = this.state;
+    const { UI: { loading, errors } } = this.props;
 
     return (
       <Fragment>
         <AuthHeader
           title="Create an account"
-          lead="Connect with your fellow techies and science geeks."
+          lead="Explore your interests and connect with fascinating people around the world."
         />
         <Container className="mt--8 pb-5">
           <Row className="justify-content-center">
             <Col lg="6" md="8">
               <Card className="bg-secondary border-0">
-                <CardHeader className="bg-transparent pb-5">
-                  <div className="text-muted text-center mt-2 mb-4">
-                    <small>Sign up with</small>
-                  </div>
-                  <div className="text-center">
-                    <Button
-                      className="btn-neutral btn-icon mr-4"
-                      color="default"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                    >
-                      <span className="btn-inner--icon mr-1">
-                        <img
-                          alt="..."
-                          src={require("assets/img/icons/common/github.svg")}
-                        />
-                      </span>
-                      <span className="btn-inner--text">Github</span>
-                    </Button>
-                    <Button
-                      className="btn-neutral btn-icon"
-                      color="default"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                    >
-                      <span className="btn-inner--icon mr-1">
-                        <img
-                          alt="..."
-                          src={require("assets/img/icons/common/google.svg")}
-                        />
-                      </span>
-                      <span className="btn-inner--text">Google</span>
-                    </Button>
+                <CardHeader className="bg-transparent pb-4 auth-form-header">
+                  <div>
+                    <img src={logo} alt="logo"/>
                   </div>
                 </CardHeader>
                 <CardBody className="px-lg-5 py-lg-5">
                   <div className="text-center text-muted mb-4">
-                    <small>Or sign up with credentials</small>
+                    <small>Sign up with credentials</small>
                   </div>
                   <Form role="form" onSubmit={this.handleSubmit} noValidate>
                     <FormGroup
@@ -197,7 +114,7 @@ class Register extends Component {
                       })}
                     >
                       <InputGroup className={classnames("input-group-merge input-group-alternative mb-3", {
-                        "is-invalid-input": this.state.handleInvalid
+                        "is-invalid-input": errors.handle
                       })}>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
@@ -226,7 +143,7 @@ class Register extends Component {
                       })}
                     >
                       <InputGroup className={classnames("input-group-merge input-group-alternative mb-3", {
-                        "is-invalid-input": this.state.emailInvalid
+                        "is-invalid-input": errors.email
                       })}>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
@@ -255,7 +172,7 @@ class Register extends Component {
                       })}
                     >
                       <InputGroup className={classnames("input-group-merge input-group-alternative", {
-                        "is-invalid-input": this.state.passwordInvalid
+                        "is-invalid-input": errors.confirmPassword || errors.password
                       })}>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
@@ -293,7 +210,7 @@ class Register extends Component {
                       })}
                     >
                       <InputGroup className={classnames("input-group-merge input-group-alternative", {
-                        "is-invalid-input": this.state.confirmPasswordInvalid
+                        "is-invalid-input": errors.confirmPassword
                       })}>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
@@ -393,4 +310,21 @@ class Register extends Component {
   }
 }
 
-export default Register;
+Register.propTypes = {
+  user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
+  signupUser: PropTypes.func.isRequired,
+  clearUserErrors: PropTypes.func.isRequired
+}
+
+export const mapStateToProps = (state) => ({
+  user: state.user,
+  UI: state.UI
+})
+
+export const mapActionsToProps = {
+  signupUser,
+  clearUserErrors
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(Register);

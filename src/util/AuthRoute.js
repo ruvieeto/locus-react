@@ -1,12 +1,16 @@
 import React, { Fragment } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-const AuthRoute = ({ component: Component, authenticated, ...rest }) =>{
+import tokenValidator from './tokenValidator';
+
+const AuthRoute = ({ component: Component, ...rest }) =>{
+	const validToken = tokenValidator();
+
 	return(
 		<Fragment>
 			<Route 
 			{...rest} 
-			render={(props) => authenticated === true ? <Redirect to="/admin/dashboard" /> : <Component {...props} />}
+			render={(props) => validToken === true ? <Redirect to="/admin/dashboard" /> : <Component {...props} />}
 			/>
 		</Fragment>
 		)

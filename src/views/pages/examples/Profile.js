@@ -1,20 +1,11 @@
-/*!
+import React, { Component, Fragment } from "react";
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-=========================================================
-* Argon Dashboard PRO React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React from "react";
+// Redux
+import { connect } from 'react-redux';
+import { uploadImage, editUserDetails } from '../../../redux/actions/userActions';
+import { clearPostClick } from '../../../redux/actions/dataActions';
 
 // reactstrap components
 import {
@@ -23,311 +14,227 @@ import {
   CardHeader,
   CardBody,
   CardImg,
+  CardImgOverlay,
   CardTitle,
+  CardText,
   FormGroup,
   Form,
   Input,
   ListGroupItem,
   ListGroup,
-  Progress,
   Container,
   Row,
   Col
 } from "reactstrap";
 // core components
 import ProfileHeader from "components/Headers/ProfileHeader.js";
+import AccountSkeleton from "./AccountSkeleton";
 
-class Profile extends React.Component {
+class Profile extends Component {
+  constructor(){
+    super();
+
+    this.state = {
+      imageFile: null,
+      emptyImage: true,
+      previewImage: null,
+      bio: "",
+      location: "",
+      website: ""
+    }
+  }
+
+  clearForm = () => {
+    const { bio, location, website } = this.props.user.credentials;
+
+    const bioInput = document.getElementById("input-bio");
+    const locationInput = document.getElementById("input-location");
+    const websiteInput = document.getElementById("input-website");
+
+    if(bio){
+      bioInput.value = bio;
+    } else{
+      bioInput.value = "";
+    }
+
+    if(location){
+      locationInput.value = location;
+    } else{
+      locationInput.value = "";
+    }
+
+    if(website){
+      websiteInput.value = website;
+    }else{
+      websiteInput.value = "";
+    }
+
+    this.setState({
+      bio: "",
+      location: "",
+      website: ""
+    });
+
+    this.removeImage();
+  }
+
+  removeImage = () => {
+    this.setState({ 
+      emptyImage: true,
+      previewImage: null,
+      imageFile: null
+    });
+
+    const imageInput = document.getElementById("profileImageInputField");
+    if(imageInput){
+      imageInput.value = "";
+    }
+  }
+
+  handleImageChange = (event) => {
+    const inputField = event.target;
+    const image = inputField.files[0];
+
+    // Creating preview image
+    if(image){
+      this.setState({
+          emptyImage: false,
+          previewImage: URL.createObjectURL(image),
+          imageFile: image
+        });
+    }
+    else{
+      this.setState({ 
+        emptyImage: true,
+        previewImage: null,
+        imageFile: null
+      });
+    }
+  }
+
+  handleInputChange = (event) =>{
+    const { value, name } = event.target;
+
+    this.setState({
+      [name]: value
+    })
+  }
+
+  handleSubmit = () => {
+    const { imageFile, bio, website, location } = this.state;
+
+    // Preparing image file for upload 
+    if(imageFile){
+      const formData = new FormData();
+      formData.append('image', imageFile, imageFile.name);
+
+      // send image to server
+      this.props.uploadImage(formData);
+      this.setState({ 
+        emptyImage: true,
+        previewImage: null,
+        imageFile: null
+      });
+    }
+
+    // Update other user details
+    if(bio || website || location){
+      this.props.editUserDetails({
+        bio, 
+        website, 
+        location
+      });
+    }
+  }
+  
+  componentDidMount(props){
+    this.props.clearPostClick();
+  }
+
   render() {
+    const { user: { loading } } = this.props;
+
+    if(loading){
+      return (
+        <Fragment>
+          <ProfileHeader handle={"there"}/>
+          <AccountSkeleton />
+        </Fragment>
+        )
+    }
+
+    const {
+      user: { 
+        credentials: { handle, website, bio, imgUrl, location, email }
+      }
+    } = this.props;
+
     return (
-      <>
-        <ProfileHeader />
+      <Fragment>
+        <ProfileHeader handle={handle}/>
         <Container className="mt--6" fluid>
           <Row>
             <Col className="order-xl-2" xl="4">
-              <Card className="card-profile">
-                <CardImg
-                  alt="..."
-                  src={require("assets/img/theme/img-1-1000x600.jpg")}
-                  top
-                />
-                <Row className="justify-content-center">
-                  <Col className="order-lg-2" lg="3">
-                    <div className="card-profile-image">
-                      <a href="#pablo" onClick={e => e.preventDefault()}>
+
+            {/*Working Remotely card*/}
+              <Card>
+                <CardBody>
+                  <Row className="align-items-center">
+                    <Col className="col-auto">
+                      <Link 
+                        to={`/users/${handle}`}
+                        className="avatar avatar-xl rounded-circle"
+                      >
                         <img
                           alt="..."
-                          className="rounded-circle"
-                          src={require("assets/img/theme/team-4.jpg")}
+                          src={imgUrl}
                         />
-                      </a>
-                    </div>
-                  </Col>
-                </Row>
-                <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                  <div className="d-flex justify-content-between">
-                    <Button
-                      className="mr-4"
-                      color="info"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                      size="sm"
-                    >
-                      Connect
-                    </Button>
-                    <Button
-                      className="float-right"
-                      color="default"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                      size="sm"
-                    >
-                      Message
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardBody className="pt-0">
-                  <Row>
-                    <div className="col">
-                      <div className="card-profile-stats d-flex justify-content-center">
-                        <div>
-                          <span className="heading">22</span>
-                          <span className="description">Friends</span>
-                        </div>
-                        <div>
-                          <span className="heading">10</span>
-                          <span className="description">Photos</span>
-                        </div>
-                        <div>
-                          <span className="heading">89</span>
-                          <span className="description">Comments</span>
-                        </div>
-                      </div>
+                      </Link>
+                    </Col>
+                    <div className="col ml--2">
+                      <h4 className="mb-0">
+                        <Link 
+                        to={`/users/${handle}`}>
+                          @{handle}
+                        </Link>
+                      </h4>
+                      <p className="text-sm text-muted mb-0">
+                        {bio}
+                      </p>
+                      <span className="text-success mr-1">●</span>
+                      <small>Active</small>
                     </div>
                   </Row>
-                  <div className="text-center">
-                    <h5 className="h3">
-                      Jessica Jones
-                      <span className="font-weight-light">, 27</span>
-                    </h5>
-                    <div className="h5 font-weight-300">
-                      <i className="ni location_pin mr-2" />
-                      Bucharest, Romania
-                    </div>
-                    <div className="h5 mt-4">
-                      <i className="ni business_briefcase-24 mr-2" />
-                      Solution Manager - Creative Tim Officer
-                    </div>
-                    <div>
-                      <i className="ni education_hat mr-2" />
-                      University of Computer Science
-                    </div>
+                </CardBody>
+              </Card>
+
+              {/* Photo background card */}
+              <Card className="bg-dark text-white border-0">
+                <CardImg
+                  alt="..."
+                  src={require("assets/img/theme/pattern4.jpg")}
+                />
+                <CardImgOverlay className="d-flex align-items-center">
+                  <div>
+                    <CardTitle className="h2 text-white mb-2">
+                      Glad you're here!
+                    </CardTitle>
+                    <CardText>
+                      It's awesome having you as part of the Locus family!
+                      Add as little or as much information
+                      so others can connect with you.
+                    </CardText>
+                    <CardText className="text-sm font-weight-bold">
+                      &hearts; The Locus Team
+                    </CardText>
                   </div>
-                </CardBody>
+                </CardImgOverlay>
               </Card>
 
-              <Card>
-                <CardHeader>
-                  <h5 className="h3 mb-0">Progress track</h5>
-                </CardHeader>
-
-                <CardBody>
-                  <ListGroup className="list my--3" flush>
-                    <ListGroupItem className="px-0">
-                      <Row className="align-items-center">
-                        <Col className="col-auto">
-                          <a
-                            className="avatar rounded-circle"
-                            href="#pablo"
-                            onClick={e => e.preventDefault()}
-                          >
-                            <img
-                              alt="..."
-                              src={require("assets/img/theme/bootstrap.jpg")}
-                            />
-                          </a>
-                        </Col>
-                        <div className="col">
-                          <h5>Argon Design System</h5>
-                          <Progress
-                            className="progress-xs mb-0"
-                            max="100"
-                            value="60"
-                            color="warning"
-                          />
-                        </div>
-                      </Row>
-                    </ListGroupItem>
-                    <ListGroupItem className="px-0">
-                      <Row className="align-items-center">
-                        <Col className="col-auto">
-                          <a
-                            className="avatar rounded-circle"
-                            href="#pablo"
-                            onClick={e => e.preventDefault()}
-                          >
-                            <img
-                              alt="..."
-                              src={require("assets/img/theme/angular.jpg")}
-                            />
-                          </a>
-                        </Col>
-                        <div className="col">
-                          <h5>Angular Now UI Kit PRO</h5>
-                          <Progress
-                            className="progress-xs mb-0"
-                            max="100"
-                            value="100"
-                            color="success"
-                          />
-                        </div>
-                      </Row>
-                    </ListGroupItem>
-                    <ListGroupItem className="px-0">
-                      <Row className="align-items-center">
-                        <Col className="col-auto">
-                          <a
-                            className="avatar rounded-circle"
-                            href="#pablo"
-                            onClick={e => e.preventDefault()}
-                          >
-                            <img
-                              alt="..."
-                              src={require("assets/img/theme/sketch.jpg")}
-                            />
-                          </a>
-                        </Col>
-                        <div className="col">
-                          <h5>Black Dashboard</h5>
-                          <Progress
-                            className="progress-xs mb-0"
-                            max="100"
-                            value="72"
-                            color="danger"
-                          />
-                        </div>
-                      </Row>
-                    </ListGroupItem>
-                    <ListGroupItem className="px-0">
-                      <Row className="align-items-center">
-                        <Col className="col-auto">
-                          <a
-                            className="avatar rounded-circle"
-                            href="#pablo"
-                            onClick={e => e.preventDefault()}
-                          >
-                            <img
-                              alt="..."
-                              src={require("assets/img/theme/react.jpg")}
-                            />
-                          </a>
-                        </Col>
-                        <div className="col">
-                          <h5>React Material Dashboard</h5>
-                          <Progress
-                            className="progress-xs mb-0"
-                            max="100"
-                            value="90"
-                            color="info"
-                          />
-                        </div>
-                      </Row>
-                    </ListGroupItem>
-                    <ListGroupItem className="px-0">
-                      <Row className="align-items-center">
-                        <Col className="col-auto">
-                          <a
-                            className="avatar rounded-circle"
-                            href="#pablo"
-                            onClick={e => e.preventDefault()}
-                          >
-                            <img
-                              alt="..."
-                              src={require("assets/img/theme/vue.jpg")}
-                            />
-                          </a>
-                        </Col>
-                        <div className="col">
-                          <h5>Vue Paper UI Kit PRO</h5>
-                          <Progress
-                            className="progress-xs mb-0"
-                            max="100"
-                            value="100"
-                            color="success"
-                          />
-                        </div>
-                      </Row>
-                    </ListGroupItem>
-                  </ListGroup>
-                </CardBody>
-              </Card>
             </Col>
             <Col className="order-xl-1" xl="8">
-              <Row>
-                <Col lg="6">
-                  <Card className="bg-gradient-success border-0">
-                    <CardBody>
-                      <Row>
-                        <div className="col">
-                          <CardTitle
-                            className="text-uppercase text-muted mb-0 text-white"
-                            tag="h5"
-                          >
-                            Total traffic
-                          </CardTitle>
-                          <span className="h2 font-weight-bold mb-0 text-white">
-                            350,897
-                          </span>
-                        </div>
-                        <Col className="col-auto">
-                          <div className="icon icon-shape bg-white text-dark rounded-circle shadow">
-                            <i className="ni ni-active-40" />
-                          </div>
-                        </Col>
-                      </Row>
-                      <p className="mt-3 mb-0 text-sm">
-                        <span className="text-white mr-2">
-                          <i className="fa fa-arrow-up" />
-                          3.48%
-                        </span>
-                        <span className="text-nowrap text-light">
-                          Since last month
-                        </span>
-                      </p>
-                    </CardBody>
-                  </Card>
-                </Col>
-                <Col lg="6">
-                  <Card className="bg-gradient-danger border-0" tag="h5">
-                    <CardBody>
-                      <Row>
-                        <div className="col">
-                          <CardTitle className="text-uppercase text-muted mb-0 text-white">
-                            Performance
-                          </CardTitle>
-                          <span className="h2 font-weight-bold mb-0 text-white">
-                            49,65%
-                          </span>
-                        </div>
-                        <Col className="col-auto">
-                          <div className="icon icon-shape bg-white text-dark rounded-circle shadow">
-                            <i className="ni ni-spaceship" />
-                          </div>
-                        </Col>
-                      </Row>
-                      <p className="mt-3 mb-0 text-sm">
-                        <span className="text-white mr-2">
-                          <i className="fa fa-arrow-up" />
-                          3.48%
-                        </span>
-                        <span className="text-nowrap text-light">
-                          Since last month
-                        </span>
-                      </p>
-                    </CardBody>
-                  </Card>
-                </Col>
-              </Row>
+
+            {/*Main profile section*/}
               <Card>
                 <CardHeader>
                   <Row className="align-items-center">
@@ -337,12 +244,21 @@ class Profile extends React.Component {
                     <Col className="text-right" xs="4">
                       <Button
                         color="primary"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
+                        onClick={this.handleSubmit}
                         size="sm"
                       >
-                        Settings
+                        Save
                       </Button>
+                      { (this.state.bio || this.state.location || this.state.website || !this.state.emptyImage) ?(
+                        <Button
+                          color="danger"
+                          onClick={this.clearForm}
+                          size="sm"
+                        >
+                          Cancel
+                        </Button>
+                        ):(null)
+                    }
                     </Col>
                   </Row>
                 </CardHeader>
@@ -362,10 +278,11 @@ class Profile extends React.Component {
                               Username
                             </label>
                             <Input
-                              defaultValue="lucky.jesse"
+                              defaultValue={handle}
                               id="input-username"
                               placeholder="Username"
                               type="text"
+                              readOnly="readonly"
                             />
                           </FormGroup>
                         </Col>
@@ -378,117 +295,58 @@ class Profile extends React.Component {
                               Email address
                             </label>
                             <Input
+                              defaultValue={email}
                               id="input-email"
-                              placeholder="jesse@example.com"
+                              placeholder="you@email.com"
                               type="email"
+                              readOnly="readonly"
                             />
                           </FormGroup>
                         </Col>
                       </Row>
-                      <Row>
-                        <Col lg="6">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-first-name"
-                            >
-                              First name
-                            </label>
-                            <Input
-                              defaultValue="Lucky"
-                              id="input-first-name"
-                              placeholder="First name"
-                              type="text"
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col lg="6">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-last-name"
-                            >
-                              Last name
-                            </label>
-                            <Input
-                              defaultValue="Jesse"
-                              id="input-last-name"
-                              placeholder="Last name"
-                              type="text"
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
+                      
                     </div>
                     <hr className="my-4" />
 
                     <h6 className="heading-small text-muted mb-4">
-                      Contact information
+                      Other information
                     </h6>
                     <div className="pl-lg-4">
+
                       <Row>
-                        <Col md="12">
+                        <Col lg="6">
                           <FormGroup>
                             <label
                               className="form-control-label"
-                              htmlFor="input-address"
+                              htmlFor="input-location"
                             >
-                              Address
+                              Location
                             </label>
                             <Input
-                              defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                              id="input-address"
-                              placeholder="Home Address"
+                              defaultValue={location}
+                              id="input-location"
+                              placeholder="Location"
                               type="text"
+                              name="location"
+                              onChange={this.handleInputChange}
                             />
                           </FormGroup>
                         </Col>
-                      </Row>
-                      <Row>
-                        <Col lg="4">
+                        <Col lg="6">
                           <FormGroup>
                             <label
                               className="form-control-label"
-                              htmlFor="input-city"
+                              htmlFor="input-website"
                             >
-                              City
+                              Website
                             </label>
                             <Input
-                              defaultValue="New York"
-                              id="input-city"
-                              placeholder="City"
+                              defaultValue={website}
+                              id="input-website"
+                              placeholder="https://www.example.com"
                               type="text"
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col lg="4">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-country"
-                            >
-                              Country
-                            </label>
-                            <Input
-                              defaultValue="United States"
-                              id="input-country"
-                              placeholder="Country"
-                              type="text"
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col lg="4">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-country"
-                            >
-                              Postal code
-                            </label>
-                            <Input
-                              id="input-postal-code"
-                              placeholder="Postal code"
-                              type="number"
+                              name="website"
+                              onChange={this.handleInputChange}
                             />
                           </FormGroup>
                         </Col>
@@ -496,27 +354,113 @@ class Profile extends React.Component {
                     </div>
                     <hr className="my-4" />
 
-                    <h6 className="heading-small text-muted mb-4">About me</h6>
+                    <h6 className="heading-small text-muted mb-4">Bio</h6>
                     <div className="pl-lg-4">
                       <FormGroup>
-                        <label className="form-control-label">About Me</label>
+                        <label className="form-control-label">About me</label>
                         <Input
-                          placeholder="A few words about you ..."
+                          placeholder="Tell others about yourself in a few words ..."
                           rows="4"
                           type="textarea"
-                          defaultValue="A beautiful premium dashboard for Bootstrap 4."
+                          defaultValue={bio}
+                          name="bio"
+                          id="input-bio"
+                          onChange={this.handleInputChange}
                         />
                       </FormGroup>
                     </div>
+
+                    <hr className="my-4" />
+                    <h6 className="heading-small text-muted mb-4">Profile Picture</h6>
+                    <FormGroup>
+
+                    {/* Image Input*/}
+                    <div className="custom-file">
+                      <input
+                        className="custom-file-input"
+                        id="profileImageInputField"
+                        type="file"
+                        onChange={this.handleImageChange}
+                        accept="image/*"
+                      />
+                      <label
+                        className="custom-file-label"
+                        htmlFor="profileImageInputField"
+                      >
+                        Choose file
+                      </label>
+                    </div>
+
+                  {
+                    !this.state.emptyImage ?
+                    (<ListGroup
+                        className=" dz-preview dz-preview-multiple list-group-lg"
+                        flush
+                      >
+                        <ListGroupItem className=" px-0">
+                          <Row className=" align-items-center">
+                             <Col className=" col-auto">
+                              <div className=" avatar" id="previewImageContainer">
+                                <img
+                                  alt="..."
+                                  className=" avatar-img rounded"
+                                  data-dz-thumbnail
+                                  src={this.state.previewImage}
+                                />
+                              </div>
+                            </Col>
+                            <div className=" col ml--3">
+                              <h4 className=" mb-1" data-dz-name>
+                                ...
+                              </h4>
+                              <p
+                                className=" small text-muted mb-0"
+                                data-dz-size
+                              >
+                                ...
+                              </p>
+                            </div>
+
+                            <Col className=" col-auto">
+                              <Button size="sm" color="danger" data-dz-remove onClick={this.removeImage}>
+                                <i className="fas fa-trash" />
+                                {` Clear`}
+                              </Button>
+                            </Col>
+                          </Row>
+                        </ListGroupItem>
+                      </ListGroup>)
+                    :
+                    (null)
+                  }
+
+                    </FormGroup>
                   </Form>
                 </CardBody>
               </Card>
             </Col>
           </Row>
         </Container>
-      </>
+      </Fragment>
     );
   }
 }
 
-export default Profile;
+const mapStateToProps = (state) => ({
+  user: state.user
+});
+
+const mapActionsToProps = {
+  uploadImage,
+  editUserDetails,
+  clearPostClick
+};
+
+Profile.propTypes = {
+  user: PropTypes.object.isRequired,
+  uploadImage: PropTypes.func.isRequired,
+  editUserDetails: PropTypes.func.isRequired,
+  clearPostClick: PropTypes.func.isRequired
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(Profile);

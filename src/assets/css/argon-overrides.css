@@ -117,6 +117,16 @@
     from {transform: rotate(0deg);}
     to {transform: rotate(360deg);}
 }
+
+.html-spinner-home{
+  display: inline-block;
+  width: 19px !important;
+  height: 19px !important;
+  border:2px solid #00006655 !important;
+  border-top:2px solid #000066dd !important;
+  padding: 0px;
+  margin: 0 10px -4px 0;
+}
 /* End Loading Spinner */
 
 .nochange, .nochange:hover, .nochange:visited {
@@ -366,12 +376,9 @@ img.avatar {
 .nav-hover:hover{
   cursor: pointer;
 }
-.html-spinner-home{
-  display: inline-block;
-  width: 19px !important;
-  height: 19px !important;
-  border:2px solid #00006655 !important;
-  border-top:2px solid #000066dd !important;
-  padding: 0px;
-  margin: 0 10px -4px 0;
+
+@media (max-width: 991.98px){
+  .btn-inner--icon-home {
+    color: var(--blue);
+  }
 }

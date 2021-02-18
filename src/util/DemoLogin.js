@@ -88,7 +88,7 @@ class DemoLogin extends Component {
 		        color="default"
 		        onClick={this.handleLogin}
 		    >
-		        <span className="btn-inner--icon">
+		        <span className="btn-inner--icon btn-inner--icon-home">
 		          {
 		          	this.state.loading ? (
 		          	<div className="html-spinner html-spinner-home"></div>

@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 
 // plugins styles from node_modules
-import "react-notification-alert/dist/animate.css";
 import "react-perfect-scrollbar/dist/css/styles.css";
 // plugins styles downloaded
 import "assets/vendor/sweetalert2/dist/sweetalert2.min.css";

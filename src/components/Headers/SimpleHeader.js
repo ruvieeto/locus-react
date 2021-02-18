@@ -1,19 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard PRO React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React, { Fragment } from "react";
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
@@ -27,7 +11,7 @@ import {
   Col
 } from "reactstrap";
 
-class TimelineHeader extends React.Component {
+class SimpleHeader extends React.Component {
   render() {
     return (
       <Fragment>
@@ -75,9 +59,9 @@ class TimelineHeader extends React.Component {
   }
 }
 
-TimelineHeader.propTypes = {
+SimpleHeader.propTypes = {
   name: PropTypes.string,
   parentName: PropTypes.string
 };
 
-export default TimelineHeader;
+export default SimpleHeader;

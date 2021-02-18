@@ -1,19 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard PRO React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React, { Fragment, Component } from "react";
 // react library for routing
 import { Route, Switch, Redirect } from "react-router-dom";
@@ -22,12 +6,12 @@ import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
-import Dashboard from "views/pages/dashboards/Dashboard.js";
-import Notifications from "views/pages/components/Notifications.js";
-import Profile from "views/pages/examples/Profile.js";
+import HomeFeed from "views/pages/HomeFeed.js";
+import Notifications from "views/pages/Notifications.js";
+import Account from "views/pages/Account.js";
 
 // User Pages Route
-import User from "../views/pages/dashboards/User.js";
+import User from "../views/pages/User.js";
 
 import routes from "routes.js";
 
@@ -102,8 +86,7 @@ class Admin extends Component {
           toggleSidenav={this.toggleSidenav}
           sidenavOpen={this.state.sidenavOpen}
           logo={{
-            innerLink: "/admin/dashboard",
-            // innerLink: "/",
+            innerLink: "/app/feed",
             imgSrc: require("assets/img/brand/locus-logo.png"),
             imgAlt: "Locus Logo"
           }}
@@ -121,14 +104,14 @@ class Admin extends Component {
             brandText={this.getBrandText(this.props.location.pathname)}
           />
           <Switch>
-            <Route exact path="/admin/dashboard" render={(props) => <Dashboard {...props} key={Date.now()} />} />
+            <Route exact path="/home/feed" render={(props) => <HomeFeed {...props} key={Date.now()} />} />
             <Route exact path="/admin/notifications" render={(props) => <Notifications {...props} key={Date.now()} />} />
-            <Route exact path="/admin/profile" render={(props) => <Profile {...props} key={Date.now()} />} />
+            <Route exact path="/admin/account" render={(props) => <Account {...props} key={Date.now()} />} />
             <Route exact path="/users/:handle" render={(props) => <User {...props} key={Date.now()} />} />
             <Route exact path="/users/:handle/post/:postId" render={(props) => <User {...props} key={Date.now()} />} />
             {/* Keys needs passed in so component is unmounted and remounted 
             when navigating from the one component to the same component */}
-            <Redirect from="*" to="/admin/dashboard" />
+            <Redirect from="*" to="/home/feed" />
           </Switch>
           <AdminFooter />
         </div>

@@ -1,19 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard PRO React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React, { Fragment } from "react";
 // nodejs library that concatenates classes
 import classnames from "classnames";
@@ -100,7 +84,7 @@ class AdminNavbar extends React.Component {
 
               {/*Options dropdown start*/}
               <Nav className="align-items-center ml-auto ml-md-0" navbar>
-                <UncontrolledDropdown nav>
+                <UncontrolledDropdown nav className="nav-hover">
                   <DropdownToggle className="nav-link pr-0" color="" tag="a">
                     <Media className="align-items-center">
                       <span className="avatar avatar-sm rounded-circle">
@@ -126,7 +110,7 @@ class AdminNavbar extends React.Component {
                         <span>My profile</span>
                       </DropdownItem>
                     </Link>
-                    <Link to={`/admin/profile`}>
+                    <Link to={`/admin/account`}>
                       <DropdownItem>
                         <i className="ni ni-settings-gear-65" />
                         <span>Edit account</span>

@@ -24,9 +24,9 @@ import { Link } from 'react-router-dom';
 
 // Redux
 import { connect } from 'react-redux';
-import { signupUser, clearUserErrors } from '../../../redux/actions/userActions';
+import { signupUser, clearUserErrors } from '../../redux/actions/userActions';
 
-import logo from '../../../assets/img/brand/locus-logo.png';
+import logo from '../../assets/img/brand/locus-logo.png';
 
 class Register extends Component {
   constructor(){

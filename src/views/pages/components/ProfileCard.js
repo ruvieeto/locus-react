@@ -70,7 +70,7 @@ class ProfileCard extends Component{
               color="default"
               size="sm"
             >
-              <Link to="/admin/profile" className="nochange">
+              <Link to="/admin/account" className="nochange">
                 Edit
               </Link>
             </Button>

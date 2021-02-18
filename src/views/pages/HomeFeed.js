@@ -9,8 +9,8 @@ import {
 
 // core components
 import PlainHeader from "components/Headers/PlainHeader.js";
-import RecentPosts from './RecentPosts';
-import ProfileCard from '../components/ProfileCard';
+import RecentPosts from './components/RecentPosts';
+import ProfileCard from './components/ProfileCard';
 
 class Dashboard extends Component {
   render() {

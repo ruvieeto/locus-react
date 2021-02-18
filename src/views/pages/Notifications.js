@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 
 // Redux
 import { connect } from 'react-redux';
-import { markNotificationsAsRead } from '../../../redux/actions/userActions';
-import { clearPostClick } from '../../../redux/actions/dataActions';
+import { markNotificationsAsRead } from '../../redux/actions/userActions';
+import { clearPostClick } from '../../redux/actions/dataActions';
 
 import {
   Card,
@@ -19,7 +19,7 @@ import {
 } from "reactstrap";
 // core components
 import PlainHeader from "components/Headers/PlainHeader.js";
-import NotificationsSkeleton from "./NotificationsSkeleton";
+import NotificationsSkeleton from "./components/NotificationsSkeleton";
 
 // Post date management
 import dayjs from 'dayjs';

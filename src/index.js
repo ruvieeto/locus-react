@@ -1,8 +1,6 @@
 /*!
-* Copyright 2020 - Ruvie Eto
 =========================================================
-* UI Kit: Argon Dashboard PRO React - v1.1.0
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
+* Copyright 2021 - Ruvie Eto (https://www.ruvieeto.com)
 =========================================================
 */
 import React from "react";

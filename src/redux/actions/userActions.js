@@ -21,7 +21,7 @@ export const loginUser = (user, history) => (dispatch) => {
         dispatch({ type: CLEAR_ERRORS });
 
         //redirect to home feed
-        history.push('/admin/dashboard');
+        history.push('/home/feed');
       })
       .catch(err => {
       	dispatch({
@@ -42,7 +42,7 @@ export const signupUser = (newUserData, history) => (dispatch) => {
         dispatch({ type: CLEAR_ERRORS });
 
         //redirect to home feed
-        history.push('/admin/dashboard');
+        history.push('/home/feed');
       })
       .catch(err => {
       	dispatch({

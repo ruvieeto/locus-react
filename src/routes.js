@@ -1,16 +1,16 @@
-import Dashboard from "views/pages/dashboards/Dashboard.js";
-import Login from "views/pages/examples/Login.js";
-import Notifications from "views/pages/components/Notifications.js";
-import Profile from "views/pages/examples/Profile.js";
-import Register from "views/pages/examples/Register.js";
+import HomeFeed from "views/pages/HomeFeed.js";
+import Login from "views/pages/Login.js";
+import Notifications from "views/pages/Notifications.js";
+import Account from "views/pages/Account.js";
+import Register from "views/pages/Register.js";
 
 const routes = [
   {
-    path: "/dashboard",
+    path: "/feed",
     name: "Home",
     icon: "ni ni-shop text-primary",
-    component: Dashboard,
-    layout: "/admin",
+    component: HomeFeed,
+    layout: "/home",
     sidebar: true
   },
   {
@@ -22,10 +22,10 @@ const routes = [
     sidebar: true
   },
   {
-    path: "/profile",
+    path: "/account",
     name: "Account",
     icon: "ni ni-ui-04 text-info",
-    component: Profile,
+    component: Account,
     layout: "/admin",
     sidebar: true
   },

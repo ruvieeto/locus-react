@@ -24,9 +24,9 @@ import { Link } from 'react-router-dom';
 
 // Redux
 import { connect } from 'react-redux';
-import { loginUser, clearUserErrors } from '../../../redux/actions/userActions';
+import { loginUser, clearUserErrors } from '../../redux/actions/userActions';
 
-import logo from '../../../assets/img/brand/locus-logo.png';
+import logo from '../../assets/img/brand/locus-logo.png';
 
 class Login extends Component {
   constructor(){
@@ -171,21 +171,12 @@ class Login extends Component {
                 </CardBody>
               </Card>
               <Row className="mt-3">
-                <Col xs="6">
-                  <a
-                    className="text-light"
-                    href="#pablo"
-                    onClick={e => e.preventDefault()}
-                  >
-                    <small>Forgot password?</small>
-                  </a>
-                </Col>
-                <Col className="text-right" xs="6">
+                <Col className="" xs="6">
                   <Link
                     className="text-light"
                     to="/auth/register"
                   >
-                    <small>Create new account</small>
+                    <small>Create a new account</small>
                   </Link>
                 </Col>
               </Row>

@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 
 // Redux
 import { connect } from 'react-redux';
-import { uploadImage, editUserDetails } from '../../../redux/actions/userActions';
-import { clearPostClick } from '../../../redux/actions/dataActions';
+import { uploadImage, editUserDetails } from '../../redux/actions/userActions';
+import { clearPostClick } from '../../redux/actions/dataActions';
 
 // reactstrap components
 import {
@@ -28,9 +28,9 @@ import {
 } from "reactstrap";
 // core components
 import ProfileHeader from "components/Headers/ProfileHeader.js";
-import AccountSkeleton from "./AccountSkeleton";
+import AccountSkeleton from "./components/AccountSkeleton";
 
-class Profile extends Component {
+class Account extends Component {
   constructor(){
     super();
 
@@ -456,11 +456,11 @@ const mapActionsToProps = {
   clearPostClick
 };
 
-Profile.propTypes = {
+Account.propTypes = {
   user: PropTypes.object.isRequired,
   uploadImage: PropTypes.func.isRequired,
   editUserDetails: PropTypes.func.isRequired,
   clearPostClick: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(Profile);
+export default connect(mapStateToProps, mapActionsToProps)(Account);

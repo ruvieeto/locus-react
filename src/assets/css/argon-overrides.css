@@ -362,3 +362,6 @@ img.avatar {
 .btn-no-ml{
   margin-left: 0px !important;
 }
+.nav-hover:hover{
+  cursor: pointer;
+}

@@ -26,7 +26,6 @@ class AccountSkeleton extends Component {
           <Row>
             <Col className="order-xl-2" xl="4">
 
-            {/*Working Remotely card*/}
               <Card>
                 <CardBody>
                   <Row className="align-items-center">

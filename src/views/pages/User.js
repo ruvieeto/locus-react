@@ -10,13 +10,13 @@ import {
 
 // core components
 import PlainHeader from "components/Headers/PlainHeader.js";
-import Postcard from '../components/Postcard';
-import UserProfileCard from '../components/UserProfileCard';
-import PostcardSkeleton from '../components/PostcardSkeleton';
+import Postcard from './components/Postcard';
+import UserProfileCard from './components/UserProfileCard';
+import PostcardSkeleton from './components/PostcardSkeleton';
 
 // Redux
 import { connect } from 'react-redux';
-import { getUserData, clearPostClick } from '../../../redux/actions/dataActions';
+import { getUserData, clearPostClick } from '../../redux/actions/dataActions';
 
 class User extends Component {
   constructor(props) {

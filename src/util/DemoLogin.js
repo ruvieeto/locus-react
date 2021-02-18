@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // reactstrap components
@@ -54,8 +54,6 @@ class DemoLogin extends Component {
 			<Button
 		        className="btn btn-neutral my-2"
 		        color="default"
-		        to="/admin/dashboard"
-		        tag={Link}
 		        onClick={this.handleLogin}
 		    >
 		        <span className="btn-inner--icon">

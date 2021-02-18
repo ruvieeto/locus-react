@@ -28,6 +28,8 @@ import { loginUser, clearUserErrors } from '../../redux/actions/userActions';
 
 import logo from '../../assets/img/brand/locus-logo.png';
 
+import resetSidebar from "../../util/resetSidebar";
+
 class Login extends Component {
   constructor(){
     super();
@@ -55,6 +57,10 @@ class Login extends Component {
     if(this.props.UI.errors){
       this.props.clearUserErrors();
     }
+  }
+
+  componentDidMount(){
+    resetSidebar();
   }
 
   componentWillUnmount(){

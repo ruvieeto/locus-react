@@ -28,6 +28,8 @@ import { signupUser, clearUserErrors } from '../../redux/actions/userActions';
 
 import logo from '../../assets/img/brand/locus-logo.png';
 
+import resetSidebar from "../../util/resetSidebar";
+
 class Register extends Component {
   constructor(){
     super();
@@ -78,6 +80,10 @@ class Register extends Component {
     this.props.signupUser(newUserData, this.props.history);
   }
   
+  componentDidMount(){
+    resetSidebar();
+  }
+
   componentWillUnmount(){
     this.props.clearUserErrors();
     document.documentElement.scrollTop = 0;

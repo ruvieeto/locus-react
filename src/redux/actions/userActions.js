@@ -27,7 +27,7 @@ export const loginUser = (user, history) => (dispatch) => {
       	dispatch({
       		type: SET_ERRORS,
       		payload: err.response.data
-      	})
+      	});
       })
 }
 

@@ -7,28 +7,54 @@ import PropTypes from 'prop-types';
 import { Button, NavLink } from "reactstrap";
 
 import { loginUser, logoutUser } from '../redux/actions/userActions';
-import tokenValidator from './tokenValidator';
 
 class DemoLogin extends Component {
-	handleLogin = (props) =>{
-		// logs out user if already logged in
-		if(tokenValidator()){
-			this.props.logoutUser();
+	constructor(){
+		super();
+		this.state={
+			loading: false
 		}
+	}
+	
+	asyncLogin = (data) => {
+		return new Promise((resolve, reject) => {
+	      this.props.loginUser(data, this.props.history);
+	    })
+	    .catch(()=>{
+			this.setState({ loading: false });
+		})
+	}
 
+	handleLogin = (props) =>{
 		const userData = {
       		email: "new@email.co.uk",
 	    	password: "123456"
 	    }
 
-    	this.props.loginUser(userData, this.props.history);
+		this.setState({ 
+			loading: true 
+		}, () => {
+			this.asyncLogin(userData)
+				.then(()=>{
+					this.setState({ loading: false });
+				})
+				.catch(()=>{
+					this.setState({ loading: false });
+				})
+		});
 	}
 	render(){
 		if(this.props.type === "navlink"){
 			return(
 				<NavLink onClick={this.handleLogin}>
                     <span className="btn-inner--icon ml-2">
-                      <i className="ni ni ni-spaceship mr-2" />
+                      {
+			          	this.state.loading ? (
+			          	<div className="html-spinner html-spinner-home"></div>
+			          	):(
+			          	<i className="ni ni ni-spaceship mr-2" />
+			          	)
+			        }
                     </span>
                     <span className="nav-link-inner--text">Try Demo</span>
                 </NavLink>
@@ -43,7 +69,13 @@ class DemoLogin extends Component {
                     onClick={this.handleLogin}
                 >
                     <span className="btn-inner--icon">
-                      <i className="ni ni ni-spaceship mr-2" />
+                    {
+			          	this.state.loading ? (
+			          	<div className="html-spinner html-spinner-home"></div>
+			          	):(
+			          	<i className="ni ni ni-spaceship mr-2" />
+			          	)
+			        }
                     </span>
                     <span className="nav-link-inner--text">Try Demo</span>
                 </Button>
@@ -57,9 +89,16 @@ class DemoLogin extends Component {
 		        onClick={this.handleLogin}
 		    >
 		        <span className="btn-inner--icon">
-		          <i className="ni ni ni-spaceship mr-2" />
+		          {
+		          	this.state.loading ? (
+		          	<div className="html-spinner html-spinner-home"></div>
+		          	):(
+		          	<i className="ni ni ni-spaceship mr-2" />
+		          	)
+		          }
 		        </span>
-		        <span>Try Demo</span>
+		        <span>Try Demo
+		        </span>
 		    </Button>
 		)
 	}

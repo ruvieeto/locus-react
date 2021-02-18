@@ -118,6 +118,7 @@
     to {transform: rotate(360deg);}
 }
 /* End Loading Spinner */
+
 .nochange, .nochange:hover, .nochange:visited {
   color: #fff;
 }
@@ -364,4 +365,13 @@ img.avatar {
 }
 .nav-hover:hover{
   cursor: pointer;
+}
+.html-spinner-home{
+  display: inline-block;
+  width: 19px !important;
+  height: 19px !important;
+  border:2px solid #00006655 !important;
+  border-top:2px solid #000066dd !important;
+  padding: 0px;
+  margin: 0 10px -4px 0;
 }

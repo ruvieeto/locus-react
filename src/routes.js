@@ -23,7 +23,7 @@ const routes = [
   },
   {
     path: "/account",
-    name: "Account",
+    name: "My Account",
     icon: "ni ni-ui-04 text-info",
     component: Account,
     layout: "/admin",

@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
 // react library for routing
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 // reactstrap components
-import { Button, Container, Row, Col } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
 import DemoLogin from '../../util/DemoLogin';
 
@@ -24,6 +24,7 @@ class IndexHeader extends Component {
                     </h2>
                     <div className="mt-5">
                       <DemoLogin />
+                      {/*
                       <Button
                         className="my-2"
                         color="default"
@@ -32,6 +33,7 @@ class IndexHeader extends Component {
                       >
                         Login
                       </Button>
+                      */}
                     </div>
                   </div>
                 </Col>

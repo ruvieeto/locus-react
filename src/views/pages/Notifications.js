@@ -40,6 +40,8 @@ class Notifications extends Component {
 
       this.props.markNotificationsAsRead(unreadNotificationsIds);
     }
+
+    this.props.clearPostClick();
   }
 
   render() {

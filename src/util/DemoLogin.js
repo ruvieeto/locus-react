@@ -97,8 +97,7 @@ class DemoLogin extends Component {
 		          	)
 		          }
 		        </span>
-		        <span>Try Demo
-		        </span>
+		        <span>Explore App</span>
 		    </Button>
 		)
 	}

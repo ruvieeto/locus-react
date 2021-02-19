@@ -151,6 +151,10 @@ class Account extends Component {
     this.props.clearPostClick();
   }
 
+  componentWillUnmount(props){
+    this.props.clearPostClick();
+  }
+
   render() {
     const { user: { loading } } = this.props;
 

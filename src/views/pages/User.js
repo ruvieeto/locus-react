@@ -9,7 +9,7 @@ import {
 } from "reactstrap";
 
 // core components
-import PlainHeader from "components/Headers/PlainHeader.js";
+import UserHeader from "components/Headers/UserHeader.js";
 import Postcard from './components/Postcard';
 import UserProfileCard from './components/UserProfileCard';
 import PostcardSkeleton from './components/PostcardSkeleton';
@@ -35,6 +35,10 @@ class User extends Component {
     if(postId){
       this.setState({ postIdParam: postId })
     }
+  }
+
+  componentWillUnmount(props){
+    this.props.clearPostClick();
   }
 
   render() {
@@ -72,14 +76,12 @@ class User extends Component {
 
     return (
       <Fragment>
-        <PlainHeader name="User Page" parentName="Profile" />
-        <Container className="mt--6" fluid>
-          <Row>
+        <UserHeader name="User Page" />
+        <Container className="mt--8" fluid>
+          <Row className="justify-content-center">
             <Col xl="8">
+            {posts !== null ? (<UserProfileCard handle={handle}/>) : null}
             {userPostsMarkup}
-            </Col>
-            <Col className="order-xl-2" xl="4">
-                {posts !== null ? (<UserProfileCard handle={handle}/>) : null}
             </Col>
           </Row>
         </Container>

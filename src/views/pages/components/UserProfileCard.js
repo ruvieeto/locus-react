@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -13,7 +13,6 @@ import {
   Button,
   Card,
   CardHeader,
-  CardImg,
   CardBody,
   Row,
   Col
@@ -43,22 +42,15 @@ class UserProfileCard extends Component{
     const { handle, createdAt, website, bio, imgUrl, location } = this.state.profile;
 
     return(
-      <Card className="card-profile card-profile-home">
-        <CardImg
-          alt="...Working?"
-          src={require("assets/img/theme/pattern.jpg")}
-          top
-        />
+      <Card className="card-profile">
         <Row className="justify-content-center">
           <Col className="order-lg-2" lg="3">
-            <div className="card-profile-image">
-              <Link to={`/users/${handle}`}>
+            <div className="card-profile-image user-page">
                 <img
                   alt="..."
-                  className="rounded-circle"
+                  className="rounded-circle user-page"
                   src={imgUrl}
                 />
-              </Link>
             </div>
           </Col>
         </Row>
@@ -95,16 +87,19 @@ class UserProfileCard extends Component{
                 <a href={website} target="_blank" rel="noopener noreferrer">{website}</a>
               </div>)
             }
-            {bio &&
-            (<div className="h5 description font-weight-300">
-              {bio}
-            </div>)
-            }
             {location &&
-            (<div className="h5 mt-4 font-weight-300">
+            (<div className="h5 mt-1 font-weight-300">
               <i className="ni ni-pin-3 mr-2" />
               {location}
             </div>)
+            }
+            {bio &&
+            (<Fragment>
+                <hr />
+                <div className="h5 description font-weight-300">
+                {bio}
+                </div>
+              </Fragment>)
             }
           
           </div>

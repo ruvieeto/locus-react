@@ -118,6 +118,13 @@
     to {transform: rotate(360deg);}
 }
 
+.html-spinner-home-2{
+  display: inline-block;
+  width: 19px !important;
+  height: 19px !important;
+  padding: 0px;
+  margin: 0 10px -4px 0;
+}
 .html-spinner-home{
   display: inline-block;
   width: 19px !important;
@@ -357,7 +364,11 @@ img.avatar {
   background-position: center;
   height: 100vh;
 }
-
+.landing-page-footer{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
 .landing-page-footer a.home-link{
   color: #ffffff77 !important;
 }
@@ -391,17 +402,13 @@ img.avatar {
 
 .card-profile-image img.user-page:hover {
   transform: translate(-50%, -50%) scale(1);
-  /*cursor: auto;*/
 }
 
 .user-header-image{
   min-height: 300px;
-  /*background-image: url("../img/theme/pattern.jpg");*/
   background-image: url("../img/theme/locus-beach.jpg");
   background-size: cover;
-  /*background-position: center top;*/
   background-position: 50% 40%;
-  /*filter: brightness(1.05);*/
 }
 .separator, .separator svg {
     position: absolute;
@@ -426,4 +433,43 @@ img.avatar {
 }
 .fill-user{
   fill: #f8f9fe;
+}
+.side-note{
+  font-family: 'Shadows Into Light', cursive;
+  font-size: 18px;
+}
+.side-note-top{
+  font-family: 'Shadows Into Light', cursive;
+  font-size: 18px;
+  vertical-align: top;
+}
+div.demo-arrow-left{
+  display: inline-block;
+  color: #fff;
+  font-size: 26px;
+  margin-left: 60px;
+  transform: scaleX(-1);
+}
+.special-button{
+  background-color: #ffffff33;
+
+  color: #32325d99;
+  border: 1px solid #32325d99;
+  
+  color: #fffffff2;
+  border: 1px solid #ffffffbb;
+  
+  font-weight: 400;
+  backdrop-filter: blur(8px);
+}
+.special-button:hover, .special-button:active{
+  background-color: #ffffff33 !important;  
+  color: #fffffff2;
+  border: 1px solid #ffffffbb !important;
+  font-weight: 400;
+  backdrop-filter: blur(8px);
+}
+
+.special-button:active{
+  background-color: #ffffff77 !important; 
 }

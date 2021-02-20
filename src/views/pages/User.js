@@ -8,6 +8,9 @@ import {
   Col
 } from "reactstrap";
 
+// react plugin for creating alert notifications
+import NotificationAlert from "react-notification-alert";
+
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
 import Postcard from './components/Postcard';
@@ -16,7 +19,7 @@ import PostcardSkeleton from './components/PostcardSkeleton';
 
 // Redux
 import { connect } from 'react-redux';
-import { getUserData, clearPostClick } from '../../redux/actions/dataActions';
+import { getUserData, clearPostClick, resetDeleteNotification } from '../../redux/actions/dataActions';
 
 class User extends Component {
   constructor(props) {
@@ -27,6 +30,28 @@ class User extends Component {
     };
   }
 
+  deleteNotification = () =>{
+    // Delete Notification
+    let options = {
+      place: "bc",
+      message: (
+        <div className="alert-text">
+          <span data-notify="message">
+            {" "}
+            Post deleted
+          </span>
+        </div>
+      ),
+      type: "danger",
+      icon: "ni ni-fat-delete",
+      autoDismiss: 3
+    };
+    this.refs.notificationAlert.notificationAlert(options);
+
+    // Reset Success Notification
+    this.props.resetDeleteNotification();
+  }
+
   componentDidMount(props){
     this.props.clearPostClick();
     this.props.getUserData(this.props.match.params.handle);
@@ -34,6 +59,12 @@ class User extends Component {
     const postId = this.props.match.params.postId;
     if(postId){
       this.setState({ postIdParam: postId })
+    }
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps){
+    if(nextProps.data.deleteSuccess){
+       this.deleteNotification();
     }
   }
 
@@ -76,6 +107,9 @@ class User extends Component {
 
     return (
       <Fragment>
+        <div className="rna-wrapper">
+          <NotificationAlert ref="notificationAlert" />
+        </div>
         <UserHeader name="User Page" />
         <Container className="mt--8" fluid>
           <Row className="justify-content-center">
@@ -97,14 +131,16 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
   getUserData,
-  clearPostClick
+  clearPostClick,
+  resetDeleteNotification
 }
 
 User.propTypes = {
   getUserData: PropTypes.func.isRequired,
   clearPostClick: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  resetDeleteNotification: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(User);

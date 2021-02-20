@@ -8,14 +8,20 @@ import {
 	ADD_POST,
 	NEW_POST_CLICK,
 	COMMENT_CLICK,
-	SUMBIT_COMMENT
+	SUMBIT_COMMENT,
+	NOTIFY_POST_SUCCESS,
+	RESET_POST_SUCCESS,
+	NOTIFY_DELETE_SUCCESS,
+	RESET_DELETE_SUCCESS
 } from "../types";
 
 const initialState = {
 	posts: [],
 	post: {},
 	loading: false,
-	newPostClick: false
+	newPostClick: false,
+	postSuccess: false,
+	deleteSuccess: false
 };
 
 let index;
@@ -72,6 +78,26 @@ export default function(state = initialState, action){
 			return {
 				...state,
 				posts: [action.payload, ...state.posts]
+			};
+		case NOTIFY_POST_SUCCESS:
+			return{
+				...state,
+				postSuccess: true
+			};
+		case RESET_POST_SUCCESS:
+			return{
+				...state,
+				postSuccess: false
+			};
+		case NOTIFY_DELETE_SUCCESS:
+			return{
+				...state,
+				deleteSuccess: true
+			};
+		case RESET_DELETE_SUCCESS:
+			return{
+				...state,
+				deleteSuccess: false
 			};
 		case SUMBIT_COMMENT:
 			index = state.posts.findIndex((post) => post.postId === action.payload.postId);

@@ -12,7 +12,11 @@ import {
 	CLEAR_ERRORS,
 	COMMENT_CLICK,
 	NEW_POST_CLICK,
-	SUMBIT_COMMENT
+	SUMBIT_COMMENT,
+	NOTIFY_POST_SUCCESS,
+	RESET_POST_SUCCESS,
+	NOTIFY_DELETE_SUCCESS,
+	RESET_DELETE_SUCCESS
 } from "../types";
 
 import axios from 'axios';
@@ -68,6 +72,9 @@ export const deletePost = (postId) => (dispatch) =>{
 				payload: postId
 			})
 		})
+		.then(() => {
+			dispatch({ type: NOTIFY_DELETE_SUCCESS });
+		})
 		.catch(err => console.log(err))
 }
 
@@ -92,6 +99,9 @@ export const addNewPost = (newPost) => (dispatch) =>{
 			});
 			dispatch(clearErrors());
 		})
+		.then(() => {
+			dispatch({ type: NOTIFY_POST_SUCCESS });
+		})
 		.catch(err => {
 			dispatch({
 				type: SET_ERRORS,
@@ -100,6 +110,17 @@ export const addNewPost = (newPost) => (dispatch) =>{
 		})
 }
 
+// Reset post success notification
+export const resetSuccessNotification = () => (dispatch) =>{
+	dispatch({ type: RESET_POST_SUCCESS });
+}
+
+// Reset delete success notification
+export const resetDeleteNotification = () => (dispatch) =>{
+	dispatch({ type: RESET_DELETE_SUCCESS });
+}
+
+// Clear Errors
 export const clearErrors = () => (dispatch) => {
 	dispatch({ type: CLEAR_ERRORS });
 }

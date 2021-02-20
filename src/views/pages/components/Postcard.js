@@ -186,7 +186,7 @@ class Postcard extends Component {
 
     // Delete post button
     const deleteButton = authenticated && userHandle === handle ? (
-      <DeletePost postId={postId} />
+      <DeletePost postId={postId} key={postId} />
       ) : (null)
 
     return(

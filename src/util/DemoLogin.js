@@ -50,13 +50,13 @@ class DemoLogin extends Component {
                     <span className="btn-inner--icon ml-2">
                       {
 			          	this.state.loading ? (
-			          	<div className="html-spinner html-spinner-home"></div>
+			          	<div className="html-spinner html-spinner-home-2"></div>
 			          	):(
 			          	<i className="ni ni ni-spaceship mr-2" />
 			          	)
 			        }
                     </span>
-                    <span className="nav-link-inner--text">Try Demo</span>
+                    <span className="nav-link-inner--text">Explore App</span>
                 </NavLink>
 			)
 		}
@@ -64,27 +64,46 @@ class DemoLogin extends Component {
 		if(this.props.type === "nav-button"){
 			return(
 				<Button
-                    className="btn-neutral btn-icon"
+                    className="btn btn-icon special-button"
                     color="default"
                     onClick={this.handleLogin}
                 >
                     <span className="btn-inner--icon">
                     {
 			          	this.state.loading ? (
-			          	<div className="html-spinner html-spinner-home"></div>
+			          	<div className="html-spinner html-spinner-home-2"></div>
 			          	):(
 			          	<i className="ni ni ni-spaceship mr-2" />
 			          	)
 			        }
                     </span>
-                    <span className="nav-link-inner--text">Try Demo</span>
+                    <span className="nav-link-inner--text brooo">Explore App</span>
                 </Button>
 			)
+			// // How it was before
+			// return(
+			// 	<Button
+   //                  className="btn-neutral btn-icon"
+   //                  color="default"
+   //                  onClick={this.handleLogin}
+   //              >
+   //                  <span className="btn-inner--icon">
+   //                  {
+			//           	this.state.loading ? (
+			//           	<div className="html-spinner html-spinner-home"></div>
+			//           	):(
+			//           	<i className="ni ni ni-spaceship mr-2" />
+			//           	)
+			//         }
+   //                  </span>
+   //                  <span className="nav-link-inner--text">Explore App</span>
+   //              </Button>
+			// )
 		}
 		
 		return(
 			<Button
-		        className="btn btn-neutral my-2"
+		        className="btn btn-neutral my-2 mt-4"
 		        color="default"
 		        onClick={this.handleLogin}
 		    >

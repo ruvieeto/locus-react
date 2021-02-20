@@ -428,7 +428,6 @@ class Account extends Component {
                             <Col className=" col-auto">
                               <Button size="sm" color="danger" data-dz-remove onClick={this.removeImage}>
                                 <i className="fas fa-trash" />
-                                {` Clear`}
                               </Button>
                             </Col>
                           </Row>

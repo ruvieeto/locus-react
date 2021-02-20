@@ -11,9 +11,10 @@ import {
   Nav,
   Container,
   Row,
-  Col,
-  Button
+  Col
 } from "reactstrap";
+
+import DemoLogin from '../../util/DemoLogin';
 
 class AdminNavbar extends React.Component {
   render() {
@@ -88,24 +89,10 @@ class AdminNavbar extends React.Component {
                 </NavItem>
                 <hr className="d-none d-small" />
                 <NavItem className="d-none d-small-block">
-                  <NavLink onClick={()=>alert("Trying it")}>
-                    <span className="btn-inner--icon ml-2">
-                      <i className="ni ni ni-spaceship mr-2" />
-                    </span>
-                    <span className="nav-link-inner--text">Try Demo</span>
-                  </NavLink>
+                  <DemoLogin type="navlink"/>
                 </NavItem>
                 <NavItem className="d-none d-lg-block ml-lg-4">
-                  <Button
-                    className="btn-neutral btn-icon"
-                    color="default"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <span className="btn-inner--icon">
-                      <i className="ni ni ni-spaceship mr-2" />
-                    </span>
-                    <span className="nav-link-inner--text">Try Demo</span>
-                  </Button>
+                  <DemoLogin type="nav-button"/>
                 </NavItem>
               </Nav>
             </UncontrolledCollapse>

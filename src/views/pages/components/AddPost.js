@@ -1,8 +1,17 @@
 import React, { Component, Fragment } from 'react';
 
+// react plugin for creating alert notifications
+import NotificationAlert from "react-notification-alert";
+
 // Redux
 import { connect } from 'react-redux';
-import { addNewPost, clearErrors, newPostClick, clearPostClick } from '../../../redux/actions/dataActions';
+import { 
+	addNewPost, 
+	clearErrors, 
+	newPostClick, 
+	clearPostClick, 
+	resetSuccessNotification 
+} from '../../../redux/actions/dataActions';
 
 import PropTypes from 'prop-types';
 
@@ -37,6 +46,29 @@ class AddPost extends Component {
 	    });
   	};
 
+  	successNotification = () =>{
+  		document.body.classList.remove("modal-open");
+  		// Success Notification
+  		let options = {
+	      place: "bc",
+	      message: (
+	        <div className="alert-text">
+	          <span data-notify="message">
+	            {" "}
+	            Your post was added
+	          </span>
+	        </div>
+	      ),
+	      type: "success",
+	      icon: "ni ni-check-bold",
+	      autoDismiss: 3
+	    };
+	    this.refs.notificationAlert.notificationAlert(options);
+
+  		// Reset Success Notification
+  		this.props.resetSuccessNotification();
+  	}
+
   	handleChange = (event) => {
   		this.setState({ [event.target.name]: event.target.value });
   	}
@@ -51,6 +83,7 @@ class AddPost extends Component {
   			this.setState({ errors: nextProps.UI.errors });
   		}
 
+  		// If no longer loading and no errors (i.e. successfully posted)
   		if(!nextProps.UI.errors.body && !nextProps.UI.loading){
   			if(nextProps.data.newPostClick){
   				this.setState({
@@ -58,8 +91,13 @@ class AddPost extends Component {
 			      body: "",
 			      errors: {}
 			    });
-  			}	
+  			}
   		}
+
+  		// Successful Notification
+  		if(nextProps.data.postSuccess){
+  			this.successNotification();
+	    }
   	}
 
 	render(){
@@ -68,6 +106,10 @@ class AddPost extends Component {
 
 		return(
 			<Fragment>
+				<div className="rna-wrapper">
+          			<NotificationAlert ref="notificationAlert" />
+        		</div>
+
 				<Button
 		            className="btn-icon"
 		            color="primary"
@@ -155,14 +197,16 @@ const mapActionsToProps = {
 	addNewPost,
 	clearErrors,
 	newPostClick,
-	clearPostClick
+	clearPostClick,
+	resetSuccessNotification
 }
 
 AddPost.propTypes = {
 	addNewPost: PropTypes.func.isRequired,
 	newPostClick: PropTypes.func.isRequired,
 	clearPostClick: PropTypes.func.isRequired,
-	UI: PropTypes.object.isRequired
+	UI: PropTypes.object.isRequired,
+	resetSuccessNotification: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(AddPost);

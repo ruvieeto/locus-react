@@ -13,6 +13,7 @@ import {
   Card,
   CardHeader,
   CardBody,
+  CardFooter,
   CardImg,
   CardImgOverlay,
   CardTitle,
@@ -213,7 +214,7 @@ class Account extends Component {
               </Card>
 
               {/* Photo background card */}
-              <Card className="bg-dark text-white border-0">
+              <Card className="bg-dark text-white border-0 hide-on-md">
                 <CardImg
                   alt="..."
                   src={require("assets/img/theme/pattern4.jpg")}
@@ -246,13 +247,26 @@ class Account extends Component {
                       <h3 className="mb-0">Edit profile</h3>
                     </Col>
                     <Col className="text-right" xs="4">
-                      <Button
-                        color="primary"
-                        onClick={this.handleSubmit}
-                        size="sm"
-                      >
-                        Save
-                      </Button>
+                      { (this.state.bio || this.state.location || this.state.website || !this.state.emptyImage) ?(
+                        <Button
+                          color="primary"
+                          onClick={this.handleSubmit}
+                          size="sm"
+                        >
+                          Save
+                        </Button>
+                      ):(
+                        <Button
+                          color="primary"
+                          onClick={(e)=>{e.preventDefault()}}
+                          size="sm"
+                          className="deny-cursor"
+                          disabled
+                        >
+                          Save
+                        </Button>
+                        )
+                      }
                       { (this.state.bio || this.state.location || this.state.website || !this.state.emptyImage) ?(
                         <Button
                           color="danger"
@@ -440,6 +454,39 @@ class Account extends Component {
                     </FormGroup>
                   </Form>
                 </CardBody>
+                <CardFooter>
+                  <Row className="align-items-center">
+                    <Col className="text-left" xs="8">
+                      { (this.state.bio || this.state.location || this.state.website || !this.state.emptyImage) ?(
+                        <Button
+                          color="primary"
+                          onClick={this.handleSubmit}
+                        >
+                          Save
+                        </Button>
+                        ):(
+                        <Button
+                          color="primary"
+                          className="deny-cursor"
+                          onClick={(e)=>{e.preventDefault()}}
+                          disabled
+                        >
+                          Save
+                        </Button>
+                        )
+                      }
+                      { (this.state.bio || this.state.location || this.state.website || !this.state.emptyImage) ?(
+                        <Button
+                          color="danger"
+                          onClick={this.clearForm}
+                        >
+                          Cancel
+                        </Button>
+                        ):(null)
+                    }
+                    </Col>
+                  </Row>
+                </CardFooter>
               </Card>
             </Col>
           </Row>

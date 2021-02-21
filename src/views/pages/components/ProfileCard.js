@@ -47,7 +47,7 @@ class ProfileCard extends Component{
               <Link to={`/users/${handle}`}>
                 <img
                   alt="..."
-                  className="rounded-circle"
+                  className="rounded-circle home-page-image"
                   src={imgUrl}
                 />
               </Link>

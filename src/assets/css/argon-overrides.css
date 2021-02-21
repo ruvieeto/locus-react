@@ -234,7 +234,6 @@ hr.thin-rule{
 .post-comments-modal{
   max-height: 90vh;
   overflow-y: auto;
-  /*style={{maxHeight: "90vh", overflowY: "auto"}}*/
 }
 
 /*Skeleton loaders*/
@@ -392,21 +391,20 @@ img.avatar {
 }
 
 .card-profile-image img.user-page{
-  /*border: none;*/
   box-shadow: 0px 0px 5px 2px #00000033;
-  /*max-width: 180px;*/
-  /*width: 180px;*/
-  /*height: 180px;*/
-  /*border: 1px solid red;*/
 }
 
 .card-profile-image img.user-page:hover {
+  cursor: zoom-in;
+}
+
+.card-profile-image img.home-page-image:hover {
   transform: translate(-50%, -50%) scale(1);
 }
 
 .user-header-image{
   min-height: 300px;
-  background-image: url("../img/theme/locus-beach.jpg");
+  background-image: url("../img/theme/locus-beach-cover.jpg");
   background-size: cover;
   background-position: 50% 40%;
 }
@@ -472,4 +470,83 @@ div.demo-arrow-left{
 
 .special-button:active{
   background-color: #ffffff77 !important; 
+}
+
+.deny-cursor:hover{
+  cursor: not-allowed;
+  transform: translateY(0px);
+}
+
+@media (max-width: 1199.98px){
+  .hide-on-md{
+    display: none;
+  }
+}
+
+.mobile-add-post{
+  display: none;
+  border-radius: 50%;
+  height: 38px;
+  width: 38px;
+  vertical-align: center;
+  background-color: var(--white);
+  box-shadow: 0px 0px 5px 2px #88888833;
+  margin-left: 10px;
+}
+.mobile-add-post:hover {
+  cursor: pointer;
+  transform: translateY(-1px);
+}
+.mobile-add-post span{
+  color: var(--blue);
+  font-weight: 300;
+  width: 100%;
+  text-align: center;
+  display:table;
+  margin: 0 auto;
+  vertical-align: center;
+  line-height: 38px;
+  font-size: 1.5rem;
+}
+
+@media (max-width: 767.98px) {
+  .mobile-add-post{
+    display: inline-block;
+  }
+}
+
+.profile-photo-modal img{
+  max-height: 90vh; 
+  width: auto; 
+  max-width: 90vw;
+}
+.profile-photo-modal .modal-content{
+  width: auto; 
+}
+.profile-photo-modal .card{
+  margin-bottom: 0px;
+}
+
+.modal-dialog-centered {
+  justify-content: center;
+}
+.photo-modal-header{
+  padding: 0px;
+  position: fixed;
+  top: 9px;
+  border-bottom-right-radius: 5px !important;
+  border-bottom-left-radius: 5px !important;
+  text-align: center;
+  vertical-align: center;
+}
+.photo-modal-header .close{
+  padding: 3px;
+}
+@media (max-width: 767.98px) {
+  .photo-modal-header .close{
+    padding: 6px;
+  }
+}
+.photo-modal-header .close span{
+  margin-right: 0px;
 }

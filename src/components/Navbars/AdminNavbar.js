@@ -36,6 +36,12 @@ class AdminNavbar extends React.Component {
     logoutUser(history);
   }
 
+  postButtonClick = () =>{
+    if(document.getElementById("navbar-post-button")){
+      document.getElementById("navbar-post-button").click();
+    }
+  }
+
   render() {
     const { user: { loading } } = this.props;
 
@@ -43,11 +49,25 @@ class AdminNavbar extends React.Component {
       return (<NavbarSkeleton />)
     }
 
+    // Determining whether to show post button on page
+    let postablePage = false;
+
+    if(this.props.location.pathname.includes("/home/feed")){
+      postablePage = true;
+    }
+
     const {
       user: { 
         credentials: { handle, imgUrl }
       }
     } = this.props;
+
+    if(this.props.user.credentials){
+      if(
+        window.location.pathname.includes(`/users/${handle}/`) || 
+        this.props.location.pathname === `/users/${handle}`
+      ){postablePage = true;}
+    }
 
     return (
       <Fragment>
@@ -77,9 +97,20 @@ class AdminNavbar extends React.Component {
                     </div>
                   </div>
                 </NavItem>
-
+                
+                {postablePage && (
+                  <NavItem 
+                    className="mobile-add-post" 
+                    role="button"
+                    onClick={this.postButtonClick}
+                    >
+                    <span>&#43;</span>
+                  </NavItem>
+                  )
+                }
                 {/*Notifications  Dropdown */}
                 <Notifications />
+
               </Nav>
 
               {/*Options dropdown start*/}

@@ -194,7 +194,7 @@ class Postcard extends Component {
         <Card>
           {index<1&&
             <CardHeader>
-                <h5 className="h3 mb-0">Activity feed</h5>
+              <h5 className="h3 mb-0">Activity feed</h5>
             </CardHeader>
           }
           <CardHeader className="d-flex align-items-center">

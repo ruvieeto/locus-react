@@ -86,7 +86,7 @@ class Admin extends Component {
           toggleSidenav={this.toggleSidenav}
           sidenavOpen={this.state.sidenavOpen}
           logo={{
-            innerLink: "/app/feed",
+            innerLink: "/home/feed",
             imgSrc: require("assets/img/brand/locus-logo.png"),
             imgAlt: "Locus Logo"
           }}

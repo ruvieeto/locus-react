@@ -39,12 +39,26 @@ class AddPost extends Component {
 
   		this.props.clearPostClick();
 
+  		if(!this.state.defaultModal){
+  			setTimeout(()=>{
+	  		 this.focusPost(); 
+	  		}, 1000);
+  		}
+
 	    this.setState({
 	      defaultModal: !this.state.defaultModal,
 	      body: "",
 	      errors: {}
 	    });
   	};
+
+  	focusPost = () => {
+  		const inputField = document.getElementById("new-post-input");
+
+  		if(inputField){
+  			inputField.focus();
+  		}
+  	}
 
   	successNotification = () =>{
   		document.body.classList.remove("modal-open");

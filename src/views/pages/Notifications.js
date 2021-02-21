@@ -97,12 +97,10 @@ class Notifications extends Component {
                 </div>
                 <small>{time}</small>
               </div>
-              <h4 className="mt-3 mb-1">
+
+              <p className="text-sm mt-3 mb-1">
                 {!read ? (<span className="text-info mr-1">●</span>) : (null) }
-                New {type}
-              </h4>
-              <p className="text-sm mb-0">
-                You are getting some engagement on your post!
+                {type === "like" ? (<i className="ni ni-like-2 mr-1" />) : (<i className="ni ni-chat-round mr-1" />)}
                 <strong>{` ${sender} `}</strong>
                 {type === "like" ? "liked your post" : "commented on your post"}
               </p>

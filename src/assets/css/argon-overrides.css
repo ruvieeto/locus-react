@@ -550,3 +550,15 @@ div.demo-arrow-left{
 .photo-modal-header .close span{
   margin-right: 0px;
 }
+.card-profile .card-header{
+  border-top-right-radius: 6px !important;
+  border-top-left-radius: 6px !important;
+}
+.navbar-light .navbar-nav .active > .nav-link{
+  background: #f6f9fc;
+  margin-right: .5rem;
+  margin-left: .5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: .375rem;
+}

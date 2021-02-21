@@ -119,7 +119,7 @@ class UserProfileCard extends Component{
         <Modal
           className="modal-dialog-centered profile-photo-modal"
           size="xl"
-          modalTransition={{ timeout: 50 }}
+          modalTransition={{ timeout: 100 }}
           isOpen={this.state.photoModal}
           toggle={this.togglePhotoModal}
         >

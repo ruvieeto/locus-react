@@ -1,8 +1,14 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 // reactstrap components
 import {
+  Button,
+  Card,
+  CardBody,
+  CardText,
+  CardTitle,
   Container,
   Row,
   Col
@@ -83,15 +89,48 @@ class User extends Component {
         return <PostcardSkeleton index={index} key={index}/>
       })
 
+    const noUserCard = (
+      <Card key={handle}>
+        <CardBody>
+          <CardTitle className="mb-3" tag="h3">
+            Uh-oh
+          </CardTitle>
+          <CardText className="mb-4">
+            <strong>@{handle}</strong> doesn't exist
+          </CardText>
+          <Button
+            color="primary"
+            tag={Link}
+            to="/home/feed"
+          >
+            Go back home
+          </Button>
+        </CardBody>
+      </Card>
+    )
+
+    const noPosts = (
+      <Card key={handle}>
+        <CardBody>
+          <CardTitle className="mb-3" tag="h3">
+            No posts to show
+          </CardTitle>
+          <CardText className="mb-4">
+            <strong>@{handle}</strong> has not posted yet! When they post, you'll be able to find them here.
+          </CardText>
+        </CardBody>
+      </Card>
+    )
+
     let userPostsMarkup;
     if(loading || userLoading){
         userPostsMarkup = loadingPosts;
     } else if (posts === null){
         // Check if user exists
-        userPostsMarkup = [<p key={handle}>@{handle} doesn't exist</p>]
+        userPostsMarkup = noUserCard;
     } else if (posts.length === 0){
         // Check if there are are any posts
-        userPostsMarkup = [<p key={handle}>@{handle} has no posts yet</p>]
+        userPostsMarkup = noPosts;
     } else if (!postIdParam){
       // Checks that route isn't to an individual/specific post
         userPostsMarkup = posts.map((post, index) => <Postcard key={post.postId} index={index} post={post} />)

@@ -129,6 +129,9 @@ class AdminNavbar extends React.Component {
                           {handle}
                         </span>
                       </Media>
+                      <span className="ml-2">
+                        <i className="fas fa-caret-down" />
+                      </span>
                     </Media>
                   </DropdownToggle>
                   <DropdownMenu right>
@@ -145,12 +148,6 @@ class AdminNavbar extends React.Component {
                       <DropdownItem>
                         <i className="ni ni-settings-gear-65" />
                         <span>Edit account</span>
-                      </DropdownItem>
-                    </Link>
-                    <Link to={`/`}>
-                      <DropdownItem>
-                        <i className="ni ni-support-16" />
-                        <span>Support</span>
                       </DropdownItem>
                     </Link>
                     <DropdownItem divider />

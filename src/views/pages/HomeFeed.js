@@ -34,7 +34,7 @@ class HomeFeed extends Component {
         </div>
       ),
       type: "danger",
-      icon: "ni ni-fat-delete",
+      icon: "fas fa-trash",
       autoDismiss: 3
     };
     this.refs.notificationAlert.notificationAlert(options);

@@ -74,7 +74,7 @@ class AddPost extends Component {
 	        </div>
 	      ),
 	      type: "success",
-	      icon: "ni ni-check-bold",
+	      icon: "fas fa-pen",
 	      autoDismiss: 3
 	    };
 	    this.refs.notificationAlert.notificationAlert(options);

@@ -115,6 +115,12 @@ class Postcard extends Component {
   unlikePost = () => {
     this.props.unlikePost(this.props.post.postId);
   }
+
+  // Expand comment
+  expandComment = () =>{
+    // console.log(this.props.post.postId);
+    document.getElementById(this.props.post.postId).click();
+  }
   
   componentDidMount(props){
     // If route is to single post
@@ -174,6 +180,7 @@ class Postcard extends Component {
       <Button
         className="like engage-button btn-no-ml"
         onClick={()=>{this.handleOpen(); this.props.clearPostClick()}}
+        id={this.props.post.postId}
       >
         <i className="ni ni-chat-round" />
         <span className="text-muted">
@@ -188,6 +195,18 @@ class Postcard extends Component {
     const deleteButton = authenticated && userHandle === handle ? (
       <DeletePost postId={postId} key={postId} />
       ) : (null)
+
+    // Expand to view button
+    const expandButton = (
+      <div className="text-right ml-auto expand-icon">
+        <Button 
+          className="btn expand-button"
+          onClick={this.expandComment}
+        >
+          <i className="fas fa-chevron-down" />
+        </Button>
+      </div>
+    )
 
     return(
       <Fragment>
@@ -230,8 +249,10 @@ class Postcard extends Component {
                 <div className="icon-actions">
                   {likeButton}
                   {commentButton}
+                  {expandButton}
                 </div>
               </Col>
+              
             </Row>
             <Modal
               className="modal-dialog-centered"

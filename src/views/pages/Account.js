@@ -2,9 +2,13 @@ import React, { Component, Fragment } from "react";
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+// react plugin for creating alert notifications
+import NotificationAlert from "react-notification-alert";
+
+
 // Redux
 import { connect } from 'react-redux';
-import { uploadImage, editUserDetails } from '../../redux/actions/userActions';
+import { uploadImage, editUserDetails, resetUpdateNotification } from '../../redux/actions/userActions';
 import { clearPostClick } from '../../redux/actions/dataActions';
 
 // reactstrap components
@@ -145,8 +149,40 @@ class Account extends Component {
         website, 
         location
       });
+
+      this.clearForm();
     }
+
   }
+
+  successNotification = () =>{
+    // Success Notification
+    let options = {
+      place: "bc",
+      message: (
+        <div className="alert-text">
+          <span data-notify="message">
+            {" "}
+            Your account was updated
+          </span>
+        </div>
+      ),
+      type: "info",
+      icon: "ni ni-settings-gear-65",
+      autoDismiss: 3
+    };
+    this.refs.notificationAlert.notificationAlert(options);
+
+    // Reset Success Notification
+    this.props.resetUpdateNotification();
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps){
+      // Successful Profile Update
+      if(nextProps.user.updateSuccess){
+        this.successNotification();
+      }
+    }
   
   componentDidMount(props){
     this.props.clearPostClick();
@@ -162,6 +198,9 @@ class Account extends Component {
     if(loading){
       return (
         <Fragment>
+          <div className="rna-wrapper">
+            <NotificationAlert ref="notificationAlert" />
+          </div>
           <ProfileHeader handle={"there"}/>
           <AccountSkeleton />
         </Fragment>
@@ -176,6 +215,9 @@ class Account extends Component {
 
     return (
       <Fragment>
+        <div className="rna-wrapper">
+          <NotificationAlert ref="notificationAlert" />
+        </div>
         <ProfileHeader handle={handle}/>
         <Container className="mt--6" fluid>
           <Row>
@@ -503,14 +545,16 @@ const mapStateToProps = (state) => ({
 const mapActionsToProps = {
   uploadImage,
   editUserDetails,
-  clearPostClick
+  clearPostClick,
+  resetUpdateNotification
 };
 
 Account.propTypes = {
   user: PropTypes.object.isRequired,
   uploadImage: PropTypes.func.isRequired,
   editUserDetails: PropTypes.func.isRequired,
-  clearPostClick: PropTypes.func.isRequired
+  clearPostClick: PropTypes.func.isRequired,
+  resetUpdateNotification: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(Account);

@@ -49,7 +49,7 @@ class User extends Component {
         </div>
       ),
       type: "danger",
-      icon: "ni ni-fat-delete",
+      icon: "fas fa-trash",
       autoDismiss: 3
     };
     this.refs.notificationAlert.notificationAlert(options);
@@ -116,7 +116,18 @@ class User extends Component {
             No posts to show
           </CardTitle>
           <CardText className="mb-4">
-            <strong>@{handle}</strong> has not posted yet! When they post, you'll be able to find them here.
+          {
+            handle === this.props.user.credentials.handle ? 
+            (
+              <Fragment>
+                You have not posted yet! <br />When you do post, you'll be able to see all your posts here.
+              </Fragment>
+            ):(
+            <Fragment>
+              <strong>@{handle}</strong> has not posted yet! <br />When they do, you'll be able to find their posts here.
+            </Fragment>
+            )
+          }
           </CardText>
         </CardBody>
       </Card>

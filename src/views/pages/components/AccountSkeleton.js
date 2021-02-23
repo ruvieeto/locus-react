@@ -25,7 +25,6 @@ class AccountSkeleton extends Component {
         <Container className="mt--6" fluid>
           <Row>
             <Col className="order-xl-2" xl="4">
-
               <Card>
                 <CardBody>
                   <Row className="align-items-center">

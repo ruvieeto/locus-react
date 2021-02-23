@@ -34,6 +34,10 @@
 	border: 1px solid #fb6340;
 	color: #fb6340;
 }
+.is-valid-input {
+  border: 1px solid #2dce89;
+  /*color: #2dce89;*/
+}
 .modal-body-lean{
   padding-top: 5px;
   padding-bottom: 5px;

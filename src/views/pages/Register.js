@@ -177,9 +177,14 @@ class Register extends Component {
                         focused: this.state.focusedPassword
                       })}
                     >
-                      <InputGroup className={classnames("input-group-merge input-group-alternative", {
+                      <InputGroup className={
+                        classnames("input-group-merge input-group-alternative", {
+                        "is-valid-input": this.state.password && this.state.password === this.state.confirmPassword
+                      },
+                      {
                         "is-invalid-input": errors.confirmPassword || errors.password
-                      })}>
+                      }
+                      )}>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
                             <i className="ni ni-lock-circle-open" />
@@ -199,15 +204,17 @@ class Register extends Component {
                           }
                         />
                       </InputGroup>
-                      {errors.password &&
-                      <div className="invalid-form-input-message">
+                      {
+                        errors.password &&
+                        <div className="invalid-form-input-message">
                           {errors.password}
-                      </div>
+                        </div>
                       }
-                      {errors.confirmPassword &&
-                      <div className="invalid-form-input-message">
+                      {
+                        errors.confirmPassword &&
+                        <div className="invalid-form-input-message">
                           {errors.confirmPassword}
-                      </div>
+                        </div>
                       }
                     </FormGroup>
                     <FormGroup
@@ -215,9 +222,11 @@ class Register extends Component {
                         focused: this.state.focusedConfirmPassword
                       })}
                     >
-                      <InputGroup className={classnames("input-group-merge input-group-alternative", {
-                        "is-invalid-input": errors.confirmPassword
-                      })}>
+                      <InputGroup className={
+                        classnames("input-group-merge input-group-alternative", 
+                        {"is-valid-input": this.state.password && this.state.password === this.state.confirmPassword},
+                        {"is-invalid-input": errors.confirmPassword}
+                      )}>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
                             <i className="ni ni-check-bold" />
@@ -243,19 +252,24 @@ class Register extends Component {
                       </div>
                       }
                     </FormGroup>
-                    <div className="text-muted font-italic">
-                      <small>
-                        password strength:{" "}
-                        <span className={`
-                          font-weight-700 
-                          ${passwordStrength === "strong"? "text-success":""} 
-                          ${passwordStrength === "medium"? "text-warning":""} 
-                          ${passwordStrength === "weak"? "text-danger":""}
-                          `}>
-                          {passwordStrength}
-                        </span>
-                      </small>
-                    </div>
+                    {
+                      this.state.password && 
+                      (
+                        <div className="text-muted font-italic">
+                        <small>
+                          password strength:{" "}
+                          <span className={`
+                            font-weight-700 
+                            ${passwordStrength === "strong"? "text-success":""} 
+                            ${passwordStrength === "medium"? "text-warning":""} 
+                            ${passwordStrength === "weak"? "text-danger":""}
+                            `}>
+                            {passwordStrength}
+                          </span>
+                        </small>
+                      </div>
+                      )
+                    }
                     <div className="text-center">
                       <Button 
                         className="mt-4"

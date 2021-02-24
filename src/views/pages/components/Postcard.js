@@ -165,7 +165,11 @@ class Postcard extends Component {
       ) : ( 
       <Button
         className={classnames("like engage-button", { active: isPostLiked })}
-        onClick={isPostLiked ? this.unlikePost : this.likePost}
+        onClick={isPostLiked ? 
+          ()=>{this.unlikePost();this.props.clearPostClick()}
+          : 
+          ()=>{this.likePost();this.props.clearPostClick()}
+        }
       >
         <i className="ni ni-like-2" />
         <span className="text-muted">

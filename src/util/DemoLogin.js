@@ -27,8 +27,8 @@ class DemoLogin extends Component {
 
 	handleLogin = (props) =>{
 		const userData = {
-      		email: "new@email.co.uk",
-	    	password: "123456"
+      		email: "mia.wright@email.com",
+	    	password: "Miaisalwaysr1ight"
 	    }
 
 		this.setState({ 

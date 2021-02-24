@@ -36,7 +36,9 @@
 }
 .is-valid-input {
   border: 1px solid #2dce89;
-  /*color: #2dce89;*/
+  color: #2dce89;
+  margin-bottom: -2px;
+  margin-left: -1px;
 }
 .modal-body-lean{
   padding-top: 5px;
@@ -586,4 +588,9 @@ div.demo-arrow-left{
 }
 .send-active{
   color: var(--blue);
+}
+.char-counter{
+  font-size: 0.8rem;
+  color: #2dce89;
+  margin-left: 5px;
 }

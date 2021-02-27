@@ -263,6 +263,8 @@ class Postcard extends Component {
               size="lg"
               isOpen={this.state.postModal}
               toggle={this.togglePostModal}
+              onOpened={()=>{document.body.classList.add("modal-open")}}
+              onClosed={()=>{document.body.classList.remove("modal-open")}}
             >
               <PostDialog toggler={this.togglePostModal}/>
             </Modal>

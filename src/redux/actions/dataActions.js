@@ -13,10 +13,13 @@ import {
 	COMMENT_CLICK,
 	NEW_POST_CLICK,
 	SUMBIT_COMMENT,
+	DELETE_COMMENT,
 	NOTIFY_POST_SUCCESS,
 	RESET_POST_SUCCESS,
 	NOTIFY_DELETE_SUCCESS,
-	RESET_DELETE_SUCCESS
+	RESET_DELETE_SUCCESS,
+	NOTIFY_DELETE_COMMENT_SUCCESS,
+	RESET_DELETE_COMMENT_SUCCESS
 } from "../types";
 
 import axios from 'axios';
@@ -115,9 +118,14 @@ export const resetSuccessNotification = () => (dispatch) =>{
 	dispatch({ type: RESET_POST_SUCCESS });
 }
 
-// Reset delete success notification
+// Reset post delete success notification
 export const resetDeleteNotification = () => (dispatch) =>{
 	dispatch({ type: RESET_DELETE_SUCCESS });
+}
+
+// Reset comment delete success notification
+export const resetCommentDeleteNotification = () => (dispatch) =>{
+	dispatch({ type: RESET_DELETE_COMMENT_SUCCESS });
 }
 
 // Clear Errors
@@ -156,6 +164,21 @@ export const submitComment = (postId, commentData) => (dispatch) => {
 				payload: err.response.data
 			});
 		});
+}
+
+// Delete a comment
+export const deleteComment = (commentId) => (dispatch) =>{
+	axios.delete(`/comment/${commentId}`)
+		.then(() => {
+			dispatch({
+				type: DELETE_COMMENT,
+				payload: commentId
+			})
+		})
+		.then(() => {
+			dispatch({ type: NOTIFY_DELETE_COMMENT_SUCCESS });
+		})
+		.catch(err => console.log(err))
 }
 
 // Gets user data for user page navigated to

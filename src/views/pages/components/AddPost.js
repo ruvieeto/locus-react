@@ -64,7 +64,6 @@ class AddPost extends Component {
   	}
 
   	successNotification = () =>{
-  		document.body.classList.remove("modal-open");
   		// Success Notification
   		let options = {
 	      place: "bc",
@@ -77,7 +76,7 @@ class AddPost extends Component {
 	        </div>
 	      ),
 	      type: "success",
-	      icon: "fas fa-pen",
+	      icon: "far fa-check-circle",
 	      autoDismiss: 3
 	    };
 	    this.refs.notificationAlert.notificationAlert(options);
@@ -154,6 +153,8 @@ class AddPost extends Component {
 	                className="modal-dialog-centered"
 	                isOpen={this.state.defaultModal}
 	                toggle={this.toggleModal}
+	                onOpened={()=>{document.body.classList.add("modal-open")}}
+	                onClosed={()=>{document.body.classList.remove("modal-open")}}
 	            >
 	                <div className="modal-header">
 		                <h6 className="modal-title" id="modal-title-default">

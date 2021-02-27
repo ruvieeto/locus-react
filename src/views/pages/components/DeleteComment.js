@@ -9,9 +9,9 @@ import { Button } from "reactstrap";
 
 //Redux
 import { connect } from 'react-redux';
-import { deletePost, clearPostClick } from '../../../redux/actions/dataActions';
+import { deleteComment, clearPostClick } from '../../../redux/actions/dataActions';
 
-class DeletePost extends Component {
+class DeleteComment extends Component {
 	state = {
 		alert: null
 	}
@@ -28,16 +28,17 @@ class DeletePost extends Component {
 		        <ReactBSAlert
 		          warning
 		          showCancel
-		          style={{ display: "block", marginTop: "100px" }}
+		          style={{ display: "block", marginTop: "150px", boxShadow: "0px 0px 2rem 5px rgba(136, 152, 170, 0.3)" }}
 		          title="Are you sure?"
-		          onConfirm={()=>this.props.deletePost(this.props.postId)}
+		          onConfirm={()=>this.props.deleteComment(this.props.commentId)}
 		          onCancel={this.hideAlert}
 		          confirmBtnBsStyle="danger"
 		          confirmBtnText="Yes, delete it!"
 		          btnSize=""
 		          focusCancelBtn={true}
+		          hideOverlay={true}
 		        >
-		          You will not be able to recover this post!
+		          You won't be able to recover this comment!
 		        </ReactBSAlert>
 	      	)
     	});
@@ -51,30 +52,29 @@ class DeletePost extends Component {
 				{this.state.alert}
 				<Button
 			        className="btn-icon"
-			        color="primary"
+			        color="danger"
 			        size="sm"
 			        type="button"
 			        onClick={this.warningAlert}
 			    >
-			        <span className="btn-inner--icon mr-1">
+			        <span className="btn-inner--icon">
 			          <i className="fas fa-trash" />
 			        </span>
-			    	<span className="btn-inner--text">Delete</span>
 			    </Button>
 		    </Fragment>
 		)
 	}
 }
 
-DeletePost.propTypes = {
-	deletePost: PropTypes.func.isRequired,
-	postId: PropTypes.string.isRequired,
+DeleteComment.propTypes = {
+	deleteComment: PropTypes.func.isRequired,
+	commentId: PropTypes.string.isRequired,
 	clearPostClick: PropTypes.func.isRequired
 }
 
 const mapActionsToProps = {
-	deletePost,
+	deleteComment,
 	clearPostClick
 }
 
-export default connect(null, mapActionsToProps)(DeletePost);
+export default connect(null, mapActionsToProps)(DeleteComment);

@@ -115,6 +115,12 @@ class Postcard extends Component {
   unlikePost = () => {
     this.props.unlikePost(this.props.post.postId);
   }
+
+  // Expand comment
+  expandComment = () =>{
+    // console.log(this.props.post.postId);
+    document.getElementById(this.props.post.postId).click();
+  }
   
   componentDidMount(props){
     // If route is to single post
@@ -159,7 +165,11 @@ class Postcard extends Component {
       ) : ( 
       <Button
         className={classnames("like engage-button", { active: isPostLiked })}
-        onClick={isPostLiked ? this.unlikePost : this.likePost}
+        onClick={isPostLiked ? 
+          ()=>{this.unlikePost();this.props.clearPostClick()}
+          : 
+          ()=>{this.likePost();this.props.clearPostClick()}
+        }
       >
         <i className="ni ni-like-2" />
         <span className="text-muted">
@@ -174,6 +184,7 @@ class Postcard extends Component {
       <Button
         className="like engage-button btn-no-ml"
         onClick={()=>{this.handleOpen(); this.props.clearPostClick()}}
+        id={this.props.post.postId}
       >
         <i className="ni ni-chat-round" />
         <span className="text-muted">
@@ -186,15 +197,27 @@ class Postcard extends Component {
 
     // Delete post button
     const deleteButton = authenticated && userHandle === handle ? (
-      <DeletePost postId={postId} />
+      <DeletePost postId={postId} key={postId} />
       ) : (null)
+
+    // Expand to view button
+    const expandButton = (
+      <div className="text-right ml-auto expand-icon">
+        <Button 
+          className="btn expand-button"
+          onClick={this.expandComment}
+        >
+          <i className="fas fa-chevron-down" />
+        </Button>
+      </div>
+    )
 
     return(
       <Fragment>
         <Card>
           {index<1&&
             <CardHeader>
-                <h5 className="h3 mb-0">Activity feed</h5>
+              <h5 className="h3 mb-0">Activity feed</h5>
             </CardHeader>
           }
           <CardHeader className="d-flex align-items-center">
@@ -230,14 +253,18 @@ class Postcard extends Component {
                 <div className="icon-actions">
                   {likeButton}
                   {commentButton}
+                  {expandButton}
                 </div>
               </Col>
+              
             </Row>
             <Modal
               className="modal-dialog-centered"
               size="lg"
               isOpen={this.state.postModal}
               toggle={this.togglePostModal}
+              onOpened={()=>{document.body.classList.add("modal-open")}}
+              onClosed={()=>{document.body.classList.remove("modal-open")}}
             >
               <PostDialog toggler={this.togglePostModal}/>
             </Modal>

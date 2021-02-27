@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import {
   Card,
   CardHeader,
-  CardImg,
   CardBody,
   Row,
   Col
@@ -15,11 +14,6 @@ class UserProfileCardSkeleton extends Component{
   render(){
     return(
       <Card className="card-profile card-profile-home">
-        <CardImg
-          alt="..."
-          src={require("assets/img/theme/pattern.jpg")}
-          top
-        />
         <Row className="justify-content-center">
           <Col className="order-lg-2" lg="3">
             <div className="card-profile-image">

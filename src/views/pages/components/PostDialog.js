@@ -5,9 +5,12 @@ import PropTypes from 'prop-types';
 // utitlity to conditionally join class names
 import classnames from 'classnames';
 
+// react plugin for creating alert notifications
+import NotificationAlert from "react-notification-alert";
+
 // Redux
 import { connect } from 'react-redux';
-import { likePost, unlikePost } from '../../../redux/actions/dataActions';
+import { likePost, unlikePost, resetCommentDeleteNotification } from '../../../redux/actions/dataActions';
 
 // reactstrap components
 import {
@@ -62,6 +65,34 @@ class PostDialog extends Component {
     this.props.unlikePost(this.props.post.postId);
   }
 
+  deleteNotification = () =>{
+    // Delete Notification
+    let options = {
+      place: "bc",
+      message: (
+        <div className="alert-text">
+          <span data-notify="message">
+            {" "}
+            Deleted
+          </span>
+        </div>
+      ),
+      type: "danger",
+      icon: "fas fa-trash",
+      autoDismiss: 3
+    };
+    this.refs.notificationAlert.notificationAlert(options);
+
+    // Reset Success Notification
+    this.props.resetCommentDeleteNotification();
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps){
+    if(nextProps.data.commentDeleteSuccess){
+       this.deleteNotification();
+    }
+  }
+
   render(){
 
     if(this.props.UI.loading){
@@ -71,7 +102,7 @@ class PostDialog extends Component {
     }
 
     // Post data
-    const { body, createdAt, userHandle, likeCount, commentCount, userImage, postId, comments } = this.props.post;
+    const { body, createdAt, userHandle, likeCount, commentCount, userImage } = this.props.post;
 
     // Redux mapped  props
     if(this.props.user.loading){
@@ -80,7 +111,6 @@ class PostDialog extends Component {
 
     const {
       user: { 
-        // credentials: { handle },
         authenticated,
         likes
       }
@@ -118,7 +148,7 @@ class PostDialog extends Component {
     // Comment Button
     const commentButton = (
       <Button
-        className="like engage-button btn-no-ml"
+        className="like engage-button btn-no-ml btn-no-click"
         onClick={e => e.preventDefault()}
       >
         <i className="ni ni-chat-round" />
@@ -144,6 +174,9 @@ class PostDialog extends Component {
 
     return(
       <Fragment>
+        <div className="rna-wrapper">
+          <NotificationAlert ref="notificationAlert" />
+        </div>
         <Card className="mb-0">
           <CardHeader className="d-flex align-items-center">
             <div className="d-flex align-items-center">
@@ -181,7 +214,7 @@ class PostDialog extends Component {
                 </div>
               </Col>
             </Row>
-              <Comments comments={comments} postId={postId} />
+              <Comments />
           </CardBody>
         </Card>
       </Fragment>
@@ -192,12 +225,14 @@ class PostDialog extends Component {
 const mapStateToProps = (state) => ({
   post: state.data.post,
   user: state.user,
-  UI: state.UI
+  UI: state.UI,
+  data: state.data
 });
 
 const mapActionsToProps = {
   likePost,
-  unlikePost
+  unlikePost,
+  resetCommentDeleteNotification
 };
 
 PostDialog.propTypes = {
@@ -206,6 +241,7 @@ PostDialog.propTypes = {
   likePost: PropTypes.func.isRequired,
   unlikePost: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
+  resetCommentDeleteNotification: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(PostDialog);

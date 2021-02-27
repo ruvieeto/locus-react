@@ -1,29 +1,13 @@
-/*!
-
-=========================================================
-* Argon Dashboard PRO React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React from "react";
+import React, { Component, Fragment } from "react";
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
 // reactstrap components
 import { Container, Row, Col } from "reactstrap";
 
-class AuthHeader extends React.Component {
+class AuthHeader extends Component {
   render() {
     return (
-      <>
+      <Fragment>
         <div className="header bg-gradient-info py-7 py-lg-8 pt-lg-9">
           <Container>
             <div className="header-body text-center mb-7">
@@ -55,7 +39,7 @@ class AuthHeader extends React.Component {
             </svg>
           </div>
         </div>
-      </>
+      </Fragment>
     );
   }
 }

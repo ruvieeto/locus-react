@@ -12,7 +12,14 @@ import {
 	CLEAR_ERRORS,
 	COMMENT_CLICK,
 	NEW_POST_CLICK,
-	SUMBIT_COMMENT
+	SUMBIT_COMMENT,
+	DELETE_COMMENT,
+	NOTIFY_POST_SUCCESS,
+	RESET_POST_SUCCESS,
+	NOTIFY_DELETE_SUCCESS,
+	RESET_DELETE_SUCCESS,
+	NOTIFY_DELETE_COMMENT_SUCCESS,
+	RESET_DELETE_COMMENT_SUCCESS
 } from "../types";
 
 import axios from 'axios';
@@ -68,6 +75,9 @@ export const deletePost = (postId) => (dispatch) =>{
 				payload: postId
 			})
 		})
+		.then(() => {
+			dispatch({ type: NOTIFY_DELETE_SUCCESS });
+		})
 		.catch(err => console.log(err))
 }
 
@@ -92,6 +102,9 @@ export const addNewPost = (newPost) => (dispatch) =>{
 			});
 			dispatch(clearErrors());
 		})
+		.then(() => {
+			dispatch({ type: NOTIFY_POST_SUCCESS });
+		})
 		.catch(err => {
 			dispatch({
 				type: SET_ERRORS,
@@ -100,6 +113,22 @@ export const addNewPost = (newPost) => (dispatch) =>{
 		})
 }
 
+// Reset post success notification
+export const resetSuccessNotification = () => (dispatch) =>{
+	dispatch({ type: RESET_POST_SUCCESS });
+}
+
+// Reset post delete success notification
+export const resetDeleteNotification = () => (dispatch) =>{
+	dispatch({ type: RESET_DELETE_SUCCESS });
+}
+
+// Reset comment delete success notification
+export const resetCommentDeleteNotification = () => (dispatch) =>{
+	dispatch({ type: RESET_DELETE_COMMENT_SUCCESS });
+}
+
+// Clear Errors
 export const clearErrors = () => (dispatch) => {
 	dispatch({ type: CLEAR_ERRORS });
 }
@@ -135,6 +164,21 @@ export const submitComment = (postId, commentData) => (dispatch) => {
 				payload: err.response.data
 			});
 		});
+}
+
+// Delete a comment
+export const deleteComment = (commentId) => (dispatch) =>{
+	axios.delete(`/comment/${commentId}`)
+		.then(() => {
+			dispatch({
+				type: DELETE_COMMENT,
+				payload: commentId
+			})
+		})
+		.then(() => {
+			dispatch({ type: NOTIFY_DELETE_COMMENT_SUCCESS });
+		})
+		.catch(err => console.log(err))
 }
 
 // Gets user data for user page navigated to

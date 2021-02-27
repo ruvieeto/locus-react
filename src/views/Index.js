@@ -5,7 +5,13 @@ import IndexNavbar from "components/Navbars/IndexNavbar.js";
 import IndexHeader from "components/Headers/IndexHeader.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
+import resetSidebar from "../util/resetSidebar";
+
 class Index extends Component {
+  componentDidMount(){
+    resetSidebar();
+  }
+
   render() {
     return (
       <Fragment>

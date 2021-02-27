@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 // Redux
 import { connect } from 'react-redux';
 import { markNotificationsAsRead } from '../../redux/actions/userActions';
+import { clearPostClick } from '../../redux/actions/dataActions';
 
 import {
   Badge,
@@ -34,6 +35,7 @@ class NotificationsDropdown extends Component{
 			.filter(notif => !notif.read)
 			.map(notif => notif.notificationId);
 
+		this.props.clearPostClick();
 		this.props.markNotificationsAsRead(unreadNotificationsIds);
 	}
 
@@ -120,6 +122,7 @@ class NotificationsDropdown extends Component{
 					isOpen={this.state.dropdownOpen}
 					toggle={this.dropdownToggle}
 					onClick={this.handleOpen}
+					className="nav-hover"
 					nav
 				>
                   <DropdownToggle className="nav-link" color="" tag="a">
@@ -166,11 +169,13 @@ const mapStateToProps = (state) => ({
 })
 
 const mapActionsToProps = {
-	markNotificationsAsRead
+	markNotificationsAsRead,
+	clearPostClick
 }
 
 NotificationsDropdown.propTypes = {
 	markNotificationsAsRead: PropTypes.func.isRequired,
+	clearPostClick: PropTypes.func.isRequired,
 	notifications: PropTypes.array.isRequired
 }
 

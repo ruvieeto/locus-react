@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { submitComment } from '../../../redux/actions/dataActions';
 
+// utitlity to conditionally join class names
+import classnames from 'classnames';
+
 // Reactstrap components
 import {
   Button,
@@ -36,6 +39,12 @@ class CommentForm extends Component{
 
 	handleChange = (event) => {
   		this.setState({ [event.target.name]: event.target.value });
+
+  		    // if(event.target.value){
+		    //   this.setState({ activeSend })
+		    // }else{
+		    //   this.setState({ content })
+		    // }
   	}
 
 	render(){
@@ -70,10 +79,12 @@ class CommentForm extends Component{
    
 	                          <Button
 	                            title="Add a comment"
-	                            className="submit-comment"
+	                            className={classnames("submit-comment", { "send-active": this.state.body } )}
 	                            type="submit"
 	                          >
 	                            <i className="ni ni-send" />
+
+
 	                          </Button>
 
 	                      </InputGroupAddon>

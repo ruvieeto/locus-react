@@ -12,7 +12,7 @@ class ProfileHeader extends Component {
           style={{
             minHeight: "500px",
             backgroundImage:
-              'url("' + require("assets/img/theme/pthe-crop2.jpg") + '")',
+              'url("' + require("assets/img/theme/account-cover.jpg") + '")',
             backgroundSize: "cover",
             backgroundPosition: "center top",
             filter: "brightness(1.05)"

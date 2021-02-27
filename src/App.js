@@ -3,17 +3,11 @@ import React, { useEffect } from "react";
 // react library for routing
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 
-// bootstrap rtl for rtl support page
-// import "assets/vendor/bootstrap-rtl/bootstrap-rtl.scss";
-
 // plugins styles from node_modules
 import "react-notification-alert/dist/animate.css";
 import "react-perfect-scrollbar/dist/css/styles.css";
 // plugins styles downloaded
-import "assets/vendor/fullcalendar/dist/fullcalendar.min.css";
 import "assets/vendor/sweetalert2/dist/sweetalert2.min.css";
-import "assets/vendor/select2/dist/css/select2.min.css";
-import "assets/vendor/quill/dist/quill.core.css";
 import "assets/vendor/nucleo/css/nucleo.css";
 import "assets/vendor/@fortawesome/fontawesome-free/css/all.min.css";
 // core styles
@@ -38,6 +32,7 @@ const App = () => {
     <Router>
       <Switch>
         <HomeRoute path="/admin" component={HomeLayout} />
+        <HomeRoute path="/home" component={HomeLayout} />
         <HomeRoute path="/users/:handle" component={HomeLayout} />
         <AuthRoute path="/auth" component={AuthLayout} />
         <Route exact path="/" render={props => <IndexView {...props} />} />

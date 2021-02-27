@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-// Comment Form
+// Comment Components
 import CommentForm from './CommentForm';
+import DeleteComment from './DeleteComment';
 
 import {
   Media
@@ -17,12 +19,25 @@ dayjs.extend(relativeTime);
 
 class Comments extends Component{
 	render(){
-		const { comments, postId } = this.props;
+		const { 
+      user: { 
+        credentials: { handle },
+        authenticated
+      }
+    } = this.props;
+    
+    const { comments, postId } = this.props.post;
 
     let commentList;
     if(comments){
+
       commentList = comments.map((comment) => {
-      const { body, createdAt, userImage, userHandle } = comment;
+      const { body, createdAt, userImage, userHandle, commentId } = comment;
+
+      // Delete post button
+      const deleteCommentButton = authenticated && userHandle === handle ? (
+        <DeleteComment commentId={commentId} key={commentId} />
+        ) : (null)
 
       return(
         <Media className="media-comment" key={createdAt}>
@@ -35,14 +50,17 @@ class Comments extends Component{
           </Link>
           <Media className="inner-media-container">
             <div className="media-comment-text">   
-            <div className="comment-head">
+              <div className="comment-head">
                 <Link
-                className="font-weight-600 commenter-name"
-                to={`/users/${userHandle}`}
-              >
-                @{userHandle}
-              </Link>
+                  className="font-weight-600 commenter-name"
+                  to={`/users/${userHandle}`}
+                >
+                  @{userHandle}
+                </Link>
                 <small className="d-block text-muted">{dayjs(createdAt.toString()).fromNow()}</small>
+                <div className="text-right ml-auto">
+                  {deleteCommentButton}
+                </div>
               </div>
               <p className="text-sm lh-160">
                 {body}
@@ -70,8 +88,14 @@ class Comments extends Component{
 	}
 }
 
+const mapStateToProps = (state) => ({
+  user: state.user,
+  post: state.data.post
+})
+
 Comments.propTypes = {
-	comments: PropTypes.array
+  comments: PropTypes.array,
+  user: PropTypes.object.isRequired
 }
 
-export default Comments;
+export default connect(mapStateToProps, null)(Comments);

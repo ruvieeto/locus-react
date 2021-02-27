@@ -5,7 +5,9 @@ import {
 	LOADING_UI, 
 	SET_UNAUTHENTICATED,
 	LOADING_USER,
-	MARK_NOTIFICATIONS_READ
+	MARK_NOTIFICATIONS_READ,
+	NOTIFY_UPDATE_SUCCESS,
+	RESET_UPDATE_SUCCESS
 } from '../types';
 
 import axios from 'axios';
@@ -21,13 +23,13 @@ export const loginUser = (user, history) => (dispatch) => {
         dispatch({ type: CLEAR_ERRORS });
 
         //redirect to home feed
-        history.push('/admin/dashboard');
+        history.push('/home/feed');
       })
       .catch(err => {
       	dispatch({
       		type: SET_ERRORS,
       		payload: err.response.data
-      	})
+      	});
       })
 }
 
@@ -42,7 +44,7 @@ export const signupUser = (newUserData, history) => (dispatch) => {
         dispatch({ type: CLEAR_ERRORS });
 
         //redirect to home feed
-        history.push('/admin/dashboard');
+        history.push('/home/feed');
       })
       .catch(err => {
       	dispatch({
@@ -84,6 +86,9 @@ export const uploadImage = (formData) => (dispatch) =>{
 		.then(() => {
 			dispatch(getUserData());
 		})
+		.then(() => {
+			dispatch({ type: NOTIFY_UPDATE_SUCCESS });
+		})
 		.catch(err => console.log(err));
 }
 
@@ -93,9 +98,16 @@ export const editUserDetails = (userDetails) => (dispatch) => {
 		.then(()=>{
 			dispatch(getUserData());
 		})
+		.then(() => {
+			dispatch({ type: NOTIFY_UPDATE_SUCCESS });
+		})
 		.catch(err => {
 			console.log(err);
 		});
+}
+
+export const resetUpdateNotification = () => (dispatch) =>{
+	dispatch({ type: RESET_UPDATE_SUCCESS });
 }
 
 export const markNotificationsAsRead = (notificationIds) => (dispatch) => {

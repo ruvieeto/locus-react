@@ -1,19 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard PRO React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React, { Fragment } from "react";
 // nodejs library that concatenates classes
 import classnames from "classnames";
@@ -52,6 +36,12 @@ class AdminNavbar extends React.Component {
     logoutUser(history);
   }
 
+  postButtonClick = () =>{
+    if(document.getElementById("navbar-post-button")){
+      document.getElementById("navbar-post-button").click();
+    }
+  }
+
   render() {
     const { user: { loading } } = this.props;
 
@@ -59,11 +49,25 @@ class AdminNavbar extends React.Component {
       return (<NavbarSkeleton />)
     }
 
+    // Determining whether to show post button on page
+    let postablePage = false;
+
+    if(this.props.location.pathname.includes("/home/feed")){
+      postablePage = true;
+    }
+
     const {
       user: { 
         credentials: { handle, imgUrl }
       }
     } = this.props;
+
+    if(this.props.user.credentials){
+      if(
+        window.location.pathname.includes(`/users/${handle}/`) || 
+        this.props.location.pathname === `/users/${handle}`
+      ){postablePage = true;}
+    }
 
     return (
       <Fragment>
@@ -93,14 +97,25 @@ class AdminNavbar extends React.Component {
                     </div>
                   </div>
                 </NavItem>
-
+                
+                {postablePage && (
+                  <NavItem 
+                    className="mobile-add-post" 
+                    role="button"
+                    onClick={this.postButtonClick}
+                    >
+                    <span>&#43;</span>
+                  </NavItem>
+                  )
+                }
                 {/*Notifications  Dropdown */}
                 <Notifications />
+
               </Nav>
 
               {/*Options dropdown start*/}
               <Nav className="align-items-center ml-auto ml-md-0" navbar>
-                <UncontrolledDropdown nav>
+                <UncontrolledDropdown nav className="nav-hover">
                   <DropdownToggle className="nav-link pr-0" color="" tag="a">
                     <Media className="align-items-center">
                       <span className="avatar avatar-sm rounded-circle">
@@ -114,6 +129,9 @@ class AdminNavbar extends React.Component {
                           {handle}
                         </span>
                       </Media>
+                      <span className="ml-2">
+                        <i className="fas fa-caret-down" />
+                      </span>
                     </Media>
                   </DropdownToggle>
                   <DropdownMenu right>
@@ -126,16 +144,10 @@ class AdminNavbar extends React.Component {
                         <span>My profile</span>
                       </DropdownItem>
                     </Link>
-                    <Link to={`/admin/profile`}>
+                    <Link to={`/admin/account`}>
                       <DropdownItem>
                         <i className="ni ni-settings-gear-65" />
                         <span>Edit account</span>
-                      </DropdownItem>
-                    </Link>
-                    <Link to={`/`}>
-                      <DropdownItem>
-                        <i className="ni ni-support-16" />
-                        <span>Support</span>
                       </DropdownItem>
                     </Link>
                     <DropdownItem divider />

@@ -47,7 +47,7 @@ class ProfileCard extends Component{
               <Link to={`/users/${handle}`}>
                 <img
                   alt="..."
-                  className="rounded-circle"
+                  className="rounded-circle home-page-image"
                   src={imgUrl}
                 />
               </Link>
@@ -70,7 +70,7 @@ class ProfileCard extends Component{
               color="default"
               size="sm"
             >
-              <Link to="/admin/profile" className="nochange">
+              <Link to="/admin/account" className="nochange">
                 Edit
               </Link>
             </Button>

@@ -9,7 +9,7 @@ import { Button } from "reactstrap";
 
 //Redux
 import { connect } from 'react-redux';
-import { deletePost } from '../../../redux/actions/dataActions';
+import { deletePost, clearPostClick } from '../../../redux/actions/dataActions';
 
 class DeletePost extends Component {
 	state = {
@@ -41,6 +41,8 @@ class DeletePost extends Component {
 		        </ReactBSAlert>
 	      	)
     	});
+
+    	this.props.clearPostClick()
   	};
 
 	render(){
@@ -55,7 +57,7 @@ class DeletePost extends Component {
 			        onClick={this.warningAlert}
 			    >
 			        <span className="btn-inner--icon mr-1">
-			          <i className="ni ni-fat-remove" />
+			          <i className="fas fa-trash" />
 			        </span>
 			    	<span className="btn-inner--text">Delete</span>
 			    </Button>
@@ -66,7 +68,13 @@ class DeletePost extends Component {
 
 DeletePost.propTypes = {
 	deletePost: PropTypes.func.isRequired,
-	postId: PropTypes.string.isRequired
+	postId: PropTypes.string.isRequired,
+	clearPostClick: PropTypes.func.isRequired
 }
 
-export default connect(null, { deletePost })(DeletePost);
+const mapActionsToProps = {
+	deletePost,
+	clearPostClick
+}
+
+export default connect(null, mapActionsToProps)(DeletePost);

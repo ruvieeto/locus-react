@@ -1,10 +1,19 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
+// react plugin for creating alert notifications
+import NotificationAlert from "react-notification-alert";
+
+import ProgressRing from './ProgressRing';
 
 // Redux
 import { connect } from 'react-redux';
-import { addNewPost, clearErrors, newPostClick, clearPostClick } from '../../../redux/actions/dataActions';
-
-import PropTypes from 'prop-types';
+import { 
+	addNewPost, 
+	clearErrors, 
+	newPostClick, 
+	clearPostClick, 
+	resetSuccessNotification 
+} from '../../../redux/actions/dataActions';
 
 import {
   Button,
@@ -21,7 +30,10 @@ class AddPost extends Component {
 		this.state = {
 			defaultModal: false,
 			body: "",
-			errors: {}
+			errors: {},
+			progress: 0,
+			charCount: null,
+			strokeColor: "#2dce89"
 	  	};
 	}
 
@@ -30,6 +42,12 @@ class AddPost extends Component {
 
   		this.props.clearPostClick();
 
+  		if(!this.state.defaultModal){
+  			setTimeout(()=>{
+	  		 this.focusPost(); 
+	  		}, 1000);
+  		}
+
 	    this.setState({
 	      defaultModal: !this.state.defaultModal,
 	      body: "",
@@ -37,8 +55,50 @@ class AddPost extends Component {
 	    });
   	};
 
+  	focusPost = () => {
+  		const inputField = document.getElementById("new-post-input");
+
+  		if(inputField){
+  			inputField.focus();
+  		}
+  	}
+
+  	successNotification = () =>{
+  		// Success Notification
+  		let options = {
+	      place: "bc",
+	      message: (
+	        <div className="alert-text">
+	          <span data-notify="message">
+	            {" "}
+	            Your post was added
+	          </span>
+	        </div>
+	      ),
+	      type: "success",
+	      icon: "far fa-check-circle",
+	      autoDismiss: 3
+	    };
+	    this.refs.notificationAlert.notificationAlert(options);
+
+  		// Reset Success Notification
+  		this.props.resetSuccessNotification();
+  	}
+
   	handleChange = (event) => {
-  		this.setState({ [event.target.name]: event.target.value });
+  		const progress = 0.05 + 0.95*(event.target.value.length/280);
+  		const charCount = 280 - event.target.value.length;
+
+  		const strokeColor = charCount > 49 ? "#2dce89"
+  			: charCount > 9 ? "#fb9e40"
+  			: "#f5365c"
+
+  		this.setState({ 
+  			[event.target.name]: event.target.value,
+  			progress,
+  			charCount,
+  			strokeColor
+  		});
   	}
 
   	handleSubmit = (event) => {
@@ -51,6 +111,7 @@ class AddPost extends Component {
   			this.setState({ errors: nextProps.UI.errors });
   		}
 
+  		// If no longer loading and no errors (i.e. successfully posted)
   		if(!nextProps.UI.errors.body && !nextProps.UI.loading){
   			if(nextProps.data.newPostClick){
   				this.setState({
@@ -58,8 +119,13 @@ class AddPost extends Component {
 			      body: "",
 			      errors: {}
 			    });
-  			}	
+  			}
   		}
+
+  		// Successful Notification
+  		if(nextProps.data.postSuccess){
+  			this.successNotification();
+	    }
   	}
 
 	render(){
@@ -68,6 +134,10 @@ class AddPost extends Component {
 
 		return(
 			<Fragment>
+				<div className="rna-wrapper">
+          			<NotificationAlert ref="notificationAlert" />
+        		</div>
+
 				<Button
 		            className="btn-icon"
 		            color="primary"
@@ -83,6 +153,8 @@ class AddPost extends Component {
 	                className="modal-dialog-centered"
 	                isOpen={this.state.defaultModal}
 	                toggle={this.toggleModal}
+	                onOpened={()=>{document.body.classList.add("modal-open")}}
+	                onClosed={()=>{document.body.classList.remove("modal-open")}}
 	            >
 	                <div className="modal-header">
 		                <h6 className="modal-title" id="modal-title-default">
@@ -107,6 +179,7 @@ class AddPost extends Component {
 	                              type="textarea"
 	                              rows="4"
 	                              resize="none"
+	                              maxLength="280"
 	                              id="new-post-input"
 	                              name="body"
 	                              onChange={(event)=>this.handleChange(event)}
@@ -120,14 +193,20 @@ class AddPost extends Component {
 	                        </FormGroup>      
 	                    </div>
 	                    <div className="modal-footer modal-footer-lean">
-	                        <Button 
-	                        	color="primary" 
-	                        	type="submit"
-	                        	disabled={loading}
-	                        	onClick={(event) => this.handleSubmit(event)}
-	                        >
-	                        	{loading ? <div className="html-spinner"></div> : "Post"}
-	                        </Button>
+	                        <div>
+		                        <Button 
+		                        	color="primary" 
+		                        	type="submit"
+		                        	disabled={loading}
+		                        	onClick={(event) => this.handleSubmit(event)}
+		                        >
+		                        	{loading ? <div className="html-spinner"></div> : "Post"}
+		                        </Button>
+		                        {
+		                        	this.state.body &&
+		                        	<ProgressRing radius={16} stroke={2} progress={this.state.progress} count={this.state.charCount} strokeColor={this.state.strokeColor}/>
+		                        }
+	                        </div>
 	                      	<Button
 	                            className="ml-auto"
 	                            color="link"
@@ -155,14 +234,16 @@ const mapActionsToProps = {
 	addNewPost,
 	clearErrors,
 	newPostClick,
-	clearPostClick
+	clearPostClick,
+	resetSuccessNotification
 }
 
 AddPost.propTypes = {
 	addNewPost: PropTypes.func.isRequired,
 	newPostClick: PropTypes.func.isRequired,
 	clearPostClick: PropTypes.func.isRequired,
-	UI: PropTypes.object.isRequired
+	UI: PropTypes.object.isRequired,
+	resetSuccessNotification: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(AddPost);

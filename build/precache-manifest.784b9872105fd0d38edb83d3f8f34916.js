@@ -1,35 +1,39 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a3fe8f5bb315fad497dfaca31dc14b5d",
+    "revision": "76972147a81f2e73fd7dfe47cab7b665",
     "url": "/index.html"
   },
   {
-    "revision": "7f20a0d836cee936c81a",
+    "revision": "acb6e18ecd8f1f379396",
     "url": "/static/css/2.f51bfa0e.chunk.css"
   },
   {
-    "revision": "32539b19d53691de21f9",
-    "url": "/static/css/main.2f13b81b.chunk.css"
+    "revision": "51c41ad7dd26e0919f88",
+    "url": "/static/css/main.cfb6b3c0.chunk.css"
   },
   {
-    "revision": "7f20a0d836cee936c81a",
-    "url": "/static/js/2.a965aa66.chunk.js"
+    "revision": "acb6e18ecd8f1f379396",
+    "url": "/static/js/2.805a504b.chunk.js"
   },
   {
     "revision": "71340731e0d78fb79481c99d8dc208e0",
-    "url": "/static/js/2.a965aa66.chunk.js.LICENSE.txt"
+    "url": "/static/js/2.805a504b.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "32539b19d53691de21f9",
-    "url": "/static/js/main.ec785b86.chunk.js"
+    "revision": "51c41ad7dd26e0919f88",
+    "url": "/static/js/main.8d50b481.chunk.js"
   },
   {
-    "revision": "e48ec789efe5e7aafd1968ee0d3be484",
-    "url": "/static/js/main.ec785b86.chunk.js.LICENSE.txt"
+    "revision": "286c449ea5c353b9f143c53064169bf2",
+    "url": "/static/js/main.8d50b481.chunk.js.LICENSE.txt"
   },
   {
     "revision": "0750dc820036edecbc24",
     "url": "/static/js/runtime-main.617c76c4.js"
+  },
+  {
+    "revision": "093cac2d76420b8d81c0b79fcc4e0ead",
+    "url": "/static/media/account-cover.093cac2d.jpg"
   },
   {
     "revision": "42f9fd6acee87559ac0d6a33488db65e",
@@ -92,28 +96,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/media/fa-solid-900.fb493903.woff2"
   },
   {
-    "revision": "4ffd4fe7945af123788bf5888296c696",
-    "url": "/static/media/github.4ffd4fe7.svg"
-  },
-  {
-    "revision": "87be59a1f7061fc6021876aad6fee028",
-    "url": "/static/media/google.87be59a1.svg"
+    "revision": "6dcfb81d167f979759b2e74d3b3a9773",
+    "url": "/static/media/home1.6dcfb81d.jpg"
   },
   {
     "revision": "35a52547bfba87e5480f3a5fa7691236",
     "url": "/static/media/img-1-1000x600.35a52547.jpg"
   },
   {
-    "revision": "4ffd1f12c9937cae964aaede0a9c490c",
-    "url": "/static/media/landing-1.4ffd1f12.png"
-  },
-  {
-    "revision": "bbe46b24bdc5b06a8d195beab589d0f9",
-    "url": "/static/media/landing-2.bbe46b24.png"
-  },
-  {
-    "revision": "ee1b391efd82a1bd336899eec55be03e",
-    "url": "/static/media/landing-3.ee1b391e.png"
+    "revision": "3319946bf96a4dce07c5d102f219ac39",
+    "url": "/static/media/locus-beach-cover.3319946b.jpg"
   },
   {
     "revision": "5a021ab95b4d2a0c8e7511c40ca7bb2f",
@@ -140,16 +132,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/media/nucleo-icons.f82ec6ba.ttf"
   },
   {
-    "revision": "b0d14832ece944c6d5db0633da8ca3c2",
-    "url": "/static/media/pattern.b0d14832.jpg"
-  },
-  {
     "revision": "630102ca1bfe5b1d13530ffb0f2aa44d",
     "url": "/static/media/pattern4.630102ca.jpg"
-  },
-  {
-    "revision": "093cac2d76420b8d81c0b79fcc4e0ead",
-    "url": "/static/media/pthe-crop2.093cac2d.jpg"
   },
   {
     "revision": "53033970a416368da35794389680266f",

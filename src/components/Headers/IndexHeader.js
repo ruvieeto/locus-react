@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
+import { Link } from 'react-router-dom';
 // reactstrap components
-import { Container, Row, Col } from "reactstrap";
+import { Button, Container, Row, Col } from "reactstrap";
+
 
 import DemoLogin from '../../util/DemoLogin';
 
@@ -22,6 +24,14 @@ class IndexHeader extends Component {
                     </h2>
                     <div className="mt-5">
                       <DemoLogin />
+                      <Button
+                        className="my-2 mt-4"
+                        color="default"
+                        to="/auth/register"
+                        tag={Link}
+                      >
+                        Sign Up
+                      </Button>
                       <div>
                         <div className="demo-arrow-left">&#10548;</div>
                         <span className="text-white mt-0 mb-0 ml-2 side-note">

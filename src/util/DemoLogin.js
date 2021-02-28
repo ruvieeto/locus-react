@@ -64,14 +64,14 @@ class DemoLogin extends Component {
 		if(this.props.type === "nav-button"){
 			return(
 				<Button
-                    className="btn btn-icon special-button"
+                    className="btn btn-neutral btn-icon"
                     color="default"
                     onClick={this.handleLogin}
                 >
                     <span className="btn-inner--icon">
                     {
 			          	this.state.loading ? (
-			          	<div className="html-spinner html-spinner-home-2"></div>
+			          	<div className="html-spinner html-spinner-home"></div>
 			          	):(
 			          	<i className="ni ni ni-spaceship mr-2" />
 			          	)
@@ -80,25 +80,6 @@ class DemoLogin extends Component {
                     <span className="nav-link-inner--text brooo">Explore App</span>
                 </Button>
 			)
-			// // How it was before
-			// return(
-			// 	<Button
-   //                  className="btn-neutral btn-icon"
-   //                  color="default"
-   //                  onClick={this.handleLogin}
-   //              >
-   //                  <span className="btn-inner--icon">
-   //                  {
-			//           	this.state.loading ? (
-			//           	<div className="html-spinner html-spinner-home"></div>
-			//           	):(
-			//           	<i className="ni ni ni-spaceship mr-2" />
-			//           	)
-			//         }
-   //                  </span>
-   //                  <span className="nav-link-inner--text">Explore App</span>
-   //              </Button>
-			// )
 		}
 		
 		return(

@@ -30,17 +30,22 @@ class Sidebar extends React.Component {
   onMouseEnterSidenav = () => {
     if (!document.body.classList.contains("g-sidenav-pinned")) {
       document.body.classList.add("g-sidenav-show");
+      
       // Post button
-      document.getElementById("navbar-post-button").classList.remove("hide-navbar-button-text");
+      if(document.getElementById("navbar-post-button")){
+        document.getElementById("navbar-post-button").classList.remove("hide-navbar-button-text");
+      }
     }
   };
   // makes the sidenav mini on mouseleave
   onMouseLeaveSidenav = () => {
     if (!document.body.classList.contains("g-sidenav-pinned")) {
       document.body.classList.remove("g-sidenav-show");
-      // Post button
-      document.getElementById("navbar-post-button").classList.add("hide-navbar-button-text");
 
+      // Post button
+      if(document.getElementById("navbar-post-button")){
+        document.getElementById("navbar-post-button").classList.add("hide-navbar-button-text");
+      }
     }
   };
   

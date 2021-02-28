@@ -23,6 +23,10 @@ import HomeRoute from "util/HomeRoute";
 
 import tokenValidator from './util/tokenValidator';
 
+// Axios
+import axios from 'axios';
+axios.defaults.baseURL = 'https://us-central1-locus-social.cloudfunctions.net/api';
+
 const App = () => {
   useEffect(()=>{
     tokenValidator();

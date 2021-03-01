@@ -44,6 +44,7 @@ class HomeFeed extends Component {
   }
 
   componentWillUnmount(props){
+    document.body.classList.remove("modal-open");
     this.props.clearPostClick();
   }
 
